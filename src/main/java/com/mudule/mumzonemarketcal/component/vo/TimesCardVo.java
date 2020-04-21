@@ -3,7 +3,7 @@ package com.mudule.mumzonemarketcal.component.vo;
 import lombok.Data;
 
 /**
- * @author wangjingjing
+ * @author DZT
  * @date 2019-03-15
  */
 @Data
