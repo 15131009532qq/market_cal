@@ -1,0 +1,560 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.mudule.mumzonemarketcal.component.mapper.member.MemberCompanyMapper" >
+  <resultMap id="BaseResultMap" type="com.mudule.mumzonemarketcal.component.po.member.MemberCompany" >
+    <id column="id" property="id" jdbcType="VARCHAR" />
+    <result column="company_id" property="companyId" jdbcType="VARCHAR" />
+    <result column="store_id" property="storeId" jdbcType="VARCHAR" />
+    <result column="member_id" property="memberId" jdbcType="VARCHAR" />
+    <result column="user_name" property="userName" jdbcType="VARCHAR" />
+    <result column="name" property="name" jdbcType="VARCHAR" />
+    <result column="gender" property="gender" jdbcType="TINYINT" />
+    <result column="birthday" property="birthday" jdbcType="DATE" />
+    <result column="head_image" property="headImage" jdbcType="VARCHAR" />
+    <result column="password" property="password" jdbcType="VARCHAR" />
+    <result column="open_id" property="openId" jdbcType="VARCHAR" />
+    <result column="ali_id" property="aliId" jdbcType="VARCHAR" />
+    <result column="qq_id" property="qqId" jdbcType="VARCHAR" />
+    <result column="taobao_id" property="taobaoId" jdbcType="VARCHAR" />
+    <result column="current_state" property="currentState" jdbcType="TINYINT" />
+    <result column="consume_num" property="consumeNum" jdbcType="INTEGER" />
+    <result column="last_time" property="lastTime" jdbcType="TIMESTAMP" />
+    <result column="last_login" property="lastLogin" jdbcType="TIMESTAMP" />
+    <result column="confinement_date" property="confinementDate" jdbcType="DATE" />
+    <result column="status" property="status" jdbcType="TINYINT" />
+    <result column="source" property="source" jdbcType="TINYINT" />
+    <result column="create_time" property="createTime" jdbcType="DATE" />
+    <result column="update_time" property="updateTime" jdbcType="DATE" />
+    <result column="recommend_id" property="recommendId" jdbcType="VARCHAR" />
+    <result column="member_code" property="memberCode" jdbcType="VARCHAR" />
+    <result column="referral_code" property="referralCode" jdbcType="VARCHAR" />
+    <result column="be_referral_code" property="beReferralCode" jdbcType="VARCHAR" />
+  </resultMap>
+  <sql id="Example_Where_Clause" >
+    <where >
+      <foreach collection="oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Update_By_Example_Where_Clause" >
+    <where >
+      <foreach collection="example.oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Base_Column_List" >
+    id, company_id, store_id, member_id, user_name, name, gender, birthday, head_image, 
+    password, open_id, ali_id, qq_id, taobao_id, current_state, consume_num, last_time, 
+    last_login, confinement_date, status, source, create_time, update_time, recommend_id, 
+    member_code, referral_code, be_referral_code
+  </sql>
+  <select id="selectByExample" resultMap="BaseResultMap" parameterType="com.mudule.mumzonemarketcal.component.po.member.MemberCompanyExample" >
+    select
+    <if test="distinct" >
+      distinct
+    </if>
+    <include refid="Base_Column_List" />
+    from member_company
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null" >
+      order by ${orderByClause}
+    </if>
+  </select>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.String" >
+    select 
+    <include refid="Base_Column_List" />
+    from member_company
+    where id = #{id,jdbcType=VARCHAR}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.String" >
+    delete from member_company
+    where id = #{id,jdbcType=VARCHAR}
+  </delete>
+  <delete id="deleteByExample" parameterType="com.mudule.mumzonemarketcal.component.po.member.MemberCompanyExample" >
+    delete from member_company
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+  </delete>
+  <insert id="insert" parameterType="com.mudule.mumzonemarketcal.component.po.member.MemberCompany" >
+    insert into member_company (id, company_id, store_id, 
+      member_id, user_name, name, 
+      gender, birthday, head_image, 
+      password, open_id, ali_id, 
+      qq_id, taobao_id, current_state, 
+      consume_num, last_time, last_login, 
+      confinement_date, status, source, 
+      create_time, update_time, recommend_id, 
+      member_code, referral_code, be_referral_code
+      )
+    values (#{id,jdbcType=VARCHAR}, #{companyId,jdbcType=VARCHAR}, #{storeId,jdbcType=VARCHAR}, 
+      #{memberId,jdbcType=VARCHAR}, #{userName,jdbcType=VARCHAR}, #{name,jdbcType=VARCHAR}, 
+      #{gender,jdbcType=TINYINT}, #{birthday,jdbcType=DATE}, #{headImage,jdbcType=VARCHAR}, 
+      #{password,jdbcType=VARCHAR}, #{openId,jdbcType=VARCHAR}, #{aliId,jdbcType=VARCHAR}, 
+      #{qqId,jdbcType=VARCHAR}, #{taobaoId,jdbcType=VARCHAR}, #{currentState,jdbcType=TINYINT}, 
+      #{consumeNum,jdbcType=INTEGER}, #{lastTime,jdbcType=TIMESTAMP}, #{lastLogin,jdbcType=TIMESTAMP}, 
+      #{confinementDate,jdbcType=DATE}, #{status,jdbcType=TINYINT}, #{source,jdbcType=TINYINT}, 
+      #{createTime,jdbcType=TIMESTAMP}, #{updateTime,jdbcType=TIMESTAMP}, #{recommendId,jdbcType=VARCHAR}, 
+      #{memberCode,jdbcType=VARCHAR}, #{referralCode,jdbcType=VARCHAR}, #{beReferralCode,jdbcType=VARCHAR}
+      )
+  </insert>
+  <insert id="insertSelective" parameterType="com.mudule.mumzonemarketcal.component.po.member.MemberCompany" >
+    insert into member_company
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        id,
+      </if>
+      <if test="companyId != null" >
+        company_id,
+      </if>
+      <if test="storeId != null" >
+        store_id,
+      </if>
+      <if test="memberId != null" >
+        member_id,
+      </if>
+      <if test="userName != null" >
+        user_name,
+      </if>
+      <if test="name != null" >
+        name,
+      </if>
+      <if test="gender != null" >
+        gender,
+      </if>
+      <if test="birthday != null" >
+        birthday,
+      </if>
+      <if test="headImage != null" >
+        head_image,
+      </if>
+      <if test="password != null" >
+        password,
+      </if>
+      <if test="openId != null" >
+        open_id,
+      </if>
+      <if test="aliId != null" >
+        ali_id,
+      </if>
+      <if test="qqId != null" >
+        qq_id,
+      </if>
+      <if test="taobaoId != null" >
+        taobao_id,
+      </if>
+      <if test="currentState != null" >
+        current_state,
+      </if>
+      <if test="consumeNum != null" >
+        consume_num,
+      </if>
+      <if test="lastTime != null" >
+        last_time,
+      </if>
+      <if test="lastLogin != null" >
+        last_login,
+      </if>
+      <if test="confinementDate != null" >
+        confinement_date,
+      </if>
+      <if test="status != null" >
+        status,
+      </if>
+      <if test="source != null" >
+        source,
+      </if>
+      <if test="createTime != null" >
+        create_time,
+      </if>
+      <if test="updateTime != null" >
+        update_time,
+      </if>
+      <if test="recommendId != null" >
+        recommend_id,
+      </if>
+      <if test="memberCode != null" >
+        member_code,
+      </if>
+      <if test="referralCode != null" >
+        referral_code,
+      </if>
+      <if test="beReferralCode != null" >
+        be_referral_code,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        #{id,jdbcType=VARCHAR},
+      </if>
+      <if test="companyId != null" >
+        #{companyId,jdbcType=VARCHAR},
+      </if>
+      <if test="storeId != null" >
+        #{storeId,jdbcType=VARCHAR},
+      </if>
+      <if test="memberId != null" >
+        #{memberId,jdbcType=VARCHAR},
+      </if>
+      <if test="userName != null" >
+        #{userName,jdbcType=VARCHAR},
+      </if>
+      <if test="name != null" >
+        #{name,jdbcType=VARCHAR},
+      </if>
+      <if test="gender != null" >
+        #{gender,jdbcType=TINYINT},
+      </if>
+      <if test="birthday != null" >
+        #{birthday,jdbcType=DATE},
+      </if>
+      <if test="headImage != null" >
+        #{headImage,jdbcType=VARCHAR},
+      </if>
+      <if test="password != null" >
+        #{password,jdbcType=VARCHAR},
+      </if>
+      <if test="openId != null" >
+        #{openId,jdbcType=VARCHAR},
+      </if>
+      <if test="aliId != null" >
+        #{aliId,jdbcType=VARCHAR},
+      </if>
+      <if test="qqId != null" >
+        #{qqId,jdbcType=VARCHAR},
+      </if>
+      <if test="taobaoId != null" >
+        #{taobaoId,jdbcType=VARCHAR},
+      </if>
+      <if test="currentState != null" >
+        #{currentState,jdbcType=TINYINT},
+      </if>
+      <if test="consumeNum != null" >
+        #{consumeNum,jdbcType=INTEGER},
+      </if>
+      <if test="lastTime != null" >
+        #{lastTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="lastLogin != null" >
+        #{lastLogin,jdbcType=TIMESTAMP},
+      </if>
+      <if test="confinementDate != null" >
+        #{confinementDate,jdbcType=DATE},
+      </if>
+      <if test="status != null" >
+        #{status,jdbcType=TINYINT},
+      </if>
+      <if test="source != null" >
+        #{source,jdbcType=TINYINT},
+      </if>
+      <if test="createTime != null" >
+        #{createTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="updateTime != null" >
+        #{updateTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="recommendId != null" >
+        #{recommendId,jdbcType=VARCHAR},
+      </if>
+      <if test="memberCode != null" >
+        #{memberCode,jdbcType=VARCHAR},
+      </if>
+      <if test="referralCode != null" >
+        #{referralCode,jdbcType=VARCHAR},
+      </if>
+      <if test="beReferralCode != null" >
+        #{beReferralCode,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <select id="countByExample" parameterType="com.mudule.mumzonemarketcal.component.po.member.MemberCompanyExample" resultType="java.lang.Integer" >
+    select count(*) from member_company
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+  </select>
+  <update id="updateByExampleSelective" parameterType="map" >
+    update member_company
+    <set >
+      <if test="record.id != null" >
+        id = #{record.id,jdbcType=VARCHAR},
+      </if>
+      <if test="record.companyId != null" >
+        company_id = #{record.companyId,jdbcType=VARCHAR},
+      </if>
+      <if test="record.storeId != null" >
+        store_id = #{record.storeId,jdbcType=VARCHAR},
+      </if>
+      <if test="record.memberId != null" >
+        member_id = #{record.memberId,jdbcType=VARCHAR},
+      </if>
+      <if test="record.userName != null" >
+        user_name = #{record.userName,jdbcType=VARCHAR},
+      </if>
+      <if test="record.name != null" >
+        name = #{record.name,jdbcType=VARCHAR},
+      </if>
+      <if test="record.gender != null" >
+        gender = #{record.gender,jdbcType=TINYINT},
+      </if>
+      <if test="record.birthday != null" >
+        birthday = #{record.birthday,jdbcType=DATE},
+      </if>
+      <if test="record.headImage != null" >
+        head_image = #{record.headImage,jdbcType=VARCHAR},
+      </if>
+      <if test="record.password != null" >
+        password = #{record.password,jdbcType=VARCHAR},
+      </if>
+      <if test="record.openId != null" >
+        open_id = #{record.openId,jdbcType=VARCHAR},
+      </if>
+      <if test="record.aliId != null" >
+        ali_id = #{record.aliId,jdbcType=VARCHAR},
+      </if>
+      <if test="record.qqId != null" >
+        qq_id = #{record.qqId,jdbcType=VARCHAR},
+      </if>
+      <if test="record.taobaoId != null" >
+        taobao_id = #{record.taobaoId,jdbcType=VARCHAR},
+      </if>
+      <if test="record.currentState != null" >
+        current_state = #{record.currentState,jdbcType=TINYINT},
+      </if>
+      <if test="record.consumeNum != null" >
+        consume_num = #{record.consumeNum,jdbcType=INTEGER},
+      </if>
+      <if test="record.lastTime != null" >
+        last_time = #{record.lastTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="record.lastLogin != null" >
+        last_login = #{record.lastLogin,jdbcType=TIMESTAMP},
+      </if>
+      <if test="record.confinementDate != null" >
+        confinement_date = #{record.confinementDate,jdbcType=DATE},
+      </if>
+      <if test="record.status != null" >
+        status = #{record.status,jdbcType=TINYINT},
+      </if>
+      <if test="record.source != null" >
+        source = #{record.source,jdbcType=TINYINT},
+      </if>
+      <if test="record.createTime != null" >
+        create_time = #{record.createTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="record.updateTime != null" >
+        update_time = #{record.updateTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="record.recommendId != null" >
+        recommend_id = #{record.recommendId,jdbcType=VARCHAR},
+      </if>
+      <if test="record.memberCode != null" >
+        member_code = #{record.memberCode,jdbcType=VARCHAR},
+      </if>
+      <if test="record.referralCode != null" >
+        referral_code = #{record.referralCode,jdbcType=VARCHAR},
+      </if>
+      <if test="record.beReferralCode != null" >
+        be_referral_code = #{record.beReferralCode,jdbcType=VARCHAR},
+      </if>
+    </set>
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByExample" parameterType="map" >
+    update member_company
+    set id = #{record.id,jdbcType=VARCHAR},
+      company_id = #{record.companyId,jdbcType=VARCHAR},
+      store_id = #{record.storeId,jdbcType=VARCHAR},
+      member_id = #{record.memberId,jdbcType=VARCHAR},
+      user_name = #{record.userName,jdbcType=VARCHAR},
+      name = #{record.name,jdbcType=VARCHAR},
+      gender = #{record.gender,jdbcType=TINYINT},
+      birthday = #{record.birthday,jdbcType=DATE},
+      head_image = #{record.headImage,jdbcType=VARCHAR},
+      password = #{record.password,jdbcType=VARCHAR},
+      open_id = #{record.openId,jdbcType=VARCHAR},
+      ali_id = #{record.aliId,jdbcType=VARCHAR},
+      qq_id = #{record.qqId,jdbcType=VARCHAR},
+      taobao_id = #{record.taobaoId,jdbcType=VARCHAR},
+      current_state = #{record.currentState,jdbcType=TINYINT},
+      consume_num = #{record.consumeNum,jdbcType=INTEGER},
+      last_time = #{record.lastTime,jdbcType=TIMESTAMP},
+      last_login = #{record.lastLogin,jdbcType=TIMESTAMP},
+      confinement_date = #{record.confinementDate,jdbcType=DATE},
+      status = #{record.status,jdbcType=TINYINT},
+      source = #{record.source,jdbcType=TINYINT},
+      create_time = #{record.createTime,jdbcType=TIMESTAMP},
+      update_time = #{record.updateTime,jdbcType=TIMESTAMP},
+      recommend_id = #{record.recommendId,jdbcType=VARCHAR},
+      member_code = #{record.memberCode,jdbcType=VARCHAR},
+      referral_code = #{record.referralCode,jdbcType=VARCHAR},
+      be_referral_code = #{record.beReferralCode,jdbcType=VARCHAR}
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByPrimaryKeySelective" parameterType="com.mudule.mumzonemarketcal.component.po.member.MemberCompany" >
+    update member_company
+    <set >
+      <if test="companyId != null" >
+        company_id = #{companyId,jdbcType=VARCHAR},
+      </if>
+      <if test="storeId != null" >
+        store_id = #{storeId,jdbcType=VARCHAR},
+      </if>
+      <if test="memberId != null" >
+        member_id = #{memberId,jdbcType=VARCHAR},
+      </if>
+      <if test="userName != null" >
+        user_name = #{userName,jdbcType=VARCHAR},
+      </if>
+      <if test="name != null" >
+        name = #{name,jdbcType=VARCHAR},
+      </if>
+      <if test="gender != null" >
+        gender = #{gender,jdbcType=TINYINT},
+      </if>
+      <if test="birthday != null" >
+        birthday = #{birthday,jdbcType=DATE},
+      </if>
+      <if test="headImage != null" >
+        head_image = #{headImage,jdbcType=VARCHAR},
+      </if>
+      <if test="password != null" >
+        password = #{password,jdbcType=VARCHAR},
+      </if>
+      <if test="openId != null" >
+        open_id = #{openId,jdbcType=VARCHAR},
+      </if>
+      <if test="aliId != null" >
+        ali_id = #{aliId,jdbcType=VARCHAR},
+      </if>
+      <if test="qqId != null" >
+        qq_id = #{qqId,jdbcType=VARCHAR},
+      </if>
+      <if test="taobaoId != null" >
+        taobao_id = #{taobaoId,jdbcType=VARCHAR},
+      </if>
+      <if test="currentState != null" >
+        current_state = #{currentState,jdbcType=TINYINT},
+      </if>
+      <if test="consumeNum != null" >
+        consume_num = #{consumeNum,jdbcType=INTEGER},
+      </if>
+      <if test="lastTime != null" >
+        last_time = #{lastTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="lastLogin != null" >
+        last_login = #{lastLogin,jdbcType=TIMESTAMP},
+      </if>
+      <if test="confinementDate != null" >
+        confinement_date = #{confinementDate,jdbcType=DATE},
+      </if>
+      <if test="status != null" >
+        status = #{status,jdbcType=TINYINT},
+      </if>
+      <if test="source != null" >
+        source = #{source,jdbcType=TINYINT},
+      </if>
+      <if test="createTime != null" >
+        create_time = #{createTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="updateTime != null" >
+        update_time = #{updateTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="recommendId != null" >
+        recommend_id = #{recommendId,jdbcType=VARCHAR},
+      </if>
+      <if test="memberCode != null" >
+        member_code = #{memberCode,jdbcType=VARCHAR},
+      </if>
+      <if test="referralCode != null" >
+        referral_code = #{referralCode,jdbcType=VARCHAR},
+      </if>
+      <if test="beReferralCode != null" >
+        be_referral_code = #{beReferralCode,jdbcType=VARCHAR},
+      </if>
+    </set>
+    where id = #{id,jdbcType=VARCHAR}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.mudule.mumzonemarketcal.component.po.member.MemberCompany" >
+    update member_company
+    set company_id = #{companyId,jdbcType=VARCHAR},
+      store_id = #{storeId,jdbcType=VARCHAR},
+      member_id = #{memberId,jdbcType=VARCHAR},
+      user_name = #{userName,jdbcType=VARCHAR},
+      name = #{name,jdbcType=VARCHAR},
+      gender = #{gender,jdbcType=TINYINT},
+      birthday = #{birthday,jdbcType=DATE},
+      head_image = #{headImage,jdbcType=VARCHAR},
+      password = #{password,jdbcType=VARCHAR},
+      open_id = #{openId,jdbcType=VARCHAR},
+      ali_id = #{aliId,jdbcType=VARCHAR},
+      qq_id = #{qqId,jdbcType=VARCHAR},
+      taobao_id = #{taobaoId,jdbcType=VARCHAR},
+      current_state = #{currentState,jdbcType=TINYINT},
+      consume_num = #{consumeNum,jdbcType=INTEGER},
+      last_time = #{lastTime,jdbcType=TIMESTAMP},
+      last_login = #{lastLogin,jdbcType=TIMESTAMP},
+      confinement_date = #{confinementDate,jdbcType=DATE},
+      status = #{status,jdbcType=TINYINT},
+      source = #{source,jdbcType=TINYINT},
+      create_time = #{createTime,jdbcType=TIMESTAMP},
+      update_time = #{updateTime,jdbcType=TIMESTAMP},
+      recommend_id = #{recommendId,jdbcType=VARCHAR},
+      member_code = #{memberCode,jdbcType=VARCHAR},
+      referral_code = #{referralCode,jdbcType=VARCHAR},
+      be_referral_code = #{beReferralCode,jdbcType=VARCHAR}
+    where id = #{id,jdbcType=VARCHAR}
+  </update>
+</mapper>

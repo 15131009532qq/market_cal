@@ -1,0 +1,258 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.mudule.mumzonemarketcal.component.mapper.market.MarketTicketApplyTypeMapper" >
+  <resultMap id="BaseResultMap" type="com.mudule.mumzonemarketcal.component.po.market.MarketTicketApplyType" >
+    <id column="id" property="id" jdbcType="VARCHAR" />
+    <result column="ticket_id" property="ticketId" jdbcType="VARCHAR" />
+    <result column="apply_type" property="applyType" jdbcType="TINYINT" />
+    <result column="join_type" property="joinType" jdbcType="TINYINT" />
+    <result column="is_use" property="isUse" jdbcType="TINYINT" />
+    <result column="create_time" property="createTime" jdbcType="TIMESTAMP" />
+    <result column="update_time" property="updateTime" jdbcType="TIMESTAMP" />
+    <result column="dr" property="dr" jdbcType="TINYINT" />
+  </resultMap>
+  <sql id="Example_Where_Clause" >
+    <where >
+      <foreach collection="oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Update_By_Example_Where_Clause" >
+    <where >
+      <foreach collection="example.oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Base_Column_List" >
+    id, ticket_id, apply_type, join_type, is_use, create_time, update_time, dr
+  </sql>
+  <select id="selectByExample" resultMap="BaseResultMap" parameterType="com.mudule.mumzonemarketcal.component.po.market.MarketTicketApplyTypeExample" >
+    select
+    <if test="distinct" >
+      distinct
+    </if>
+    <include refid="Base_Column_List" />
+    from market_ticket_apply_type
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null" >
+      order by ${orderByClause}
+    </if>
+  </select>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.String" >
+    select 
+    <include refid="Base_Column_List" />
+    from market_ticket_apply_type
+    where id = #{id,jdbcType=VARCHAR}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.String" >
+    delete from market_ticket_apply_type
+    where id = #{id,jdbcType=VARCHAR}
+  </delete>
+  <delete id="deleteByExample" parameterType="com.mudule.mumzonemarketcal.component.po.market.MarketTicketApplyTypeExample" >
+    delete from market_ticket_apply_type
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+  </delete>
+  <insert id="insert" parameterType="com.mudule.mumzonemarketcal.component.po.market.MarketTicketApplyType" >
+    insert into market_ticket_apply_type (id, ticket_id, apply_type, 
+      join_type, is_use, create_time, 
+      update_time, dr)
+    values (#{id,jdbcType=VARCHAR}, #{ticketId,jdbcType=VARCHAR}, #{applyType,jdbcType=TINYINT}, 
+      #{joinType,jdbcType=TINYINT}, #{isUse,jdbcType=TINYINT}, #{createTime,jdbcType=TIMESTAMP}, 
+      #{updateTime,jdbcType=TIMESTAMP}, #{dr,jdbcType=TINYINT})
+  </insert>
+  <insert id="insertSelective" parameterType="com.mudule.mumzonemarketcal.component.po.market.MarketTicketApplyType" >
+    insert into market_ticket_apply_type
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        id,
+      </if>
+      <if test="ticketId != null" >
+        ticket_id,
+      </if>
+      <if test="applyType != null" >
+        apply_type,
+      </if>
+      <if test="joinType != null" >
+        join_type,
+      </if>
+      <if test="isUse != null" >
+        is_use,
+      </if>
+      <if test="createTime != null" >
+        create_time,
+      </if>
+      <if test="updateTime != null" >
+        update_time,
+      </if>
+      <if test="dr != null" >
+        dr,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        #{id,jdbcType=VARCHAR},
+      </if>
+      <if test="ticketId != null" >
+        #{ticketId,jdbcType=VARCHAR},
+      </if>
+      <if test="applyType != null" >
+        #{applyType,jdbcType=TINYINT},
+      </if>
+      <if test="joinType != null" >
+        #{joinType,jdbcType=TINYINT},
+      </if>
+      <if test="isUse != null" >
+        #{isUse,jdbcType=TINYINT},
+      </if>
+      <if test="createTime != null" >
+        #{createTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="updateTime != null" >
+        #{updateTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="dr != null" >
+        #{dr,jdbcType=TINYINT},
+      </if>
+    </trim>
+  </insert>
+  <select id="countByExample" parameterType="com.mudule.mumzonemarketcal.component.po.market.MarketTicketApplyTypeExample" resultType="java.lang.Integer" >
+    select count(*) from market_ticket_apply_type
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+  </select>
+  <update id="updateByExampleSelective" parameterType="map" >
+    update market_ticket_apply_type
+    <set >
+      <if test="record.id != null" >
+        id = #{record.id,jdbcType=VARCHAR},
+      </if>
+      <if test="record.ticketId != null" >
+        ticket_id = #{record.ticketId,jdbcType=VARCHAR},
+      </if>
+      <if test="record.applyType != null" >
+        apply_type = #{record.applyType,jdbcType=TINYINT},
+      </if>
+      <if test="record.joinType != null" >
+        join_type = #{record.joinType,jdbcType=TINYINT},
+      </if>
+      <if test="record.isUse != null" >
+        is_use = #{record.isUse,jdbcType=TINYINT},
+      </if>
+      <if test="record.createTime != null" >
+        create_time = #{record.createTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="record.updateTime != null" >
+        update_time = #{record.updateTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="record.dr != null" >
+        dr = #{record.dr,jdbcType=TINYINT},
+      </if>
+    </set>
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByExample" parameterType="map" >
+    update market_ticket_apply_type
+    set id = #{record.id,jdbcType=VARCHAR},
+      ticket_id = #{record.ticketId,jdbcType=VARCHAR},
+      apply_type = #{record.applyType,jdbcType=TINYINT},
+      join_type = #{record.joinType,jdbcType=TINYINT},
+      is_use = #{record.isUse,jdbcType=TINYINT},
+      create_time = #{record.createTime,jdbcType=TIMESTAMP},
+      update_time = #{record.updateTime,jdbcType=TIMESTAMP},
+      dr = #{record.dr,jdbcType=TINYINT}
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByPrimaryKeySelective" parameterType="com.mudule.mumzonemarketcal.component.po.market.MarketTicketApplyType" >
+    update market_ticket_apply_type
+    <set >
+      <if test="ticketId != null" >
+        ticket_id = #{ticketId,jdbcType=VARCHAR},
+      </if>
+      <if test="applyType != null" >
+        apply_type = #{applyType,jdbcType=TINYINT},
+      </if>
+      <if test="joinType != null" >
+        join_type = #{joinType,jdbcType=TINYINT},
+      </if>
+      <if test="isUse != null" >
+        is_use = #{isUse,jdbcType=TINYINT},
+      </if>
+      <if test="createTime != null" >
+        create_time = #{createTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="updateTime != null" >
+        update_time = #{updateTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="dr != null" >
+        dr = #{dr,jdbcType=TINYINT},
+      </if>
+    </set>
+    where id = #{id,jdbcType=VARCHAR}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.mudule.mumzonemarketcal.component.po.market.MarketTicketApplyType" >
+    update market_ticket_apply_type
+    set ticket_id = #{ticketId,jdbcType=VARCHAR},
+      apply_type = #{applyType,jdbcType=TINYINT},
+      join_type = #{joinType,jdbcType=TINYINT},
+      is_use = #{isUse,jdbcType=TINYINT},
+      create_time = #{createTime,jdbcType=TIMESTAMP},
+      update_time = #{updateTime,jdbcType=TIMESTAMP},
+      dr = #{dr,jdbcType=TINYINT}
+    where id = #{id,jdbcType=VARCHAR}
+  </update>
+</mapper>

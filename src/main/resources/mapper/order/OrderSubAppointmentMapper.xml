@@ -1,0 +1,481 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.mudule.mumzonemarketcal.component.mapper.order.OrderSubAppointmentMapper" >
+  <resultMap id="BaseResultMap" type="com.mudule.mumzonemarketcal.component.po.order.OrderSubAppointment" >
+    <id column="id" property="id" jdbcType="VARCHAR" />
+    <result column="member_company_id" property="memberCompanyId" jdbcType="VARCHAR" />
+    <result column="appointment_id" property="appointmentId" jdbcType="VARCHAR" />
+    <result column="service_id" property="serviceId" jdbcType="VARCHAR" />
+    <result column="service_name" property="serviceName" jdbcType="VARCHAR" />
+    <result column="technician_id" property="technicianId" jdbcType="VARCHAR" />
+    <result column="technician_name" property="technicianName" jdbcType="VARCHAR" />
+    <result column="price" property="price" jdbcType="DECIMAL" />
+    <result column="appointment_time" property="appointmentTime" jdbcType="TIMESTAMP" />
+    <result column="pay_type" property="payType" jdbcType="TINYINT" />
+    <result column="goods_id" property="goodsId" jdbcType="VARCHAR" />
+    <result column="create_time" property="createTime" jdbcType="TIMESTAMP" />
+    <result column="update_time" property="updateTime" jdbcType="TIMESTAMP" />
+    <result column="dl" property="dl" jdbcType="TINYINT" />
+    <result column="member_price" property="memberPrice" jdbcType="DECIMAL" />
+    <result column="service_length" property="serviceLength" jdbcType="INTEGER" />
+    <result column="origin_price" property="originPrice" jdbcType="DECIMAL" />
+    <result column="total_discount" property="totalDiscount" jdbcType="DECIMAL" />
+    <result column="obtain_integral" property="obtainIntegral" jdbcType="INTEGER" />
+    <result column="ticket_id" property="ticketId" jdbcType="VARCHAR" />
+    <result column="suborder_status" property="suborderStatus" jdbcType="TINYINT" />
+    <result column="sub_tickets" property="subTickets" jdbcType="VARCHAR" />
+  </resultMap>
+  <sql id="Example_Where_Clause" >
+    <where >
+      <foreach collection="oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Update_By_Example_Where_Clause" >
+    <where >
+      <foreach collection="example.oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Base_Column_List" >
+    id, member_company_id, appointment_id, service_id, service_name, technician_id, technician_name, 
+    price, appointment_time, pay_type, goods_id, create_time, update_time, dl, member_price, 
+    service_length, origin_price, total_discount, obtain_integral, ticket_id, suborder_status, 
+    sub_tickets
+  </sql>
+  <select id="selectByExample" resultMap="BaseResultMap" parameterType="com.mudule.mumzonemarketcal.component.po.order.OrderSubAppointmentExample" >
+    select
+    <if test="distinct" >
+      distinct
+    </if>
+    <include refid="Base_Column_List" />
+    from order_sub_appointment
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null" >
+      order by ${orderByClause}
+    </if>
+  </select>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.String" >
+    select 
+    <include refid="Base_Column_List" />
+    from order_sub_appointment
+    where id = #{id,jdbcType=VARCHAR}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.String" >
+    delete from order_sub_appointment
+    where id = #{id,jdbcType=VARCHAR}
+  </delete>
+  <delete id="deleteByExample" parameterType="com.mudule.mumzonemarketcal.component.po.order.OrderSubAppointmentExample" >
+    delete from order_sub_appointment
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+  </delete>
+  <insert id="insert" parameterType="com.mudule.mumzonemarketcal.component.po.order.OrderSubAppointment" >
+    insert into order_sub_appointment (id, member_company_id, appointment_id, 
+      service_id, service_name, technician_id, 
+      technician_name, price, appointment_time, 
+      pay_type, goods_id, create_time, 
+      update_time, dl, member_price, 
+      service_length, origin_price, total_discount, 
+      obtain_integral, ticket_id, suborder_status, 
+      sub_tickets)
+    values (#{id,jdbcType=VARCHAR}, #{memberCompanyId,jdbcType=VARCHAR}, #{appointmentId,jdbcType=VARCHAR}, 
+      #{serviceId,jdbcType=VARCHAR}, #{serviceName,jdbcType=VARCHAR}, #{technicianId,jdbcType=VARCHAR}, 
+      #{technicianName,jdbcType=VARCHAR}, #{price,jdbcType=DECIMAL}, #{appointmentTime,jdbcType=TIMESTAMP}, 
+      #{payType,jdbcType=TINYINT}, #{goodsId,jdbcType=VARCHAR}, #{createTime,jdbcType=TIMESTAMP}, 
+      #{updateTime,jdbcType=TIMESTAMP}, #{dl,jdbcType=TINYINT}, #{memberPrice,jdbcType=DECIMAL}, 
+      #{serviceLength,jdbcType=INTEGER}, #{originPrice,jdbcType=DECIMAL}, #{totalDiscount,jdbcType=DECIMAL}, 
+      #{obtainIntegral,jdbcType=INTEGER}, #{ticketId,jdbcType=VARCHAR}, #{suborderStatus,jdbcType=TINYINT}, 
+      #{subTickets,jdbcType=VARCHAR})
+  </insert>
+  <insert id="insertSelective" parameterType="com.mudule.mumzonemarketcal.component.po.order.OrderSubAppointment" >
+    insert into order_sub_appointment
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        id,
+      </if>
+      <if test="memberCompanyId != null" >
+        member_company_id,
+      </if>
+      <if test="appointmentId != null" >
+        appointment_id,
+      </if>
+      <if test="serviceId != null" >
+        service_id,
+      </if>
+      <if test="serviceName != null" >
+        service_name,
+      </if>
+      <if test="technicianId != null" >
+        technician_id,
+      </if>
+      <if test="technicianName != null" >
+        technician_name,
+      </if>
+      <if test="price != null" >
+        price,
+      </if>
+      <if test="appointmentTime != null" >
+        appointment_time,
+      </if>
+      <if test="payType != null" >
+        pay_type,
+      </if>
+      <if test="goodsId != null" >
+        goods_id,
+      </if>
+      <if test="createTime != null" >
+        create_time,
+      </if>
+      <if test="updateTime != null" >
+        update_time,
+      </if>
+      <if test="dl != null" >
+        dl,
+      </if>
+      <if test="memberPrice != null" >
+        member_price,
+      </if>
+      <if test="serviceLength != null" >
+        service_length,
+      </if>
+      <if test="originPrice != null" >
+        origin_price,
+      </if>
+      <if test="totalDiscount != null" >
+        total_discount,
+      </if>
+      <if test="obtainIntegral != null" >
+        obtain_integral,
+      </if>
+      <if test="ticketId != null" >
+        ticket_id,
+      </if>
+      <if test="suborderStatus != null" >
+        suborder_status,
+      </if>
+      <if test="subTickets != null" >
+        sub_tickets,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        #{id,jdbcType=VARCHAR},
+      </if>
+      <if test="memberCompanyId != null" >
+        #{memberCompanyId,jdbcType=VARCHAR},
+      </if>
+      <if test="appointmentId != null" >
+        #{appointmentId,jdbcType=VARCHAR},
+      </if>
+      <if test="serviceId != null" >
+        #{serviceId,jdbcType=VARCHAR},
+      </if>
+      <if test="serviceName != null" >
+        #{serviceName,jdbcType=VARCHAR},
+      </if>
+      <if test="technicianId != null" >
+        #{technicianId,jdbcType=VARCHAR},
+      </if>
+      <if test="technicianName != null" >
+        #{technicianName,jdbcType=VARCHAR},
+      </if>
+      <if test="price != null" >
+        #{price,jdbcType=DECIMAL},
+      </if>
+      <if test="appointmentTime != null" >
+        #{appointmentTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="payType != null" >
+        #{payType,jdbcType=TINYINT},
+      </if>
+      <if test="goodsId != null" >
+        #{goodsId,jdbcType=VARCHAR},
+      </if>
+      <if test="createTime != null" >
+        #{createTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="updateTime != null" >
+        #{updateTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="dl != null" >
+        #{dl,jdbcType=TINYINT},
+      </if>
+      <if test="memberPrice != null" >
+        #{memberPrice,jdbcType=DECIMAL},
+      </if>
+      <if test="serviceLength != null" >
+        #{serviceLength,jdbcType=INTEGER},
+      </if>
+      <if test="originPrice != null" >
+        #{originPrice,jdbcType=DECIMAL},
+      </if>
+      <if test="totalDiscount != null" >
+        #{totalDiscount,jdbcType=DECIMAL},
+      </if>
+      <if test="obtainIntegral != null" >
+        #{obtainIntegral,jdbcType=INTEGER},
+      </if>
+      <if test="ticketId != null" >
+        #{ticketId,jdbcType=VARCHAR},
+      </if>
+      <if test="suborderStatus != null" >
+        #{suborderStatus,jdbcType=TINYINT},
+      </if>
+      <if test="subTickets != null" >
+        #{subTickets,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <select id="countByExample" parameterType="com.mudule.mumzonemarketcal.component.po.order.OrderSubAppointmentExample" resultType="java.lang.Integer" >
+    select count(*) from order_sub_appointment
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+  </select>
+  <update id="updateByExampleSelective" parameterType="map" >
+    update order_sub_appointment
+    <set >
+      <if test="record.id != null" >
+        id = #{record.id,jdbcType=VARCHAR},
+      </if>
+      <if test="record.memberCompanyId != null" >
+        member_company_id = #{record.memberCompanyId,jdbcType=VARCHAR},
+      </if>
+      <if test="record.appointmentId != null" >
+        appointment_id = #{record.appointmentId,jdbcType=VARCHAR},
+      </if>
+      <if test="record.serviceId != null" >
+        service_id = #{record.serviceId,jdbcType=VARCHAR},
+      </if>
+      <if test="record.serviceName != null" >
+        service_name = #{record.serviceName,jdbcType=VARCHAR},
+      </if>
+      <if test="record.technicianId != null" >
+        technician_id = #{record.technicianId,jdbcType=VARCHAR},
+      </if>
+      <if test="record.technicianName != null" >
+        technician_name = #{record.technicianName,jdbcType=VARCHAR},
+      </if>
+      <if test="record.price != null" >
+        price = #{record.price,jdbcType=DECIMAL},
+      </if>
+      <if test="record.appointmentTime != null" >
+        appointment_time = #{record.appointmentTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="record.payType != null" >
+        pay_type = #{record.payType,jdbcType=TINYINT},
+      </if>
+      <if test="record.goodsId != null" >
+        goods_id = #{record.goodsId,jdbcType=VARCHAR},
+      </if>
+      <if test="record.createTime != null" >
+        create_time = #{record.createTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="record.updateTime != null" >
+        update_time = #{record.updateTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="record.dl != null" >
+        dl = #{record.dl,jdbcType=TINYINT},
+      </if>
+      <if test="record.memberPrice != null" >
+        member_price = #{record.memberPrice,jdbcType=DECIMAL},
+      </if>
+      <if test="record.serviceLength != null" >
+        service_length = #{record.serviceLength,jdbcType=INTEGER},
+      </if>
+      <if test="record.originPrice != null" >
+        origin_price = #{record.originPrice,jdbcType=DECIMAL},
+      </if>
+      <if test="record.totalDiscount != null" >
+        total_discount = #{record.totalDiscount,jdbcType=DECIMAL},
+      </if>
+      <if test="record.obtainIntegral != null" >
+        obtain_integral = #{record.obtainIntegral,jdbcType=INTEGER},
+      </if>
+      <if test="record.ticketId != null" >
+        ticket_id = #{record.ticketId,jdbcType=VARCHAR},
+      </if>
+      <if test="record.suborderStatus != null" >
+        suborder_status = #{record.suborderStatus,jdbcType=TINYINT},
+      </if>
+      <if test="record.subTickets != null" >
+        sub_tickets = #{record.subTickets,jdbcType=VARCHAR},
+      </if>
+    </set>
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByExample" parameterType="map" >
+    update order_sub_appointment
+    set id = #{record.id,jdbcType=VARCHAR},
+      member_company_id = #{record.memberCompanyId,jdbcType=VARCHAR},
+      appointment_id = #{record.appointmentId,jdbcType=VARCHAR},
+      service_id = #{record.serviceId,jdbcType=VARCHAR},
+      service_name = #{record.serviceName,jdbcType=VARCHAR},
+      technician_id = #{record.technicianId,jdbcType=VARCHAR},
+      technician_name = #{record.technicianName,jdbcType=VARCHAR},
+      price = #{record.price,jdbcType=DECIMAL},
+      appointment_time = #{record.appointmentTime,jdbcType=TIMESTAMP},
+      pay_type = #{record.payType,jdbcType=TINYINT},
+      goods_id = #{record.goodsId,jdbcType=VARCHAR},
+      create_time = #{record.createTime,jdbcType=TIMESTAMP},
+      update_time = #{record.updateTime,jdbcType=TIMESTAMP},
+      dl = #{record.dl,jdbcType=TINYINT},
+      member_price = #{record.memberPrice,jdbcType=DECIMAL},
+      service_length = #{record.serviceLength,jdbcType=INTEGER},
+      origin_price = #{record.originPrice,jdbcType=DECIMAL},
+      total_discount = #{record.totalDiscount,jdbcType=DECIMAL},
+      obtain_integral = #{record.obtainIntegral,jdbcType=INTEGER},
+      ticket_id = #{record.ticketId,jdbcType=VARCHAR},
+      suborder_status = #{record.suborderStatus,jdbcType=TINYINT},
+      sub_tickets = #{record.subTickets,jdbcType=VARCHAR}
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByPrimaryKeySelective" parameterType="com.mudule.mumzonemarketcal.component.po.order.OrderSubAppointment" >
+    update order_sub_appointment
+    <set >
+      <if test="memberCompanyId != null" >
+        member_company_id = #{memberCompanyId,jdbcType=VARCHAR},
+      </if>
+      <if test="appointmentId != null" >
+        appointment_id = #{appointmentId,jdbcType=VARCHAR},
+      </if>
+      <if test="serviceId != null" >
+        service_id = #{serviceId,jdbcType=VARCHAR},
+      </if>
+      <if test="serviceName != null" >
+        service_name = #{serviceName,jdbcType=VARCHAR},
+      </if>
+      <if test="technicianId != null" >
+        technician_id = #{technicianId,jdbcType=VARCHAR},
+      </if>
+      <if test="technicianName != null" >
+        technician_name = #{technicianName,jdbcType=VARCHAR},
+      </if>
+      <if test="price != null" >
+        price = #{price,jdbcType=DECIMAL},
+      </if>
+      <if test="appointmentTime != null" >
+        appointment_time = #{appointmentTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="payType != null" >
+        pay_type = #{payType,jdbcType=TINYINT},
+      </if>
+      <if test="goodsId != null" >
+        goods_id = #{goodsId,jdbcType=VARCHAR},
+      </if>
+      <if test="createTime != null" >
+        create_time = #{createTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="updateTime != null" >
+        update_time = #{updateTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="dl != null" >
+        dl = #{dl,jdbcType=TINYINT},
+      </if>
+      <if test="memberPrice != null" >
+        member_price = #{memberPrice,jdbcType=DECIMAL},
+      </if>
+      <if test="serviceLength != null" >
+        service_length = #{serviceLength,jdbcType=INTEGER},
+      </if>
+      <if test="originPrice != null" >
+        origin_price = #{originPrice,jdbcType=DECIMAL},
+      </if>
+      <if test="totalDiscount != null" >
+        total_discount = #{totalDiscount,jdbcType=DECIMAL},
+      </if>
+      <if test="obtainIntegral != null" >
+        obtain_integral = #{obtainIntegral,jdbcType=INTEGER},
+      </if>
+      <if test="ticketId != null" >
+        ticket_id = #{ticketId,jdbcType=VARCHAR},
+      </if>
+      <if test="suborderStatus != null" >
+        suborder_status = #{suborderStatus,jdbcType=TINYINT},
+      </if>
+      <if test="subTickets != null" >
+        sub_tickets = #{subTickets,jdbcType=VARCHAR},
+      </if>
+    </set>
+    where id = #{id,jdbcType=VARCHAR}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.mudule.mumzonemarketcal.component.po.order.OrderSubAppointment" >
+    update order_sub_appointment
+    set member_company_id = #{memberCompanyId,jdbcType=VARCHAR},
+      appointment_id = #{appointmentId,jdbcType=VARCHAR},
+      service_id = #{serviceId,jdbcType=VARCHAR},
+      service_name = #{serviceName,jdbcType=VARCHAR},
+      technician_id = #{technicianId,jdbcType=VARCHAR},
+      technician_name = #{technicianName,jdbcType=VARCHAR},
+      price = #{price,jdbcType=DECIMAL},
+      appointment_time = #{appointmentTime,jdbcType=TIMESTAMP},
+      pay_type = #{payType,jdbcType=TINYINT},
+      goods_id = #{goodsId,jdbcType=VARCHAR},
+      create_time = #{createTime,jdbcType=TIMESTAMP},
+      update_time = #{updateTime,jdbcType=TIMESTAMP},
+      dl = #{dl,jdbcType=TINYINT},
+      member_price = #{memberPrice,jdbcType=DECIMAL},
+      service_length = #{serviceLength,jdbcType=INTEGER},
+      origin_price = #{originPrice,jdbcType=DECIMAL},
+      total_discount = #{totalDiscount,jdbcType=DECIMAL},
+      obtain_integral = #{obtainIntegral,jdbcType=INTEGER},
+      ticket_id = #{ticketId,jdbcType=VARCHAR},
+      suborder_status = #{suborderStatus,jdbcType=TINYINT},
+      sub_tickets = #{subTickets,jdbcType=VARCHAR}
+    where id = #{id,jdbcType=VARCHAR}
+  </update>
+</mapper>

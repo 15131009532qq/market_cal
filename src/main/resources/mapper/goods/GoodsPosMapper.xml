@@ -1,0 +1,512 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.mudule.mumzonemarketcal.component.mapper.goods.GoodsPosMapper" >
+  <resultMap id="BaseResultMap" type="com.mudule.mumzonemarketcal.component.po.goods.GoodsPos" >
+    <id column="id" property="id" jdbcType="VARCHAR" />
+    <result column="goods_shop_id" property="goodsShopId" jdbcType="VARCHAR" />
+    <result column="pos_price_template_id" property="posPriceTemplateId" jdbcType="VARCHAR" />
+    <result column="shop_id" property="shopId" jdbcType="VARCHAR" />
+    <result column="name" property="name" jdbcType="VARCHAR" />
+    <result column="code" property="code" jdbcType="VARCHAR" />
+    <result column="bar_code" property="barCode" jdbcType="VARCHAR" />
+    <result column="goods_code" property="goodsCode" jdbcType="VARCHAR" />
+    <result column="goods_sale_price" property="goodsSalePrice" jdbcType="DECIMAL" />
+    <result column="goods_member_price" property="goodsMemberPrice" jdbcType="DECIMAL" />
+    <result column="primary_classify_id" property="primaryClassifyId" jdbcType="VARCHAR" />
+    <result column="goods_unit_id" property="goodsUnitId" jdbcType="VARCHAR" />
+    <result column="goods_unit_name" property="goodsUnitName" jdbcType="VARCHAR" />
+    <result column="goods_pack_parameter_id" property="goodsPackParameterId" jdbcType="VARCHAR" />
+    <result column="status" property="status" jdbcType="TINYINT" />
+    <result column="bulk_bear" property="bulkBear" jdbcType="TINYINT" />
+    <result column="income_tax_rates" property="incomeTaxRates" jdbcType="VARCHAR" />
+    <result column="manufacturer_price" property="manufacturerPrice" jdbcType="DECIMAL" />
+    <result column="is_batch" property="isBatch" jdbcType="TINYINT" />
+    <result column="is_allot" property="isAllot" jdbcType="TINYINT" />
+    <result column="retail_state" property="retailState" jdbcType="TINYINT" />
+    <result column="create_time" property="createTime" jdbcType="TIMESTAMP" />
+    <result column="update_time" property="updateTime" jdbcType="TIMESTAMP" />
+  </resultMap>
+  <sql id="Example_Where_Clause" >
+    <where >
+      <foreach collection="oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Update_By_Example_Where_Clause" >
+    <where >
+      <foreach collection="example.oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Base_Column_List" >
+    id, goods_shop_id, pos_price_template_id, shop_id, name, code, bar_code, goods_code, 
+    goods_sale_price, goods_member_price, primary_classify_id, goods_unit_id, goods_unit_name, 
+    goods_pack_parameter_id, status, bulk_bear, income_tax_rates, manufacturer_price, 
+    is_batch, is_allot, retail_state, create_time, update_time
+  </sql>
+  <select id="selectByExample" resultMap="BaseResultMap" parameterType="com.mudule.mumzonemarketcal.component.po.goods.GoodsPosExample" >
+    select
+    <if test="distinct" >
+      distinct
+    </if>
+    <include refid="Base_Column_List" />
+    from goods_pos
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null" >
+      order by ${orderByClause}
+    </if>
+  </select>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.String" >
+    select 
+    <include refid="Base_Column_List" />
+    from goods_pos
+    where id = #{id,jdbcType=VARCHAR}
+  </select>
+  <!-- 根据商品id 查询商品货号-->
+  <select id="selectGoodsCode" resultMap="BaseResultMap" parameterType="java.lang.String" >
+    select
+    <include refid="Base_Column_List" />
+    from goods_pos
+    where goods_shop_id = #{goodsId,jdbcType=VARCHAR}
+  </select>
+  <!--根据 公司id、goods_code商品货号 查询公司下 商品id-->
+  <select id="selectGoodsId" resultMap="BaseResultMap" parameterType="java.lang.String" >
+    select
+    <include refid="Base_Column_List" />
+    from goods_pos
+      where shop_id = #{companyId,jdbcType=VARCHAR}
+      and goods_code = #{goodsCode,jdbcType=VARCHAR}
+      and bar_code = #{barCode,jdbcType=VARCHAR}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.String" >
+    delete from goods_pos
+    where id = #{id,jdbcType=VARCHAR}
+  </delete>
+  <delete id="deleteByExample" parameterType="com.mudule.mumzonemarketcal.component.po.goods.GoodsPosExample" >
+    delete from goods_pos
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+  </delete>
+  <insert id="insert" parameterType="com.mudule.mumzonemarketcal.component.po.goods.GoodsPos" >
+    insert into goods_pos (id, goods_shop_id, pos_price_template_id, 
+      shop_id, name, code, 
+      bar_code, goods_code, goods_sale_price, 
+      goods_member_price, primary_classify_id, goods_unit_id, 
+      goods_unit_name, goods_pack_parameter_id, status, 
+      bulk_bear, income_tax_rates, manufacturer_price, 
+      is_batch, is_allot, retail_state, 
+      create_time, update_time)
+    values (#{id,jdbcType=VARCHAR}, #{goodsShopId,jdbcType=VARCHAR}, #{posPriceTemplateId,jdbcType=VARCHAR}, 
+      #{shopId,jdbcType=VARCHAR}, #{name,jdbcType=VARCHAR}, #{code,jdbcType=VARCHAR}, 
+      #{barCode,jdbcType=VARCHAR}, #{goodsCode,jdbcType=VARCHAR}, #{goodsSalePrice,jdbcType=DECIMAL}, 
+      #{goodsMemberPrice,jdbcType=DECIMAL}, #{primaryClassifyId,jdbcType=VARCHAR}, #{goodsUnitId,jdbcType=VARCHAR}, 
+      #{goodsUnitName,jdbcType=VARCHAR}, #{goodsPackParameterId,jdbcType=VARCHAR}, #{status,jdbcType=TINYINT}, 
+      #{bulkBear,jdbcType=TINYINT}, #{incomeTaxRates,jdbcType=VARCHAR}, #{manufacturerPrice,jdbcType=DECIMAL}, 
+      #{isBatch,jdbcType=TINYINT}, #{isAllot,jdbcType=TINYINT}, #{retailState,jdbcType=TINYINT}, 
+      #{createTime,jdbcType=TIMESTAMP}, #{updateTime,jdbcType=TIMESTAMP})
+  </insert>
+  <insert id="insertSelective" parameterType="com.mudule.mumzonemarketcal.component.po.goods.GoodsPos" >
+    insert into goods_pos
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        id,
+      </if>
+      <if test="goodsShopId != null" >
+        goods_shop_id,
+      </if>
+      <if test="posPriceTemplateId != null" >
+        pos_price_template_id,
+      </if>
+      <if test="shopId != null" >
+        shop_id,
+      </if>
+      <if test="name != null" >
+        name,
+      </if>
+      <if test="code != null" >
+        code,
+      </if>
+      <if test="barCode != null" >
+        bar_code,
+      </if>
+      <if test="goodsCode != null" >
+        goods_code,
+      </if>
+      <if test="goodsSalePrice != null" >
+        goods_sale_price,
+      </if>
+      <if test="goodsMemberPrice != null" >
+        goods_member_price,
+      </if>
+      <if test="primaryClassifyId != null" >
+        primary_classify_id,
+      </if>
+      <if test="goodsUnitId != null" >
+        goods_unit_id,
+      </if>
+      <if test="goodsUnitName != null" >
+        goods_unit_name,
+      </if>
+      <if test="goodsPackParameterId != null" >
+        goods_pack_parameter_id,
+      </if>
+      <if test="status != null" >
+        status,
+      </if>
+      <if test="bulkBear != null" >
+        bulk_bear,
+      </if>
+      <if test="incomeTaxRates != null" >
+        income_tax_rates,
+      </if>
+      <if test="manufacturerPrice != null" >
+        manufacturer_price,
+      </if>
+      <if test="isBatch != null" >
+        is_batch,
+      </if>
+      <if test="isAllot != null" >
+        is_allot,
+      </if>
+      <if test="retailState != null" >
+        retail_state,
+      </if>
+      <if test="createTime != null" >
+        create_time,
+      </if>
+      <if test="updateTime != null" >
+        update_time,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        #{id,jdbcType=VARCHAR},
+      </if>
+      <if test="goodsShopId != null" >
+        #{goodsShopId,jdbcType=VARCHAR},
+      </if>
+      <if test="posPriceTemplateId != null" >
+        #{posPriceTemplateId,jdbcType=VARCHAR},
+      </if>
+      <if test="shopId != null" >
+        #{shopId,jdbcType=VARCHAR},
+      </if>
+      <if test="name != null" >
+        #{name,jdbcType=VARCHAR},
+      </if>
+      <if test="code != null" >
+        #{code,jdbcType=VARCHAR},
+      </if>
+      <if test="barCode != null" >
+        #{barCode,jdbcType=VARCHAR},
+      </if>
+      <if test="goodsCode != null" >
+        #{goodsCode,jdbcType=VARCHAR},
+      </if>
+      <if test="goodsSalePrice != null" >
+        #{goodsSalePrice,jdbcType=DECIMAL},
+      </if>
+      <if test="goodsMemberPrice != null" >
+        #{goodsMemberPrice,jdbcType=DECIMAL},
+      </if>
+      <if test="primaryClassifyId != null" >
+        #{primaryClassifyId,jdbcType=VARCHAR},
+      </if>
+      <if test="goodsUnitId != null" >
+        #{goodsUnitId,jdbcType=VARCHAR},
+      </if>
+      <if test="goodsUnitName != null" >
+        #{goodsUnitName,jdbcType=VARCHAR},
+      </if>
+      <if test="goodsPackParameterId != null" >
+        #{goodsPackParameterId,jdbcType=VARCHAR},
+      </if>
+      <if test="status != null" >
+        #{status,jdbcType=TINYINT},
+      </if>
+      <if test="bulkBear != null" >
+        #{bulkBear,jdbcType=TINYINT},
+      </if>
+      <if test="incomeTaxRates != null" >
+        #{incomeTaxRates,jdbcType=VARCHAR},
+      </if>
+      <if test="manufacturerPrice != null" >
+        #{manufacturerPrice,jdbcType=DECIMAL},
+      </if>
+      <if test="isBatch != null" >
+        #{isBatch,jdbcType=TINYINT},
+      </if>
+      <if test="isAllot != null" >
+        #{isAllot,jdbcType=TINYINT},
+      </if>
+      <if test="retailState != null" >
+        #{retailState,jdbcType=TINYINT},
+      </if>
+      <if test="createTime != null" >
+        #{createTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="updateTime != null" >
+        #{updateTime,jdbcType=TIMESTAMP},
+      </if>
+    </trim>
+  </insert>
+  <select id="countByExample" parameterType="com.mudule.mumzonemarketcal.component.po.goods.GoodsPosExample" resultType="java.lang.Integer" >
+    select count(*) from goods_pos
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+  </select>
+  <update id="updateByExampleSelective" parameterType="map" >
+    update goods_pos
+    <set >
+      <if test="record.id != null" >
+        id = #{record.id,jdbcType=VARCHAR},
+      </if>
+      <if test="record.goodsShopId != null" >
+        goods_shop_id = #{record.goodsShopId,jdbcType=VARCHAR},
+      </if>
+      <if test="record.posPriceTemplateId != null" >
+        pos_price_template_id = #{record.posPriceTemplateId,jdbcType=VARCHAR},
+      </if>
+      <if test="record.shopId != null" >
+        shop_id = #{record.shopId,jdbcType=VARCHAR},
+      </if>
+      <if test="record.name != null" >
+        name = #{record.name,jdbcType=VARCHAR},
+      </if>
+      <if test="record.code != null" >
+        code = #{record.code,jdbcType=VARCHAR},
+      </if>
+      <if test="record.barCode != null" >
+        bar_code = #{record.barCode,jdbcType=VARCHAR},
+      </if>
+      <if test="record.goodsCode != null" >
+        goods_code = #{record.goodsCode,jdbcType=VARCHAR},
+      </if>
+      <if test="record.goodsSalePrice != null" >
+        goods_sale_price = #{record.goodsSalePrice,jdbcType=DECIMAL},
+      </if>
+      <if test="record.goodsMemberPrice != null" >
+        goods_member_price = #{record.goodsMemberPrice,jdbcType=DECIMAL},
+      </if>
+      <if test="record.primaryClassifyId != null" >
+        primary_classify_id = #{record.primaryClassifyId,jdbcType=VARCHAR},
+      </if>
+      <if test="record.goodsUnitId != null" >
+        goods_unit_id = #{record.goodsUnitId,jdbcType=VARCHAR},
+      </if>
+      <if test="record.goodsUnitName != null" >
+        goods_unit_name = #{record.goodsUnitName,jdbcType=VARCHAR},
+      </if>
+      <if test="record.goodsPackParameterId != null" >
+        goods_pack_parameter_id = #{record.goodsPackParameterId,jdbcType=VARCHAR},
+      </if>
+      <if test="record.status != null" >
+        status = #{record.status,jdbcType=TINYINT},
+      </if>
+      <if test="record.bulkBear != null" >
+        bulk_bear = #{record.bulkBear,jdbcType=TINYINT},
+      </if>
+      <if test="record.incomeTaxRates != null" >
+        income_tax_rates = #{record.incomeTaxRates,jdbcType=VARCHAR},
+      </if>
+      <if test="record.manufacturerPrice != null" >
+        manufacturer_price = #{record.manufacturerPrice,jdbcType=DECIMAL},
+      </if>
+      <if test="record.isBatch != null" >
+        is_batch = #{record.isBatch,jdbcType=TINYINT},
+      </if>
+      <if test="record.isAllot != null" >
+        is_allot = #{record.isAllot,jdbcType=TINYINT},
+      </if>
+      <if test="record.retailState != null" >
+        retail_state = #{record.retailState,jdbcType=TINYINT},
+      </if>
+      <if test="record.createTime != null" >
+        create_time = #{record.createTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="record.updateTime != null" >
+        update_time = #{record.updateTime,jdbcType=TIMESTAMP},
+      </if>
+    </set>
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByExample" parameterType="map" >
+    update goods_pos
+    set id = #{record.id,jdbcType=VARCHAR},
+      goods_shop_id = #{record.goodsShopId,jdbcType=VARCHAR},
+      pos_price_template_id = #{record.posPriceTemplateId,jdbcType=VARCHAR},
+      shop_id = #{record.shopId,jdbcType=VARCHAR},
+      name = #{record.name,jdbcType=VARCHAR},
+      code = #{record.code,jdbcType=VARCHAR},
+      bar_code = #{record.barCode,jdbcType=VARCHAR},
+      goods_code = #{record.goodsCode,jdbcType=VARCHAR},
+      goods_sale_price = #{record.goodsSalePrice,jdbcType=DECIMAL},
+      goods_member_price = #{record.goodsMemberPrice,jdbcType=DECIMAL},
+      primary_classify_id = #{record.primaryClassifyId,jdbcType=VARCHAR},
+      goods_unit_id = #{record.goodsUnitId,jdbcType=VARCHAR},
+      goods_unit_name = #{record.goodsUnitName,jdbcType=VARCHAR},
+      goods_pack_parameter_id = #{record.goodsPackParameterId,jdbcType=VARCHAR},
+      status = #{record.status,jdbcType=TINYINT},
+      bulk_bear = #{record.bulkBear,jdbcType=TINYINT},
+      income_tax_rates = #{record.incomeTaxRates,jdbcType=VARCHAR},
+      manufacturer_price = #{record.manufacturerPrice,jdbcType=DECIMAL},
+      is_batch = #{record.isBatch,jdbcType=TINYINT},
+      is_allot = #{record.isAllot,jdbcType=TINYINT},
+      retail_state = #{record.retailState,jdbcType=TINYINT},
+      create_time = #{record.createTime,jdbcType=TIMESTAMP},
+      update_time = #{record.updateTime,jdbcType=TIMESTAMP}
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByPrimaryKeySelective" parameterType="com.mudule.mumzonemarketcal.component.po.goods.GoodsPos" >
+    update goods_pos
+    <set >
+      <if test="goodsShopId != null" >
+        goods_shop_id = #{goodsShopId,jdbcType=VARCHAR},
+      </if>
+      <if test="posPriceTemplateId != null" >
+        pos_price_template_id = #{posPriceTemplateId,jdbcType=VARCHAR},
+      </if>
+      <if test="shopId != null" >
+        shop_id = #{shopId,jdbcType=VARCHAR},
+      </if>
+      <if test="name != null" >
+        name = #{name,jdbcType=VARCHAR},
+      </if>
+      <if test="code != null" >
+        code = #{code,jdbcType=VARCHAR},
+      </if>
+      <if test="barCode != null" >
+        bar_code = #{barCode,jdbcType=VARCHAR},
+      </if>
+      <if test="goodsCode != null" >
+        goods_code = #{goodsCode,jdbcType=VARCHAR},
+      </if>
+      <if test="goodsSalePrice != null" >
+        goods_sale_price = #{goodsSalePrice,jdbcType=DECIMAL},
+      </if>
+      <if test="goodsMemberPrice != null" >
+        goods_member_price = #{goodsMemberPrice,jdbcType=DECIMAL},
+      </if>
+      <if test="primaryClassifyId != null" >
+        primary_classify_id = #{primaryClassifyId,jdbcType=VARCHAR},
+      </if>
+      <if test="goodsUnitId != null" >
+        goods_unit_id = #{goodsUnitId,jdbcType=VARCHAR},
+      </if>
+      <if test="goodsUnitName != null" >
+        goods_unit_name = #{goodsUnitName,jdbcType=VARCHAR},
+      </if>
+      <if test="goodsPackParameterId != null" >
+        goods_pack_parameter_id = #{goodsPackParameterId,jdbcType=VARCHAR},
+      </if>
+      <if test="status != null" >
+        status = #{status,jdbcType=TINYINT},
+      </if>
+      <if test="bulkBear != null" >
+        bulk_bear = #{bulkBear,jdbcType=TINYINT},
+      </if>
+      <if test="incomeTaxRates != null" >
+        income_tax_rates = #{incomeTaxRates,jdbcType=VARCHAR},
+      </if>
+      <if test="manufacturerPrice != null" >
+        manufacturer_price = #{manufacturerPrice,jdbcType=DECIMAL},
+      </if>
+      <if test="isBatch != null" >
+        is_batch = #{isBatch,jdbcType=TINYINT},
+      </if>
+      <if test="isAllot != null" >
+        is_allot = #{isAllot,jdbcType=TINYINT},
+      </if>
+      <if test="retailState != null" >
+        retail_state = #{retailState,jdbcType=TINYINT},
+      </if>
+      <if test="createTime != null" >
+        create_time = #{createTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="updateTime != null" >
+        update_time = #{updateTime,jdbcType=TIMESTAMP},
+      </if>
+    </set>
+    where id = #{id,jdbcType=VARCHAR}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.mudule.mumzonemarketcal.component.po.goods.GoodsPos" >
+    update goods_pos
+    set goods_shop_id = #{goodsShopId,jdbcType=VARCHAR},
+      pos_price_template_id = #{posPriceTemplateId,jdbcType=VARCHAR},
+      shop_id = #{shopId,jdbcType=VARCHAR},
+      name = #{name,jdbcType=VARCHAR},
+      code = #{code,jdbcType=VARCHAR},
+      bar_code = #{barCode,jdbcType=VARCHAR},
+      goods_code = #{goodsCode,jdbcType=VARCHAR},
+      goods_sale_price = #{goodsSalePrice,jdbcType=DECIMAL},
+      goods_member_price = #{goodsMemberPrice,jdbcType=DECIMAL},
+      primary_classify_id = #{primaryClassifyId,jdbcType=VARCHAR},
+      goods_unit_id = #{goodsUnitId,jdbcType=VARCHAR},
+      goods_unit_name = #{goodsUnitName,jdbcType=VARCHAR},
+      goods_pack_parameter_id = #{goodsPackParameterId,jdbcType=VARCHAR},
+      status = #{status,jdbcType=TINYINT},
+      bulk_bear = #{bulkBear,jdbcType=TINYINT},
+      income_tax_rates = #{incomeTaxRates,jdbcType=VARCHAR},
+      manufacturer_price = #{manufacturerPrice,jdbcType=DECIMAL},
+      is_batch = #{isBatch,jdbcType=TINYINT},
+      is_allot = #{isAllot,jdbcType=TINYINT},
+      retail_state = #{retailState,jdbcType=TINYINT},
+      create_time = #{createTime,jdbcType=TIMESTAMP},
+      update_time = #{updateTime,jdbcType=TIMESTAMP}
+    where id = #{id,jdbcType=VARCHAR}
+  </update>
+</mapper>

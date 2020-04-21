@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<kmodule xmlns="http://www.drools.org/xsd/kmodule">
+    <!--
+        一个kmodule下可以配合多个kbase
+        一个kbase可以配置多个drl文件
+        一个drl文件里边可以配置多条规则
+    -->
+    <kbase name="rules" packages="rules">
+        <ksession name="ksession-rules"/>
+    </kbase>
+</kmodule>

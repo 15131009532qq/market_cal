@@ -1,0 +1,320 @@
+package rules;
+
+import com.mudule.mumzonemarketcal.component.vo.OrderVo
+import com.mudule.mumzonemarketcal.component.vo.OrderSubVo
+import com.mudule.mumzonemarketcal.component.vo.ResponseDiscountVo
+import com.mudule.mumzonemarketcal.component.vo.BaseOrderVo
+import com.mudule.mumzonemarketcal.component.vo.TicketVo
+import com.mudule.mumzonemarketcal.component.vo.ActivityVo
+import java.math.BigDecimal
+import com.mudule.mumzonemarketcal.constant.RuleCalConstant
+import org.springframework.beans.factory.annotation.Autowired
+import com.mudule.mumzonemarketcal.market.rules.RuleExecuteContant
+import com.mudule.mumzonemarketcal.market.rules.RuleLogger
+import org.springframework.beans.BeanUtils
+import com.mudule.mumzonemarketcal.utils.BeanSwitchUtils
+import com.mudule.mumzonemarketcal.market.rules.ReflectASMUtils
+import com.mudule.mumzonemarketcal.service.impl.RuleExecuteServiceImpl
+import com.mudule.mumzonemarketcal.constant.OrderConstant
+import java.util.List
+import com.mudule.mumzonemarketcal.constant.TicketType
+import com.mudule.mumzonemarketcal.utils.StringUtils
+import com.mudule.mumzonemarketcal.constant.UseConstant
+import com.mudule.mumzonemarketcal.market.rules.RuleExecuteContant
+import com.mudule.mumzonemarketcal.enums.TicketTypeEnum
+import com.mudule.mumzonemarketcal.component.vo.ResponseDiscountListVo
+import com.sun.javafx.binding.StringFormatter
+
+global RuleExecuteServiceImpl ruleExecuteService
+global String SERVICEORDER
+global String GOODSORDER
+global String TIMESCARDORDER
+global String EXPERIENCETICKET_TYPE
+global String TIMECARD
+global String DISCOUNTCOUPONS
+global String WITHDISCOUNTCOUPONS
+global String SUCCESS
+global String CALSUCCESS
+
+
+dialect  "java"
+
+
+rule "MlPrice Discount Rule" //执行抹零折扣规则
+lock-on-active true
+enabled true
+salience 80
+when
+    $OrderVo : OrderVo(StringUtils.isNotEmpty(mlPrice),RuleCalConstant.checkBigDecimalZero(mlPrice))
+    $ResponseDiscountVo : ResponseDiscountVo(ruleFlag==true,code==SUCCESS)
+    $ResultCollection : ResponseDiscountListVo(responseDiscountVos.size()>=0)
+then
+    RuleLogger.info("执行规则----------------->[{}]",drools.getRule().getName());
+    ResponseDiscountVo responseDiscountVo=ruleExecuteService.mlPriceDiscount($OrderVo);
+    ReflectASMUtils.copyProperties($ResponseDiscountVo,responseDiscountVo);
+    ReflectASMUtils.copyProperties($OrderVo,responseDiscountVo.getOrderVo());
+    List<ResponseDiscountVo> list=$ResultCollection.getResponseDiscountVos();
+    list.add(responseDiscountVo);
+    modify($ResponseDiscountVo){setRuleFlag(RuleExecuteContant.strategyActResult(responseDiscountVo))}
+    modify($ResultCollection){setResponseDiscountVos(list)}
+end
+
+
+rule "Integral ToPay Discount Rule"  //执行积分抵现金额均摊规则
+enabled true
+lock-on-active true
+salience 75
+when
+   $OrderVo : OrderVo(StringUtils.isNotEmpty(ticketVoList))
+   $List    : List(size()>=1) from collect(TicketVo(TicketType.INTEGRAL_PAY==ticketType) from $OrderVo.getTicketVoList())
+   $ResponseDiscountVo : ResponseDiscountVo(ruleFlag==true,code==SUCCESS)
+   $ResultCollection : ResponseDiscountListVo(responseDiscountVos.size()>=0)
+then
+   RuleLogger.info("执行规则----------------->[{}]",drools.getRule().getName());
+   ResponseDiscountVo responseDiscountVo=ruleExecuteService.integralToPayDiscount($OrderVo);
+   ReflectASMUtils.copyProperties($ResponseDiscountVo,responseDiscountVo);
+   ReflectASMUtils.copyProperties($OrderVo,responseDiscountVo.getOrderVo());
+   List<ResponseDiscountVo> list=$ResultCollection.getResponseDiscountVos();
+   list.add(responseDiscountVo);
+   modify($ResponseDiscountVo){setRuleFlag(RuleExecuteContant.strategyActResult(responseDiscountVo))}
+   modify($ResultCollection){setResponseDiscountVos(list)}
+end
+
+
+rule "Bargain Discount Rule" //执行议价折扣规则
+enabled true
+lock-on-active true
+salience 77
+when
+    $OrderVo : OrderVo(orderType==GOODSORDER,StringUtils.isNotEmpty(goods))
+    $List : List($OrderVo.goods)
+    exists OrderSubVo(RuleCalConstant.checkBigDecimalZero(bargainPrice)) from $List
+    $ResponseDiscountVo : ResponseDiscountVo(ruleFlag==true,code==SUCCESS)
+    $ResultCollection : ResponseDiscountListVo(responseDiscountVos.size()>=0)
+then
+    RuleLogger.info("执行规则----------------->[{}]",drools.getRule().getName());
+    ResponseDiscountVo responseDiscountVo=ruleExecuteService.bargainDiscount($OrderVo);
+    ReflectASMUtils.copyProperties($ResponseDiscountVo,responseDiscountVo);
+    ReflectASMUtils.copyProperties($OrderVo,responseDiscountVo.getOrderVo());
+    List<ResponseDiscountVo> list=$ResultCollection.getResponseDiscountVos();
+    list.add(responseDiscountVo);
+    modify($ResponseDiscountVo){setRuleFlag(RuleExecuteContant.strategyActResult(responseDiscountVo))}
+    modify($ResultCollection){setResponseDiscountVos(list)}
+end
+
+rule "Integral Share Rule"  //执行获取积分进行积分均摊规则
+lock-on-active true
+enabled true
+salience 74
+when
+    $OrderVo : OrderVo(StringUtils.isNotEmpty(goods))
+    $ResponseDiscountVo : ResponseDiscountVo(ruleFlag==true,code==SUCCESS)
+    $ResultCollection : ResponseDiscountListVo(responseDiscountVos.size()>=0)
+then
+    RuleLogger.info("执行规则----------------->[{}]",drools.getRule().getName());
+    ResponseDiscountVo responseDiscountVo=ruleExecuteService.integralShare($OrderVo);
+    ReflectASMUtils.copyProperties($ResponseDiscountVo,responseDiscountVo);
+    ReflectASMUtils.copyProperties($OrderVo,responseDiscountVo.getOrderVo());
+    List<ResponseDiscountVo> list=$ResultCollection.getResponseDiscountVos();
+    list.add(responseDiscountVo);
+    modify($ResponseDiscountVo){setRuleFlag(RuleExecuteContant.strategyActResult(responseDiscountVo))}
+    modify($ResultCollection){setResponseDiscountVos(list)}
+end
+
+rule "TimesCard ToPay Rule"  //计次卡支付规则
+enabled true
+no-loop true
+salience 97
+when
+    $OrderVo : OrderVo(orderType == TIMESCARDORDER,StringUtils.isNotEmpty(goods))
+    $TicketVo : TicketVo($OrderVo.ticketVo.ticketType==TIMECARD)
+    $ResponseDiscountVo : ResponseDiscountVo(ruleFlag == true,code==SUCCESS)
+    $ResultCollection : ResponseDiscountListVo(responseDiscountVos.size()>=0)
+then
+    RuleLogger.info("执行规则----------------->[{}]",drools.getRule().getName());
+    ResponseDiscountVo responseDiscountVo=ruleExecuteService.timesCardPayDiscount($OrderVo);
+    responseDiscountVo.setOrderVo(RuleCalConstant.processMarketRuleAdjust($OrderVo,$OrderVo.getTicketVo()));
+    ReflectASMUtils.copyProperties($ResponseDiscountVo,responseDiscountVo);
+    ReflectASMUtils.copyProperties($OrderVo,responseDiscountVo.getOrderVo());
+    List<ResponseDiscountVo> list=$ResultCollection.getResponseDiscountVos();
+    list.add(responseDiscountVo);
+    modify($ResponseDiscountVo){setRuleFlag(RuleExecuteContant.strategyActResult(responseDiscountVo))}
+    modify($ResultCollection){setResponseDiscountVos(list)}
+end
+
+rule "Market Activity Dicount Rule"  //营销活动折扣规则
+enabled true
+no-loop true
+salience 96
+when
+    $OrderVo : OrderVo(orderType==GOODSORDER,StringUtils.isNotEmpty(goods),StringUtils.isNotEmpty(ticketVo))
+    $TicketVo : TicketVo(TicketTypeEnum.ONE_ORDER_SUBSTRACTION.getCode()==$OrderVo.ticketVo.ticketType||TicketTypeEnum.ONE_ORDER_DISCOUNT.getCode()==$OrderVo.ticketVo.ticketType)
+    $ResponseDiscountVo : ResponseDiscountVo(ruleFlag==true,code==SUCCESS)
+    $ResultCollection : ResponseDiscountListVo(responseDiscountVos.size()>=0)
+then
+    RuleLogger.info("执行规则----------------->[{}]",drools.getRule().getName());
+    ResponseDiscountVo responseDiscountVo=ruleExecuteService.marketActivityDiscount($OrderVo);
+    responseDiscountVo.setOrderVo(RuleCalConstant.processMarketRuleAdjust($OrderVo,$OrderVo.getTicketVo()));
+    ReflectASMUtils.copyProperties($ResponseDiscountVo,responseDiscountVo);
+    ReflectASMUtils.copyProperties($OrderVo,responseDiscountVo.getOrderVo());
+    List<ResponseDiscountVo> list=$ResultCollection.getResponseDiscountVos();
+    list.add(responseDiscountVo);
+    modify($ResponseDiscountVo){setRuleFlag(RuleExecuteContant.strategyActResult(responseDiscountVo))}
+    modify($ResultCollection){setResponseDiscountVos(list)}
+end
+
+rule "Member Discount  Rule"  //会员折扣规则
+enabled true
+lock-on-active true
+salience 79
+when
+    $OrderVo : OrderVo(StringUtils.isNotEmpty(memberCompanyId))
+    $ResponseDiscountVo : ResponseDiscountVo(ruleFlag==true,code==SUCCESS)
+    $ResultCollection : ResponseDiscountListVo(responseDiscountVos.size()>=0)
+then
+    RuleLogger.info("执行规则----------------->[{}]",drools.getRule().getName());
+    ResponseDiscountVo responseDiscountVo=ruleExecuteService.memberDiscount($OrderVo);
+    ReflectASMUtils.copyProperties($ResponseDiscountVo,responseDiscountVo);
+    ReflectASMUtils.copyProperties($OrderVo,responseDiscountVo.getOrderVo());
+    List<ResponseDiscountVo> list=$ResultCollection.getResponseDiscountVos();
+    list.add(responseDiscountVo);
+    modify($ResponseDiscountVo){setRuleFlag(RuleExecuteContant.strategyActResult(responseDiscountVo))}
+    modify($ResultCollection){setResponseDiscountVos(list)}
+end
+
+rule "ExperienceSecurities Discount  Rule"  //体验劵优惠折扣规则
+enabled true
+no-loop true
+salience 99
+when
+    $OrderVo : OrderVo(orderType==SERVICEORDER,StringUtils.isNotEmpty(goods))
+    $TicketVo : TicketVo($OrderVo.ticketVo.ticketType==EXPERIENCETICKET_TYPE)
+    $ResponseDiscountVo : ResponseDiscountVo(ruleFlag==true,StringUtils.isNotEmpty($TicketVo))
+    $ResultCollection : ResponseDiscountListVo(responseDiscountVos.size()>=0)
+then
+    RuleLogger.info("执行规则----------------->[{}]",drools.getRule().getName());
+    ResponseDiscountVo responseDiscountVo=ruleExecuteService.experienceSecuritiesDiscount($OrderVo);
+    responseDiscountVo.setOrderVo(RuleCalConstant.processMarketRuleAdjust($OrderVo,$OrderVo.getTicketVo()));
+    ReflectASMUtils.copyProperties($ResponseDiscountVo,responseDiscountVo);
+    ReflectASMUtils.copyProperties($OrderVo,responseDiscountVo.getOrderVo());
+    List<ResponseDiscountVo> list=$ResultCollection.getResponseDiscountVos();
+    list.add(responseDiscountVo);
+    modify($ResponseDiscountVo){setRuleFlag(RuleExecuteContant.strategyActResult(responseDiscountVo))}
+    modify($ResultCollection){setResponseDiscountVos(list)}
+end
+
+rule "WithReducedSecurities Discount Rule"  //执行满减劵优惠折扣规则
+enabled true
+no-loop true
+salience 100
+when
+    $OrderVo : OrderVo(StringUtils.isNotEmpty(goods))
+    $TicketVo : TicketVo(StringUtils.isNotEmpty($OrderVo.ticketVo),$OrderVo.ticketVo.ticketType==DISCOUNTCOUPONS)
+    $ResponseDiscountVo : ResponseDiscountVo(ruleFlag==true,code==SUCCESS)
+    $ResultCollection : ResponseDiscountListVo(responseDiscountVos.size()>=0)
+then
+    RuleLogger.info("执行规则----------------->[{}]",drools.getRule().getName());
+    ResponseDiscountVo responseDiscountVo=ruleExecuteService.withReducedSecuritiesDisocunt($OrderVo);
+    responseDiscountVo.setOrderVo(RuleCalConstant.processMarketRuleAdjust($OrderVo,$OrderVo.getTicketVo()));
+    ReflectASMUtils.copyProperties($ResponseDiscountVo,responseDiscountVo);
+    ReflectASMUtils.copyProperties($OrderVo,responseDiscountVo.getOrderVo());
+    List<ResponseDiscountVo> list=$ResultCollection.getResponseDiscountVos();
+    list.add(responseDiscountVo);
+    modify($ResponseDiscountVo){setRuleFlag(RuleExecuteContant.strategyActResult(responseDiscountVo))}
+    modify($ResultCollection){setResponseDiscountVos(list)}
+end
+
+
+rule "DiscountCoupon Discount Rule"  //执行折扣劵优惠折扣规则
+enabled true
+no-loop true
+salience 98
+when
+    $OrderVo : OrderVo(StringUtils.isNotEmpty(goods),orderType==GOODSORDER)
+    $TicketVo : TicketVo(StringUtils.isNotEmpty($OrderVo.ticketVo),$OrderVo.ticketVo.ticketType==WITHDISCOUNTCOUPONS)
+    $ResponseDiscountVo : ResponseDiscountVo(ruleFlag==true,code==SUCCESS)
+    $ResultCollection : ResponseDiscountListVo(responseDiscountVos.size()>=0)
+then
+    RuleLogger.info("执行规则----------------->[{}]",drools.getRule().getName());
+    ResponseDiscountVo responseDiscountVo=ruleExecuteService.discountCouponDiscount($OrderVo);
+    responseDiscountVo.setOrderVo(RuleCalConstant.processMarketRuleAdjust($OrderVo,$OrderVo.getTicketVo()));
+    ReflectASMUtils.copyProperties($ResponseDiscountVo,responseDiscountVo);
+    ReflectASMUtils.copyProperties($OrderVo,responseDiscountVo.getOrderVo());
+    List<ResponseDiscountVo> list=$ResultCollection.getResponseDiscountVos();
+    list.add(responseDiscountVo);
+    modify($ResponseDiscountVo){setRuleFlag(RuleExecuteContant.strategyActResult(responseDiscountVo))}
+    modify($ResultCollection){setResponseDiscountVos(list)}
+end
+
+rule "Combination Pay Rule"  //执行组合支付规则
+enabled true
+lock-on-active true
+salience 76
+when
+    $OrderVo : OrderVo(StringUtils.isNotEmpty(goods),StringUtils.isListEmpty(ticketVoList))
+    $List    : List(size()>=1) from collect(TicketVo(ticketType==TicketType.CASH||ticketType==TicketType.BALANCE||ticketType==TicketType.INTEGRAL_PAY) from $OrderVo.getTicketVoList())
+    $ResponseDiscountVo : ResponseDiscountVo(ruleFlag==true,code==SUCCESS)
+    $ResultCollection : ResponseDiscountListVo(responseDiscountVos.size()>=0)
+then
+    RuleLogger.info("执行规则----------------->[{}]",drools.getRule().getName());
+    ResponseDiscountVo responseDiscountVo=ruleExecuteService.combinationPay($OrderVo);
+    ReflectASMUtils.copyProperties($ResponseDiscountVo,responseDiscountVo);
+    ReflectASMUtils.copyProperties($OrderVo,responseDiscountVo.getOrderVo());
+    List<ResponseDiscountVo> list=$ResultCollection.getResponseDiscountVos();
+    list.add(responseDiscountVo);
+    modify($ResponseDiscountVo){setRuleFlag(RuleExecuteContant.strategyActResult(responseDiscountVo))}
+    modify($ResultCollection){setResponseDiscountVos(list)}
+end
+
+rule "Goods Discount Rule"  //执行商品折扣优惠折扣规则
+enabled true
+lock-on-active true
+salience 78
+when
+    $OrderVo : OrderVo(StringUtils.isNotEmpty(goods))
+    $List    : List(size()>=1) from collect( OrderSubVo(StringUtils.isNotEmpty(secondPrice),RuleCalConstant.checkBigDecimalZero(secondPrice)) from $OrderVo.getGoods())
+    $ResponseDiscountVo : ResponseDiscountVo(ruleFlag==true,code==SUCCESS)
+    $ResultCollection : ResponseDiscountListVo(responseDiscountVos.size()>=0)
+then
+    RuleLogger.info("执行规则----------------->[{}]",drools.getRule().getName());
+    ResponseDiscountVo responseDiscountVo=ruleExecuteService.goodsDiscount($OrderVo);
+    ReflectASMUtils.copyProperties($ResponseDiscountVo,responseDiscountVo);
+    ReflectASMUtils.copyProperties($OrderVo,responseDiscountVo.getOrderVo());
+    List<ResponseDiscountVo> list=$ResultCollection.getResponseDiscountVos();
+    list.add(responseDiscountVo);
+    modify($ResponseDiscountVo){setRuleFlag(RuleExecuteContant.strategyActResult(responseDiscountVo))}
+    modify($ResultCollection){setResponseDiscountVos(list)}
+end
+
+
+rule "calFinallyAmountCollection Rule" //执行最后订单金额汇总规则
+lock-on-active true
+enabled true
+salience 2
+when
+    $ResultCollection : ResponseDiscountListVo()
+    $ResponseDiscountVo : ResponseDiscountVo(ruleFlag == true,code == SUCCESS)
+then
+    RuleLogger.info("执行规则----------------->[{}]",drools.getRule().getName());
+    ResponseDiscountVo responseDiscountVo=RuleExecuteContant.toPayMonyCal(
+            RuleExecuteContant.getLastResponseDiscountVo(SUCCESS,CALSUCCESS,$ResultCollection.getResponseDiscountVos()));
+    ReflectASMUtils.copyProperties($ResponseDiscountVo,responseDiscountVo);
+    modify($ResponseDiscountVo){setRuleFlag(RuleExecuteContant.strategyActResult(responseDiscountVo))}
+end
+
+rule "calFinallyAmountCollection Rule1" //执行最后订单金额汇总规则
+lock-on-active true
+enabled true
+salience 1
+when
+    $a : OrderVo()
+then
+   drools.getWorkingMemory().getObjects().stream().forEach(x->RuleLogger.info(x.toString()));
+end
+
+
+
+
+
+
+

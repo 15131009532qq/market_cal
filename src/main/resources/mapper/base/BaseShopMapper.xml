@@ -1,0 +1,749 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.mudule.mumzonemarketcal.component.mapper.base.BaseShopMapper" >
+  <resultMap id="BaseResultMap" type="com.mudule.mumzonemarketcal.component.po.base.BaseShop" >
+    <id column="id" property="id" jdbcType="VARCHAR" />
+    <result column="shop_code" property="shopCode" jdbcType="VARCHAR" />
+    <result column="name" property="name" jdbcType="VARCHAR" />
+    <result column="address" property="address" jdbcType="VARCHAR" />
+    <result column="principal" property="principal" jdbcType="VARCHAR" />
+    <result column="parent_id" property="parentId" jdbcType="VARCHAR" />
+    <result column="logo_url" property="logoUrl" jdbcType="VARCHAR" />
+    <result column="license_url" property="licenseUrl" jdbcType="VARCHAR" />
+    <result column="idcard_number" property="idcardNumber" jdbcType="VARCHAR" />
+    <result column="idcard_front" property="idcardFront" jdbcType="VARCHAR" />
+    <result column="idcard_reverse" property="idcardReverse" jdbcType="VARCHAR" />
+    <result column="food_license_number" property="foodLicenseNumber" jdbcType="VARCHAR" />
+    <result column="food_url" property="foodUrl" jdbcType="VARCHAR" />
+    <result column="taxes_type" property="taxesType" jdbcType="VARCHAR" />
+    <result column="link_name" property="linkName" jdbcType="VARCHAR" />
+    <result column="link_phone" property="linkPhone" jdbcType="VARCHAR" />
+    <result column="fix_phone" property="fixPhone" jdbcType="VARCHAR" />
+    <result column="email" property="email" jdbcType="VARCHAR" />
+    <result column="is_login" property="isLogin" jdbcType="TINYINT" />
+    <result column="open_account" property="openAccount" jdbcType="TINYINT" />
+    <result column="enter_time" property="enterTime" jdbcType="TIMESTAMP" />
+    <result column="credit_code" property="creditCode" jdbcType="VARCHAR" />
+    <result column="pay_channel" property="payChannel" jdbcType="TINYINT" />
+    <result column="registered_capital" property="registeredCapital" jdbcType="DECIMAL" />
+    <result column="registered_no" property="registeredNo" jdbcType="VARCHAR" />
+    <result column="tex_no" property="texNo" jdbcType="VARCHAR" />
+    <result column="fax" property="fax" jdbcType="VARCHAR" />
+    <result column="remark" property="remark" jdbcType="VARCHAR" />
+    <result column="is_store" property="isStore" jdbcType="TINYINT" />
+    <result column="is_tenant" property="isTenant" jdbcType="TINYINT" />
+    <result column="audit_state" property="auditState" jdbcType="TINYINT" />
+    <result column="reason_rejection" property="reasonRejection" jdbcType="VARCHAR" />
+    <result column="status" property="status" jdbcType="TINYINT" />
+    <result column="creator" property="creator" jdbcType="VARCHAR" />
+    <result column="create_time" property="createTime" jdbcType="TIMESTAMP" />
+    <result column="updater" property="updater" jdbcType="VARCHAR" />
+    <result column="update_time" property="updateTime" jdbcType="TIMESTAMP" />
+    <result column="dr" property="dr" jdbcType="TINYINT" />
+    <result column="source" property="source" jdbcType="TINYINT" />
+  </resultMap>
+  <sql id="Example_Where_Clause" >
+    <where >
+      <foreach collection="oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Update_By_Example_Where_Clause" >
+    <where >
+      <foreach collection="example.oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Base_Column_List" >
+    id, shop_code, name, address, principal, parent_id, logo_url, license_url, idcard_number, 
+    idcard_front, idcard_reverse, food_license_number, food_url, taxes_type, link_name, 
+    link_phone, fix_phone, email, is_login, open_account, enter_time, credit_code, pay_channel, 
+    registered_capital, registered_no, tex_no, fax, remark, is_store, is_tenant, audit_state, 
+    reason_rejection, status, creator, create_time, updater, update_time, dr, source
+  </sql>
+  <select id="selectByExample" resultMap="BaseResultMap" parameterType="com.mudule.mumzonemarketcal.component.po.base.BaseShopExample" >
+    select
+    <if test="distinct" >
+      distinct
+    </if>
+    <include refid="Base_Column_List" />
+    from base_shop
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null" >
+      order by ${orderByClause}
+    </if>
+  </select>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.String" >
+    select 
+    <include refid="Base_Column_List" />
+    from base_shop
+    where id = #{id,jdbcType=VARCHAR}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.String" >
+    delete from base_shop
+    where id = #{id,jdbcType=VARCHAR}
+  </delete>
+  <delete id="deleteByExample" parameterType="com.mudule.mumzonemarketcal.component.po.base.BaseShopExample" >
+    delete from base_shop
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+  </delete>
+  <insert id="insert" parameterType="com.mudule.mumzonemarketcal.component.po.base.BaseShop" >
+    insert into base_shop (id, shop_code, name, 
+      address, principal, parent_id, 
+      logo_url, license_url, idcard_number, 
+      idcard_front, idcard_reverse, food_license_number, 
+      food_url, taxes_type, link_name, 
+      link_phone, fix_phone, email, 
+      is_login, open_account, enter_time, 
+      credit_code, pay_channel, registered_capital, 
+      registered_no, tex_no, fax, 
+      remark, is_store, is_tenant, 
+      audit_state, reason_rejection, status, 
+      creator, create_time, updater, 
+      update_time, dr, source
+      )
+    values (#{id,jdbcType=VARCHAR}, #{shopCode,jdbcType=VARCHAR}, #{name,jdbcType=VARCHAR}, 
+      #{address,jdbcType=VARCHAR}, #{principal,jdbcType=VARCHAR}, #{parentId,jdbcType=VARCHAR}, 
+      #{logoUrl,jdbcType=VARCHAR}, #{licenseUrl,jdbcType=VARCHAR}, #{idcardNumber,jdbcType=VARCHAR}, 
+      #{idcardFront,jdbcType=VARCHAR}, #{idcardReverse,jdbcType=VARCHAR}, #{foodLicenseNumber,jdbcType=VARCHAR}, 
+      #{foodUrl,jdbcType=VARCHAR}, #{taxesType,jdbcType=VARCHAR}, #{linkName,jdbcType=VARCHAR}, 
+      #{linkPhone,jdbcType=VARCHAR}, #{fixPhone,jdbcType=VARCHAR}, #{email,jdbcType=VARCHAR}, 
+      #{isLogin,jdbcType=TINYINT}, #{openAccount,jdbcType=TINYINT}, #{enterTime,jdbcType=TIMESTAMP}, 
+      #{creditCode,jdbcType=VARCHAR}, #{payChannel,jdbcType=TINYINT}, #{registeredCapital,jdbcType=DECIMAL}, 
+      #{registeredNo,jdbcType=VARCHAR}, #{texNo,jdbcType=VARCHAR}, #{fax,jdbcType=VARCHAR}, 
+      #{remark,jdbcType=VARCHAR}, #{isStore,jdbcType=TINYINT}, #{isTenant,jdbcType=TINYINT}, 
+      #{auditState,jdbcType=TINYINT}, #{reasonRejection,jdbcType=VARCHAR}, #{status,jdbcType=TINYINT}, 
+      #{creator,jdbcType=VARCHAR}, #{createTime,jdbcType=TIMESTAMP}, #{updater,jdbcType=VARCHAR}, 
+      #{updateTime,jdbcType=TIMESTAMP}, #{dr,jdbcType=TINYINT}, #{source,jdbcType=TINYINT}
+      )
+  </insert>
+  <insert id="insertSelective" parameterType="com.mudule.mumzonemarketcal.component.po.base.BaseShop" >
+    insert into base_shop
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        id,
+      </if>
+      <if test="shopCode != null" >
+        shop_code,
+      </if>
+      <if test="name != null" >
+        name,
+      </if>
+      <if test="address != null" >
+        address,
+      </if>
+      <if test="principal != null" >
+        principal,
+      </if>
+      <if test="parentId != null" >
+        parent_id,
+      </if>
+      <if test="logoUrl != null" >
+        logo_url,
+      </if>
+      <if test="licenseUrl != null" >
+        license_url,
+      </if>
+      <if test="idcardNumber != null" >
+        idcard_number,
+      </if>
+      <if test="idcardFront != null" >
+        idcard_front,
+      </if>
+      <if test="idcardReverse != null" >
+        idcard_reverse,
+      </if>
+      <if test="foodLicenseNumber != null" >
+        food_license_number,
+      </if>
+      <if test="foodUrl != null" >
+        food_url,
+      </if>
+      <if test="taxesType != null" >
+        taxes_type,
+      </if>
+      <if test="linkName != null" >
+        link_name,
+      </if>
+      <if test="linkPhone != null" >
+        link_phone,
+      </if>
+      <if test="fixPhone != null" >
+        fix_phone,
+      </if>
+      <if test="email != null" >
+        email,
+      </if>
+      <if test="isLogin != null" >
+        is_login,
+      </if>
+      <if test="openAccount != null" >
+        open_account,
+      </if>
+      <if test="enterTime != null" >
+        enter_time,
+      </if>
+      <if test="creditCode != null" >
+        credit_code,
+      </if>
+      <if test="payChannel != null" >
+        pay_channel,
+      </if>
+      <if test="registeredCapital != null" >
+        registered_capital,
+      </if>
+      <if test="registeredNo != null" >
+        registered_no,
+      </if>
+      <if test="texNo != null" >
+        tex_no,
+      </if>
+      <if test="fax != null" >
+        fax,
+      </if>
+      <if test="remark != null" >
+        remark,
+      </if>
+      <if test="isStore != null" >
+        is_store,
+      </if>
+      <if test="isTenant != null" >
+        is_tenant,
+      </if>
+      <if test="auditState != null" >
+        audit_state,
+      </if>
+      <if test="reasonRejection != null" >
+        reason_rejection,
+      </if>
+      <if test="status != null" >
+        status,
+      </if>
+      <if test="creator != null" >
+        creator,
+      </if>
+      <if test="createTime != null" >
+        create_time,
+      </if>
+      <if test="updater != null" >
+        updater,
+      </if>
+      <if test="updateTime != null" >
+        update_time,
+      </if>
+      <if test="dr != null" >
+        dr,
+      </if>
+      <if test="source != null" >
+        source,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        #{id,jdbcType=VARCHAR},
+      </if>
+      <if test="shopCode != null" >
+        #{shopCode,jdbcType=VARCHAR},
+      </if>
+      <if test="name != null" >
+        #{name,jdbcType=VARCHAR},
+      </if>
+      <if test="address != null" >
+        #{address,jdbcType=VARCHAR},
+      </if>
+      <if test="principal != null" >
+        #{principal,jdbcType=VARCHAR},
+      </if>
+      <if test="parentId != null" >
+        #{parentId,jdbcType=VARCHAR},
+      </if>
+      <if test="logoUrl != null" >
+        #{logoUrl,jdbcType=VARCHAR},
+      </if>
+      <if test="licenseUrl != null" >
+        #{licenseUrl,jdbcType=VARCHAR},
+      </if>
+      <if test="idcardNumber != null" >
+        #{idcardNumber,jdbcType=VARCHAR},
+      </if>
+      <if test="idcardFront != null" >
+        #{idcardFront,jdbcType=VARCHAR},
+      </if>
+      <if test="idcardReverse != null" >
+        #{idcardReverse,jdbcType=VARCHAR},
+      </if>
+      <if test="foodLicenseNumber != null" >
+        #{foodLicenseNumber,jdbcType=VARCHAR},
+      </if>
+      <if test="foodUrl != null" >
+        #{foodUrl,jdbcType=VARCHAR},
+      </if>
+      <if test="taxesType != null" >
+        #{taxesType,jdbcType=VARCHAR},
+      </if>
+      <if test="linkName != null" >
+        #{linkName,jdbcType=VARCHAR},
+      </if>
+      <if test="linkPhone != null" >
+        #{linkPhone,jdbcType=VARCHAR},
+      </if>
+      <if test="fixPhone != null" >
+        #{fixPhone,jdbcType=VARCHAR},
+      </if>
+      <if test="email != null" >
+        #{email,jdbcType=VARCHAR},
+      </if>
+      <if test="isLogin != null" >
+        #{isLogin,jdbcType=TINYINT},
+      </if>
+      <if test="openAccount != null" >
+        #{openAccount,jdbcType=TINYINT},
+      </if>
+      <if test="enterTime != null" >
+        #{enterTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="creditCode != null" >
+        #{creditCode,jdbcType=VARCHAR},
+      </if>
+      <if test="payChannel != null" >
+        #{payChannel,jdbcType=TINYINT},
+      </if>
+      <if test="registeredCapital != null" >
+        #{registeredCapital,jdbcType=DECIMAL},
+      </if>
+      <if test="registeredNo != null" >
+        #{registeredNo,jdbcType=VARCHAR},
+      </if>
+      <if test="texNo != null" >
+        #{texNo,jdbcType=VARCHAR},
+      </if>
+      <if test="fax != null" >
+        #{fax,jdbcType=VARCHAR},
+      </if>
+      <if test="remark != null" >
+        #{remark,jdbcType=VARCHAR},
+      </if>
+      <if test="isStore != null" >
+        #{isStore,jdbcType=TINYINT},
+      </if>
+      <if test="isTenant != null" >
+        #{isTenant,jdbcType=TINYINT},
+      </if>
+      <if test="auditState != null" >
+        #{auditState,jdbcType=TINYINT},
+      </if>
+      <if test="reasonRejection != null" >
+        #{reasonRejection,jdbcType=VARCHAR},
+      </if>
+      <if test="status != null" >
+        #{status,jdbcType=TINYINT},
+      </if>
+      <if test="creator != null" >
+        #{creator,jdbcType=VARCHAR},
+      </if>
+      <if test="createTime != null" >
+        #{createTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="updater != null" >
+        #{updater,jdbcType=VARCHAR},
+      </if>
+      <if test="updateTime != null" >
+        #{updateTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="dr != null" >
+        #{dr,jdbcType=TINYINT},
+      </if>
+      <if test="source != null" >
+        #{source,jdbcType=TINYINT},
+      </if>
+    </trim>
+  </insert>
+  <select id="countByExample" parameterType="com.mudule.mumzonemarketcal.component.po.base.BaseShopExample" resultType="java.lang.Integer" >
+    select count(*) from base_shop
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+  </select>
+  <update id="updateByExampleSelective" parameterType="map" >
+    update base_shop
+    <set >
+      <if test="record.id != null" >
+        id = #{record.id,jdbcType=VARCHAR},
+      </if>
+      <if test="record.shopCode != null" >
+        shop_code = #{record.shopCode,jdbcType=VARCHAR},
+      </if>
+      <if test="record.name != null" >
+        name = #{record.name,jdbcType=VARCHAR},
+      </if>
+      <if test="record.address != null" >
+        address = #{record.address,jdbcType=VARCHAR},
+      </if>
+      <if test="record.principal != null" >
+        principal = #{record.principal,jdbcType=VARCHAR},
+      </if>
+      <if test="record.parentId != null" >
+        parent_id = #{record.parentId,jdbcType=VARCHAR},
+      </if>
+      <if test="record.logoUrl != null" >
+        logo_url = #{record.logoUrl,jdbcType=VARCHAR},
+      </if>
+      <if test="record.licenseUrl != null" >
+        license_url = #{record.licenseUrl,jdbcType=VARCHAR},
+      </if>
+      <if test="record.idcardNumber != null" >
+        idcard_number = #{record.idcardNumber,jdbcType=VARCHAR},
+      </if>
+      <if test="record.idcardFront != null" >
+        idcard_front = #{record.idcardFront,jdbcType=VARCHAR},
+      </if>
+      <if test="record.idcardReverse != null" >
+        idcard_reverse = #{record.idcardReverse,jdbcType=VARCHAR},
+      </if>
+      <if test="record.foodLicenseNumber != null" >
+        food_license_number = #{record.foodLicenseNumber,jdbcType=VARCHAR},
+      </if>
+      <if test="record.foodUrl != null" >
+        food_url = #{record.foodUrl,jdbcType=VARCHAR},
+      </if>
+      <if test="record.taxesType != null" >
+        taxes_type = #{record.taxesType,jdbcType=VARCHAR},
+      </if>
+      <if test="record.linkName != null" >
+        link_name = #{record.linkName,jdbcType=VARCHAR},
+      </if>
+      <if test="record.linkPhone != null" >
+        link_phone = #{record.linkPhone,jdbcType=VARCHAR},
+      </if>
+      <if test="record.fixPhone != null" >
+        fix_phone = #{record.fixPhone,jdbcType=VARCHAR},
+      </if>
+      <if test="record.email != null" >
+        email = #{record.email,jdbcType=VARCHAR},
+      </if>
+      <if test="record.isLogin != null" >
+        is_login = #{record.isLogin,jdbcType=TINYINT},
+      </if>
+      <if test="record.openAccount != null" >
+        open_account = #{record.openAccount,jdbcType=TINYINT},
+      </if>
+      <if test="record.enterTime != null" >
+        enter_time = #{record.enterTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="record.creditCode != null" >
+        credit_code = #{record.creditCode,jdbcType=VARCHAR},
+      </if>
+      <if test="record.payChannel != null" >
+        pay_channel = #{record.payChannel,jdbcType=TINYINT},
+      </if>
+      <if test="record.registeredCapital != null" >
+        registered_capital = #{record.registeredCapital,jdbcType=DECIMAL},
+      </if>
+      <if test="record.registeredNo != null" >
+        registered_no = #{record.registeredNo,jdbcType=VARCHAR},
+      </if>
+      <if test="record.texNo != null" >
+        tex_no = #{record.texNo,jdbcType=VARCHAR},
+      </if>
+      <if test="record.fax != null" >
+        fax = #{record.fax,jdbcType=VARCHAR},
+      </if>
+      <if test="record.remark != null" >
+        remark = #{record.remark,jdbcType=VARCHAR},
+      </if>
+      <if test="record.isStore != null" >
+        is_store = #{record.isStore,jdbcType=TINYINT},
+      </if>
+      <if test="record.isTenant != null" >
+        is_tenant = #{record.isTenant,jdbcType=TINYINT},
+      </if>
+      <if test="record.auditState != null" >
+        audit_state = #{record.auditState,jdbcType=TINYINT},
+      </if>
+      <if test="record.reasonRejection != null" >
+        reason_rejection = #{record.reasonRejection,jdbcType=VARCHAR},
+      </if>
+      <if test="record.status != null" >
+        status = #{record.status,jdbcType=TINYINT},
+      </if>
+      <if test="record.creator != null" >
+        creator = #{record.creator,jdbcType=VARCHAR},
+      </if>
+      <if test="record.createTime != null" >
+        create_time = #{record.createTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="record.updater != null" >
+        updater = #{record.updater,jdbcType=VARCHAR},
+      </if>
+      <if test="record.updateTime != null" >
+        update_time = #{record.updateTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="record.dr != null" >
+        dr = #{record.dr,jdbcType=TINYINT},
+      </if>
+      <if test="record.source != null" >
+        source = #{record.source,jdbcType=TINYINT},
+      </if>
+    </set>
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByExample" parameterType="map" >
+    update base_shop
+    set id = #{record.id,jdbcType=VARCHAR},
+      shop_code = #{record.shopCode,jdbcType=VARCHAR},
+      name = #{record.name,jdbcType=VARCHAR},
+      address = #{record.address,jdbcType=VARCHAR},
+      principal = #{record.principal,jdbcType=VARCHAR},
+      parent_id = #{record.parentId,jdbcType=VARCHAR},
+      logo_url = #{record.logoUrl,jdbcType=VARCHAR},
+      license_url = #{record.licenseUrl,jdbcType=VARCHAR},
+      idcard_number = #{record.idcardNumber,jdbcType=VARCHAR},
+      idcard_front = #{record.idcardFront,jdbcType=VARCHAR},
+      idcard_reverse = #{record.idcardReverse,jdbcType=VARCHAR},
+      food_license_number = #{record.foodLicenseNumber,jdbcType=VARCHAR},
+      food_url = #{record.foodUrl,jdbcType=VARCHAR},
+      taxes_type = #{record.taxesType,jdbcType=VARCHAR},
+      link_name = #{record.linkName,jdbcType=VARCHAR},
+      link_phone = #{record.linkPhone,jdbcType=VARCHAR},
+      fix_phone = #{record.fixPhone,jdbcType=VARCHAR},
+      email = #{record.email,jdbcType=VARCHAR},
+      is_login = #{record.isLogin,jdbcType=TINYINT},
+      open_account = #{record.openAccount,jdbcType=TINYINT},
+      enter_time = #{record.enterTime,jdbcType=TIMESTAMP},
+      credit_code = #{record.creditCode,jdbcType=VARCHAR},
+      pay_channel = #{record.payChannel,jdbcType=TINYINT},
+      registered_capital = #{record.registeredCapital,jdbcType=DECIMAL},
+      registered_no = #{record.registeredNo,jdbcType=VARCHAR},
+      tex_no = #{record.texNo,jdbcType=VARCHAR},
+      fax = #{record.fax,jdbcType=VARCHAR},
+      remark = #{record.remark,jdbcType=VARCHAR},
+      is_store = #{record.isStore,jdbcType=TINYINT},
+      is_tenant = #{record.isTenant,jdbcType=TINYINT},
+      audit_state = #{record.auditState,jdbcType=TINYINT},
+      reason_rejection = #{record.reasonRejection,jdbcType=VARCHAR},
+      status = #{record.status,jdbcType=TINYINT},
+      creator = #{record.creator,jdbcType=VARCHAR},
+      create_time = #{record.createTime,jdbcType=TIMESTAMP},
+      updater = #{record.updater,jdbcType=VARCHAR},
+      update_time = #{record.updateTime,jdbcType=TIMESTAMP},
+      dr = #{record.dr,jdbcType=TINYINT},
+      source = #{record.source,jdbcType=TINYINT}
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByPrimaryKeySelective" parameterType="com.mudule.mumzonemarketcal.component.po.base.BaseShop" >
+    update base_shop
+    <set >
+      <if test="shopCode != null" >
+        shop_code = #{shopCode,jdbcType=VARCHAR},
+      </if>
+      <if test="name != null" >
+        name = #{name,jdbcType=VARCHAR},
+      </if>
+      <if test="address != null" >
+        address = #{address,jdbcType=VARCHAR},
+      </if>
+      <if test="principal != null" >
+        principal = #{principal,jdbcType=VARCHAR},
+      </if>
+      <if test="parentId != null" >
+        parent_id = #{parentId,jdbcType=VARCHAR},
+      </if>
+      <if test="logoUrl != null" >
+        logo_url = #{logoUrl,jdbcType=VARCHAR},
+      </if>
+      <if test="licenseUrl != null" >
+        license_url = #{licenseUrl,jdbcType=VARCHAR},
+      </if>
+      <if test="idcardNumber != null" >
+        idcard_number = #{idcardNumber,jdbcType=VARCHAR},
+      </if>
+      <if test="idcardFront != null" >
+        idcard_front = #{idcardFront,jdbcType=VARCHAR},
+      </if>
+      <if test="idcardReverse != null" >
+        idcard_reverse = #{idcardReverse,jdbcType=VARCHAR},
+      </if>
+      <if test="foodLicenseNumber != null" >
+        food_license_number = #{foodLicenseNumber,jdbcType=VARCHAR},
+      </if>
+      <if test="foodUrl != null" >
+        food_url = #{foodUrl,jdbcType=VARCHAR},
+      </if>
+      <if test="taxesType != null" >
+        taxes_type = #{taxesType,jdbcType=VARCHAR},
+      </if>
+      <if test="linkName != null" >
+        link_name = #{linkName,jdbcType=VARCHAR},
+      </if>
+      <if test="linkPhone != null" >
+        link_phone = #{linkPhone,jdbcType=VARCHAR},
+      </if>
+      <if test="fixPhone != null" >
+        fix_phone = #{fixPhone,jdbcType=VARCHAR},
+      </if>
+      <if test="email != null" >
+        email = #{email,jdbcType=VARCHAR},
+      </if>
+      <if test="isLogin != null" >
+        is_login = #{isLogin,jdbcType=TINYINT},
+      </if>
+      <if test="openAccount != null" >
+        open_account = #{openAccount,jdbcType=TINYINT},
+      </if>
+      <if test="enterTime != null" >
+        enter_time = #{enterTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="creditCode != null" >
+        credit_code = #{creditCode,jdbcType=VARCHAR},
+      </if>
+      <if test="payChannel != null" >
+        pay_channel = #{payChannel,jdbcType=TINYINT},
+      </if>
+      <if test="registeredCapital != null" >
+        registered_capital = #{registeredCapital,jdbcType=DECIMAL},
+      </if>
+      <if test="registeredNo != null" >
+        registered_no = #{registeredNo,jdbcType=VARCHAR},
+      </if>
+      <if test="texNo != null" >
+        tex_no = #{texNo,jdbcType=VARCHAR},
+      </if>
+      <if test="fax != null" >
+        fax = #{fax,jdbcType=VARCHAR},
+      </if>
+      <if test="remark != null" >
+        remark = #{remark,jdbcType=VARCHAR},
+      </if>
+      <if test="isStore != null" >
+        is_store = #{isStore,jdbcType=TINYINT},
+      </if>
+      <if test="isTenant != null" >
+        is_tenant = #{isTenant,jdbcType=TINYINT},
+      </if>
+      <if test="auditState != null" >
+        audit_state = #{auditState,jdbcType=TINYINT},
+      </if>
+      <if test="reasonRejection != null" >
+        reason_rejection = #{reasonRejection,jdbcType=VARCHAR},
+      </if>
+      <if test="status != null" >
+        status = #{status,jdbcType=TINYINT},
+      </if>
+      <if test="creator != null" >
+        creator = #{creator,jdbcType=VARCHAR},
+      </if>
+      <if test="createTime != null" >
+        create_time = #{createTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="updater != null" >
+        updater = #{updater,jdbcType=VARCHAR},
+      </if>
+      <if test="updateTime != null" >
+        update_time = #{updateTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="dr != null" >
+        dr = #{dr,jdbcType=TINYINT},
+      </if>
+      <if test="source != null" >
+        source = #{source,jdbcType=TINYINT},
+      </if>
+    </set>
+    where id = #{id,jdbcType=VARCHAR}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.mudule.mumzonemarketcal.component.po.base.BaseShop" >
+    update base_shop
+    set shop_code = #{shopCode,jdbcType=VARCHAR},
+      name = #{name,jdbcType=VARCHAR},
+      address = #{address,jdbcType=VARCHAR},
+      principal = #{principal,jdbcType=VARCHAR},
+      parent_id = #{parentId,jdbcType=VARCHAR},
+      logo_url = #{logoUrl,jdbcType=VARCHAR},
+      license_url = #{licenseUrl,jdbcType=VARCHAR},
+      idcard_number = #{idcardNumber,jdbcType=VARCHAR},
+      idcard_front = #{idcardFront,jdbcType=VARCHAR},
+      idcard_reverse = #{idcardReverse,jdbcType=VARCHAR},
+      food_license_number = #{foodLicenseNumber,jdbcType=VARCHAR},
+      food_url = #{foodUrl,jdbcType=VARCHAR},
+      taxes_type = #{taxesType,jdbcType=VARCHAR},
+      link_name = #{linkName,jdbcType=VARCHAR},
+      link_phone = #{linkPhone,jdbcType=VARCHAR},
+      fix_phone = #{fixPhone,jdbcType=VARCHAR},
+      email = #{email,jdbcType=VARCHAR},
+      is_login = #{isLogin,jdbcType=TINYINT},
+      open_account = #{openAccount,jdbcType=TINYINT},
+      enter_time = #{enterTime,jdbcType=TIMESTAMP},
+      credit_code = #{creditCode,jdbcType=VARCHAR},
+      pay_channel = #{payChannel,jdbcType=TINYINT},
+      registered_capital = #{registeredCapital,jdbcType=DECIMAL},
+      registered_no = #{registeredNo,jdbcType=VARCHAR},
+      tex_no = #{texNo,jdbcType=VARCHAR},
+      fax = #{fax,jdbcType=VARCHAR},
+      remark = #{remark,jdbcType=VARCHAR},
+      is_store = #{isStore,jdbcType=TINYINT},
+      is_tenant = #{isTenant,jdbcType=TINYINT},
+      audit_state = #{auditState,jdbcType=TINYINT},
+      reason_rejection = #{reasonRejection,jdbcType=VARCHAR},
+      status = #{status,jdbcType=TINYINT},
+      creator = #{creator,jdbcType=VARCHAR},
+      create_time = #{createTime,jdbcType=TIMESTAMP},
+      updater = #{updater,jdbcType=VARCHAR},
+      update_time = #{updateTime,jdbcType=TIMESTAMP},
+      dr = #{dr,jdbcType=TINYINT},
+      source = #{source,jdbcType=TINYINT}
+    where id = #{id,jdbcType=VARCHAR}
+  </update>
+</mapper>

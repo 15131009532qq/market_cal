@@ -1,0 +1,433 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.mudule.mumzonemarketcal.component.mapper.base.BaseShopConfigMapper" >
+  <resultMap id="BaseResultMap" type="com.mudule.mumzonemarketcal.component.po.base.BaseShopConfig" >
+    <id column="id" property="id" jdbcType="VARCHAR" />
+    <result column="org_code" property="orgCode" jdbcType="VARCHAR" />
+    <result column="comapny_code" property="comapnyCode" jdbcType="VARCHAR" />
+    <result column="shop_id" property="shopId" jdbcType="VARCHAR" />
+    <result column="company_id" property="companyId" jdbcType="VARCHAR" />
+    <result column="business_week" property="businessWeek" jdbcType="VARCHAR" />
+    <result column="mechant_intro" property="mechantIntro" jdbcType="VARCHAR" />
+    <result column="mechant_tab" property="mechantTab" jdbcType="VARCHAR" />
+    <result column="mechant_item" property="mechantItem" jdbcType="VARCHAR" />
+    <result column="fit_age" property="fitAge" jdbcType="VARCHAR" />
+    <result column="tran_info" property="tranInfo" jdbcType="VARCHAR" />
+    <result column="addr_guide" property="addrGuide" jdbcType="VARCHAR" />
+    <result column="stop_pace" property="stopPace" jdbcType="VARCHAR" />
+    <result column="stop_pace_intro" property="stopPaceIntro" jdbcType="VARCHAR" />
+    <result column="health_safe_swim" property="healthSafeSwim" jdbcType="VARCHAR" />
+    <result column="health_safe_pool" property="healthSafePool" jdbcType="VARCHAR" />
+    <result column="warm_prompt" property="warmPrompt" jdbcType="VARCHAR" />
+    <result column="create_time" property="createTime" jdbcType="TIMESTAMP" />
+    <result column="update_time" property="updateTime" jdbcType="TIMESTAMP" />
+  </resultMap>
+  <sql id="Example_Where_Clause" >
+    <where >
+      <foreach collection="oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Update_By_Example_Where_Clause" >
+    <where >
+      <foreach collection="example.oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Base_Column_List" >
+    id, org_code, comapny_code, shop_id, company_id, business_week, mechant_intro, mechant_tab, 
+    mechant_item, fit_age, tran_info, addr_guide, stop_pace, stop_pace_intro, health_safe_swim, 
+    health_safe_pool, warm_prompt, create_time, update_time
+  </sql>
+  <select id="selectByExample" resultMap="BaseResultMap" parameterType="com.mudule.mumzonemarketcal.component.po.base.BaseShopConfigExample" >
+    select
+    <if test="distinct" >
+      distinct
+    </if>
+    <include refid="Base_Column_List" />
+    from base_shop_config
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null" >
+      order by ${orderByClause}
+    </if>
+  </select>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.String" >
+    select 
+    <include refid="Base_Column_List" />
+    from base_shop_config
+    where id = #{id,jdbcType=VARCHAR}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.String" >
+    delete from base_shop_config
+    where id = #{id,jdbcType=VARCHAR}
+  </delete>
+  <delete id="deleteByExample" parameterType="com.mudule.mumzonemarketcal.component.po.base.BaseShopConfigExample" >
+    delete from base_shop_config
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+  </delete>
+  <insert id="insert" parameterType="com.mudule.mumzonemarketcal.component.po.base.BaseShopConfig" >
+    insert into base_shop_config (id, org_code, comapny_code, 
+      shop_id, company_id, business_week, 
+      mechant_intro, mechant_tab, mechant_item, 
+      fit_age, tran_info, addr_guide, 
+      stop_pace, stop_pace_intro, health_safe_swim, 
+      health_safe_pool, warm_prompt, create_time, 
+      update_time)
+    values (#{id,jdbcType=VARCHAR}, #{orgCode,jdbcType=VARCHAR}, #{comapnyCode,jdbcType=VARCHAR}, 
+      #{shopId,jdbcType=VARCHAR}, #{companyId,jdbcType=VARCHAR}, #{businessWeek,jdbcType=VARCHAR}, 
+      #{mechantIntro,jdbcType=VARCHAR}, #{mechantTab,jdbcType=VARCHAR}, #{mechantItem,jdbcType=VARCHAR}, 
+      #{fitAge,jdbcType=VARCHAR}, #{tranInfo,jdbcType=VARCHAR}, #{addrGuide,jdbcType=VARCHAR}, 
+      #{stopPace,jdbcType=VARCHAR}, #{stopPaceIntro,jdbcType=VARCHAR}, #{healthSafeSwim,jdbcType=VARCHAR}, 
+      #{healthSafePool,jdbcType=VARCHAR}, #{warmPrompt,jdbcType=VARCHAR}, #{createTime,jdbcType=TIMESTAMP}, 
+      #{updateTime,jdbcType=TIMESTAMP})
+  </insert>
+  <insert id="insertSelective" parameterType="com.mudule.mumzonemarketcal.component.po.base.BaseShopConfig" >
+    insert into base_shop_config
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        id,
+      </if>
+      <if test="orgCode != null" >
+        org_code,
+      </if>
+      <if test="comapnyCode != null" >
+        comapny_code,
+      </if>
+      <if test="shopId != null" >
+        shop_id,
+      </if>
+      <if test="companyId != null" >
+        company_id,
+      </if>
+      <if test="businessWeek != null" >
+        business_week,
+      </if>
+      <if test="mechantIntro != null" >
+        mechant_intro,
+      </if>
+      <if test="mechantTab != null" >
+        mechant_tab,
+      </if>
+      <if test="mechantItem != null" >
+        mechant_item,
+      </if>
+      <if test="fitAge != null" >
+        fit_age,
+      </if>
+      <if test="tranInfo != null" >
+        tran_info,
+      </if>
+      <if test="addrGuide != null" >
+        addr_guide,
+      </if>
+      <if test="stopPace != null" >
+        stop_pace,
+      </if>
+      <if test="stopPaceIntro != null" >
+        stop_pace_intro,
+      </if>
+      <if test="healthSafeSwim != null" >
+        health_safe_swim,
+      </if>
+      <if test="healthSafePool != null" >
+        health_safe_pool,
+      </if>
+      <if test="warmPrompt != null" >
+        warm_prompt,
+      </if>
+      <if test="createTime != null" >
+        create_time,
+      </if>
+      <if test="updateTime != null" >
+        update_time,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        #{id,jdbcType=VARCHAR},
+      </if>
+      <if test="orgCode != null" >
+        #{orgCode,jdbcType=VARCHAR},
+      </if>
+      <if test="comapnyCode != null" >
+        #{comapnyCode,jdbcType=VARCHAR},
+      </if>
+      <if test="shopId != null" >
+        #{shopId,jdbcType=VARCHAR},
+      </if>
+      <if test="companyId != null" >
+        #{companyId,jdbcType=VARCHAR},
+      </if>
+      <if test="businessWeek != null" >
+        #{businessWeek,jdbcType=VARCHAR},
+      </if>
+      <if test="mechantIntro != null" >
+        #{mechantIntro,jdbcType=VARCHAR},
+      </if>
+      <if test="mechantTab != null" >
+        #{mechantTab,jdbcType=VARCHAR},
+      </if>
+      <if test="mechantItem != null" >
+        #{mechantItem,jdbcType=VARCHAR},
+      </if>
+      <if test="fitAge != null" >
+        #{fitAge,jdbcType=VARCHAR},
+      </if>
+      <if test="tranInfo != null" >
+        #{tranInfo,jdbcType=VARCHAR},
+      </if>
+      <if test="addrGuide != null" >
+        #{addrGuide,jdbcType=VARCHAR},
+      </if>
+      <if test="stopPace != null" >
+        #{stopPace,jdbcType=VARCHAR},
+      </if>
+      <if test="stopPaceIntro != null" >
+        #{stopPaceIntro,jdbcType=VARCHAR},
+      </if>
+      <if test="healthSafeSwim != null" >
+        #{healthSafeSwim,jdbcType=VARCHAR},
+      </if>
+      <if test="healthSafePool != null" >
+        #{healthSafePool,jdbcType=VARCHAR},
+      </if>
+      <if test="warmPrompt != null" >
+        #{warmPrompt,jdbcType=VARCHAR},
+      </if>
+      <if test="createTime != null" >
+        #{createTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="updateTime != null" >
+        #{updateTime,jdbcType=TIMESTAMP},
+      </if>
+    </trim>
+  </insert>
+  <select id="countByExample" parameterType="com.mudule.mumzonemarketcal.component.po.base.BaseShopConfigExample" resultType="java.lang.Integer" >
+    select count(*) from base_shop_config
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+  </select>
+  <update id="updateByExampleSelective" parameterType="map" >
+    update base_shop_config
+    <set >
+      <if test="record.id != null" >
+        id = #{record.id,jdbcType=VARCHAR},
+      </if>
+      <if test="record.orgCode != null" >
+        org_code = #{record.orgCode,jdbcType=VARCHAR},
+      </if>
+      <if test="record.comapnyCode != null" >
+        comapny_code = #{record.comapnyCode,jdbcType=VARCHAR},
+      </if>
+      <if test="record.shopId != null" >
+        shop_id = #{record.shopId,jdbcType=VARCHAR},
+      </if>
+      <if test="record.companyId != null" >
+        company_id = #{record.companyId,jdbcType=VARCHAR},
+      </if>
+      <if test="record.businessWeek != null" >
+        business_week = #{record.businessWeek,jdbcType=VARCHAR},
+      </if>
+      <if test="record.mechantIntro != null" >
+        mechant_intro = #{record.mechantIntro,jdbcType=VARCHAR},
+      </if>
+      <if test="record.mechantTab != null" >
+        mechant_tab = #{record.mechantTab,jdbcType=VARCHAR},
+      </if>
+      <if test="record.mechantItem != null" >
+        mechant_item = #{record.mechantItem,jdbcType=VARCHAR},
+      </if>
+      <if test="record.fitAge != null" >
+        fit_age = #{record.fitAge,jdbcType=VARCHAR},
+      </if>
+      <if test="record.tranInfo != null" >
+        tran_info = #{record.tranInfo,jdbcType=VARCHAR},
+      </if>
+      <if test="record.addrGuide != null" >
+        addr_guide = #{record.addrGuide,jdbcType=VARCHAR},
+      </if>
+      <if test="record.stopPace != null" >
+        stop_pace = #{record.stopPace,jdbcType=VARCHAR},
+      </if>
+      <if test="record.stopPaceIntro != null" >
+        stop_pace_intro = #{record.stopPaceIntro,jdbcType=VARCHAR},
+      </if>
+      <if test="record.healthSafeSwim != null" >
+        health_safe_swim = #{record.healthSafeSwim,jdbcType=VARCHAR},
+      </if>
+      <if test="record.healthSafePool != null" >
+        health_safe_pool = #{record.healthSafePool,jdbcType=VARCHAR},
+      </if>
+      <if test="record.warmPrompt != null" >
+        warm_prompt = #{record.warmPrompt,jdbcType=VARCHAR},
+      </if>
+      <if test="record.createTime != null" >
+        create_time = #{record.createTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="record.updateTime != null" >
+        update_time = #{record.updateTime,jdbcType=TIMESTAMP},
+      </if>
+    </set>
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByExample" parameterType="map" >
+    update base_shop_config
+    set id = #{record.id,jdbcType=VARCHAR},
+      org_code = #{record.orgCode,jdbcType=VARCHAR},
+      comapny_code = #{record.comapnyCode,jdbcType=VARCHAR},
+      shop_id = #{record.shopId,jdbcType=VARCHAR},
+      company_id = #{record.companyId,jdbcType=VARCHAR},
+      business_week = #{record.businessWeek,jdbcType=VARCHAR},
+      mechant_intro = #{record.mechantIntro,jdbcType=VARCHAR},
+      mechant_tab = #{record.mechantTab,jdbcType=VARCHAR},
+      mechant_item = #{record.mechantItem,jdbcType=VARCHAR},
+      fit_age = #{record.fitAge,jdbcType=VARCHAR},
+      tran_info = #{record.tranInfo,jdbcType=VARCHAR},
+      addr_guide = #{record.addrGuide,jdbcType=VARCHAR},
+      stop_pace = #{record.stopPace,jdbcType=VARCHAR},
+      stop_pace_intro = #{record.stopPaceIntro,jdbcType=VARCHAR},
+      health_safe_swim = #{record.healthSafeSwim,jdbcType=VARCHAR},
+      health_safe_pool = #{record.healthSafePool,jdbcType=VARCHAR},
+      warm_prompt = #{record.warmPrompt,jdbcType=VARCHAR},
+      create_time = #{record.createTime,jdbcType=TIMESTAMP},
+      update_time = #{record.updateTime,jdbcType=TIMESTAMP}
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByPrimaryKeySelective" parameterType="com.mudule.mumzonemarketcal.component.po.base.BaseShopConfig" >
+    update base_shop_config
+    <set >
+      <if test="orgCode != null" >
+        org_code = #{orgCode,jdbcType=VARCHAR},
+      </if>
+      <if test="comapnyCode != null" >
+        comapny_code = #{comapnyCode,jdbcType=VARCHAR},
+      </if>
+      <if test="shopId != null" >
+        shop_id = #{shopId,jdbcType=VARCHAR},
+      </if>
+      <if test="companyId != null" >
+        company_id = #{companyId,jdbcType=VARCHAR},
+      </if>
+      <if test="businessWeek != null" >
+        business_week = #{businessWeek,jdbcType=VARCHAR},
+      </if>
+      <if test="mechantIntro != null" >
+        mechant_intro = #{mechantIntro,jdbcType=VARCHAR},
+      </if>
+      <if test="mechantTab != null" >
+        mechant_tab = #{mechantTab,jdbcType=VARCHAR},
+      </if>
+      <if test="mechantItem != null" >
+        mechant_item = #{mechantItem,jdbcType=VARCHAR},
+      </if>
+      <if test="fitAge != null" >
+        fit_age = #{fitAge,jdbcType=VARCHAR},
+      </if>
+      <if test="tranInfo != null" >
+        tran_info = #{tranInfo,jdbcType=VARCHAR},
+      </if>
+      <if test="addrGuide != null" >
+        addr_guide = #{addrGuide,jdbcType=VARCHAR},
+      </if>
+      <if test="stopPace != null" >
+        stop_pace = #{stopPace,jdbcType=VARCHAR},
+      </if>
+      <if test="stopPaceIntro != null" >
+        stop_pace_intro = #{stopPaceIntro,jdbcType=VARCHAR},
+      </if>
+      <if test="healthSafeSwim != null" >
+        health_safe_swim = #{healthSafeSwim,jdbcType=VARCHAR},
+      </if>
+      <if test="healthSafePool != null" >
+        health_safe_pool = #{healthSafePool,jdbcType=VARCHAR},
+      </if>
+      <if test="warmPrompt != null" >
+        warm_prompt = #{warmPrompt,jdbcType=VARCHAR},
+      </if>
+      <if test="createTime != null" >
+        create_time = #{createTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="updateTime != null" >
+        update_time = #{updateTime,jdbcType=TIMESTAMP},
+      </if>
+    </set>
+    where id = #{id,jdbcType=VARCHAR}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.mudule.mumzonemarketcal.component.po.base.BaseShopConfig" >
+    update base_shop_config
+    set org_code = #{orgCode,jdbcType=VARCHAR},
+      comapny_code = #{comapnyCode,jdbcType=VARCHAR},
+      shop_id = #{shopId,jdbcType=VARCHAR},
+      company_id = #{companyId,jdbcType=VARCHAR},
+      business_week = #{businessWeek,jdbcType=VARCHAR},
+      mechant_intro = #{mechantIntro,jdbcType=VARCHAR},
+      mechant_tab = #{mechantTab,jdbcType=VARCHAR},
+      mechant_item = #{mechantItem,jdbcType=VARCHAR},
+      fit_age = #{fitAge,jdbcType=VARCHAR},
+      tran_info = #{tranInfo,jdbcType=VARCHAR},
+      addr_guide = #{addrGuide,jdbcType=VARCHAR},
+      stop_pace = #{stopPace,jdbcType=VARCHAR},
+      stop_pace_intro = #{stopPaceIntro,jdbcType=VARCHAR},
+      health_safe_swim = #{healthSafeSwim,jdbcType=VARCHAR},
+      health_safe_pool = #{healthSafePool,jdbcType=VARCHAR},
+      warm_prompt = #{warmPrompt,jdbcType=VARCHAR},
+      create_time = #{createTime,jdbcType=TIMESTAMP},
+      update_time = #{updateTime,jdbcType=TIMESTAMP}
+    where id = #{id,jdbcType=VARCHAR}
+  </update>
+</mapper>

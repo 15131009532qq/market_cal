@@ -1,0 +1,155 @@
+#服务器配置
+server:
+  port: 8040
+
+#日志
+logging:
+  config: classpath:logback-spring.xml
+#是否开启SQL执行效率拦截器
+codeModel: true
+
+eureka:
+  client:
+    serviceUrl:
+      defaultZone: http://localhost:8671/eureka/
+  instance:
+    prefer-ip-address: true
+    #租期到期时间
+    lease-expiration-duration-in-seconds: 1
+    #租期更新间隔
+    lease-renewal-interval-in-seconds: 2
+    hostname: market_cal
+
+
+#加载数据源
+spring:
+  datasource:
+    druid:
+      #baseDataSource
+      db1:
+        username: root
+        password: 12345
+        driver-class-name: com.mysql.jdbc.Driver
+        url: jdbc:mysql://localhost:3306/egg-base?useUnicode=true&characterEncoding=UTF-8&zeroDateTimeBehavior=convertToNull
+        initialSize: 5
+        minIdle: 5
+        maxActive: 20
+        max-wait: 60000
+        test-on-borrow: false
+        test-on-return: false
+        test-while-idle: true
+      #goodsDataSource
+      db2:
+        username: root
+        password: 12345
+        driver-class-name: com.mysql.jdbc.Driver
+        url: jdbc:mysql://localhost:3306/egg-goods?useUnicode=true&characterEncoding=UTF-8&zeroDateTimeBehavior=convertToNull
+        initialSize: 5
+        minIdle: 5
+        maxActive: 20
+        max-wait: 60000
+        test-on-borrow: false
+        test-on-return: false
+        test-while-idle: true
+      #marketDataSource
+      db3:
+        username: root
+        password: 12345
+        driver-class-name: com.mysql.jdbc.Driver
+        url: jdbc:mysql://localhost:3306/egg-market?useUnicode=true&characterEncoding=UTF-8&zeroDateTimeBehavior=convertToNull
+        initialSize: 5
+        minIdle: 5
+        maxActive: 20
+        max-wait: 60000
+        test-on-borrow: false
+        test-on-return: false
+        test-while-idle: true
+      #memberDataSource
+      db4:
+        username: root
+        password: 12345
+        driver-class-name: com.mysql.jdbc.Driver
+        url: jdbc:mysql://localhost:3306/egg-member?useUnicode=true&characterEncoding=UTF-8&zeroDateTimeBehavior=convertToNull
+        initialSize: 5
+        minIdle: 5
+        maxActive: 20
+        max-wait: 60000
+        test-on-borrow: false
+        test-on-return: false
+        test-while-idle: true
+      #orderDataSource
+      db5:
+        username: root
+        password: 12345
+        driver-class-name: com.mysql.jdbc.Driver
+        url: jdbc:mysql://localhost:3306/egg-order?useUnicode=true&characterEncoding=UTF-8&zeroDateTimeBehavior=convertToNull
+        initialSize: 5
+        minIdle: 5
+        maxActive: 20
+        max-wait: 60000
+        test-on-borrow: false
+        test-on-return: false
+        test-while-idle: true
+  main:
+    allow-bean-definition-overriding: true
+
+  # Redis服务器地址
+  redis:
+    host: localhost
+    password: madworld
+    port: 6379
+    timeout: 100ms
+    jedis:
+      pool:
+        max-idle: 8
+        min-idle: 1
+        max-active: 8
+        max-wait: -1ms
+
+  #配置邮箱 默认第一数据源
+  mail:
+    host: smtp.exmail.qq.com
+    username: 
+    password: 
+    default-encoding: UTF-8
+    protocol: smtp
+    port: 465
+
+  #配置接受人邮箱
+sender-email:
+  mail:
+    mail-0:
+      host: smtp.exmail.qq.com
+      protocol : smtp
+      username: 
+    mail-1:
+      host: smtp.exmail.qq.com
+      protocol: smtp
+      username: 
+    mail-2:
+      host: smtp.exmail.qq.com
+      protocol: smtp
+      username: 
+    mail-3:
+      host: smtp.exmail.qq.com
+      protocol: smtp
+      username: 
+    mail-4:
+      host: smtp.exmail.qq.com
+      protocol: smtp
+      username: 
+    mail-5:
+      host: smtp.exmail.qq.com
+      protocol: smtp
+      username:
+    mail-6:
+      host: smtp.exmail.qq.com
+      protocol: smtp
+      username: 
+
+market:
+  service:
+    url: http://localhost
+goods:
+  service:
+    url: http://localhost

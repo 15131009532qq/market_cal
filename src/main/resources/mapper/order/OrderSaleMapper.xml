@@ -1,0 +1,718 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.mudule.mumzonemarketcal.component.mapper.order.OrderSaleMapper" >
+  <resultMap id="BaseResultMap" type="com.mudule.mumzonemarketcal.component.po.order.OrderSale" >
+    <id column="id" property="id" jdbcType="VARCHAR" />
+    <result column="member_company_id" property="memberCompanyId" jdbcType="VARCHAR" />
+    <result column="company_id" property="companyId" jdbcType="VARCHAR" />
+    <result column="shop_id" property="shopId" jdbcType="VARCHAR" />
+    <result column="saler_id" property="salerId" jdbcType="VARCHAR" />
+    <result column="order_code" property="orderCode" jdbcType="VARCHAR" />
+    <result column="phone" property="phone" jdbcType="VARCHAR" />
+    <result column="cashier" property="cashier" jdbcType="VARCHAR" />
+    <result column="pos_code" property="posCode" jdbcType="VARCHAR" />
+    <result column="amount" property="amount" jdbcType="DECIMAL" />
+    <result column="goods_count" property="goodsCount" jdbcType="INTEGER" />
+    <result column="bargaining_amount" property="bargainingAmount" jdbcType="DECIMAL" />
+    <result column="activity_id" property="activityId" jdbcType="VARCHAR" />
+    <result column="activity_amount" property="activityAmount" jdbcType="DECIMAL" />
+    <result column="ticket_id" property="ticketId" jdbcType="VARCHAR" />
+    <result column="ticket_amount" property="ticketAmount" jdbcType="DECIMAL" />
+    <result column="ml_price" property="mlPrice" jdbcType="DECIMAL" />
+    <result column="integral_money" property="integralMoney" jdbcType="INTEGER" />
+    <result column="integral_amount" property="integralAmount" jdbcType="DECIMAL" />
+    <result column="integral_goods" property="integralGoods" jdbcType="INTEGER" />
+    <result column="pay_amount" property="payAmount" jdbcType="DECIMAL" />
+    <result column="pay_type" property="payType" jdbcType="VARCHAR" />
+    <result column="order_status" property="orderStatus" jdbcType="VARCHAR" />
+    <result column="dl" property="dl" jdbcType="TINYINT" />
+    <result column="create_time" property="createTime" jdbcType="TIMESTAMP" />
+    <result column="update_time" property="updateTime" jdbcType="TIMESTAMP" />
+    <result column="cash_collection" property="cashCollection" jdbcType="DECIMAL" />
+    <result column="cash_change" property="cashChange" jdbcType="DECIMAL" />
+    <result column="billing_user" property="billingUser" jdbcType="VARCHAR" />
+    <result column="source" property="source" jdbcType="TINYINT" />
+    <result column="activity_name" property="activityName" jdbcType="VARCHAR" />
+    <result column="experience_id" property="experienceId" jdbcType="VARCHAR" />
+    <result column="experience_name" property="experienceName" jdbcType="VARCHAR" />
+    <result column="experience_amount" property="experienceAmount" jdbcType="DECIMAL" />
+    <result column="total_gain" property="totalGain" jdbcType="INTEGER" />
+    <result column="remark" property="remark" jdbcType="VARCHAR" />
+    <result column="tickets" property="tickets" jdbcType="VARCHAR" />
+  </resultMap>
+  <sql id="Example_Where_Clause" >
+    <where >
+      <foreach collection="oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Update_By_Example_Where_Clause" >
+    <where >
+      <foreach collection="example.oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Base_Column_List" >
+    id, member_company_id, company_id, shop_id, saler_id, order_code, phone, cashier, 
+    pos_code, amount, goods_count, bargaining_amount, activity_id, activity_amount, ticket_id, 
+    ticket_amount, ml_price, integral_money, integral_amount, integral_goods, pay_amount, 
+    pay_type, order_status, dl, create_time, update_time, cash_collection, cash_change, 
+    billing_user, source, activity_name, experience_id, experience_name, experience_amount, 
+    total_gain, remark, tickets
+  </sql>
+  <select id="selectByExample" resultMap="BaseResultMap" parameterType="com.mudule.mumzonemarketcal.component.po.order.OrderSaleExample" >
+    select
+    <if test="distinct" >
+      distinct
+    </if>
+    <include refid="Base_Column_List" />
+    from order_sale
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null" >
+      order by ${orderByClause}
+    </if>
+  </select>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.String" >
+    select 
+    <include refid="Base_Column_List" />
+    from order_sale
+    where id = #{id,jdbcType=VARCHAR}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.String" >
+    delete from order_sale
+    where id = #{id,jdbcType=VARCHAR}
+  </delete>
+  <delete id="deleteByExample" parameterType="com.mudule.mumzonemarketcal.component.po.order.OrderSaleExample" >
+    delete from order_sale
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+  </delete>
+  <insert id="insert" parameterType="com.mudule.mumzonemarketcal.component.po.order.OrderSale" >
+    insert into order_sale (id, member_company_id, company_id, 
+      shop_id, saler_id, order_code, 
+      phone, cashier, pos_code, 
+      amount, goods_count, bargaining_amount, 
+      activity_id, activity_amount, ticket_id, 
+      ticket_amount, ml_price, integral_money, 
+      integral_amount, integral_goods, pay_amount, 
+      pay_type, order_status, dl, 
+      create_time, update_time, cash_collection, 
+      cash_change, billing_user, source, 
+      activity_name, experience_id, experience_name, 
+      experience_amount, total_gain, remark, 
+      tickets)
+    values (#{id,jdbcType=VARCHAR}, #{memberCompanyId,jdbcType=VARCHAR}, #{companyId,jdbcType=VARCHAR}, 
+      #{shopId,jdbcType=VARCHAR}, #{salerId,jdbcType=VARCHAR}, #{orderCode,jdbcType=VARCHAR}, 
+      #{phone,jdbcType=VARCHAR}, #{cashier,jdbcType=VARCHAR}, #{posCode,jdbcType=VARCHAR}, 
+      #{amount,jdbcType=DECIMAL}, #{goodsCount,jdbcType=INTEGER}, #{bargainingAmount,jdbcType=DECIMAL}, 
+      #{activityId,jdbcType=VARCHAR}, #{activityAmount,jdbcType=DECIMAL}, #{ticketId,jdbcType=VARCHAR}, 
+      #{ticketAmount,jdbcType=DECIMAL}, #{mlPrice,jdbcType=DECIMAL}, #{integralMoney,jdbcType=INTEGER}, 
+      #{integralAmount,jdbcType=DECIMAL}, #{integralGoods,jdbcType=INTEGER}, #{payAmount,jdbcType=DECIMAL}, 
+      #{payType,jdbcType=VARCHAR}, #{orderStatus,jdbcType=VARCHAR}, #{dl,jdbcType=TINYINT}, 
+      #{createTime,jdbcType=TIMESTAMP}, #{updateTime,jdbcType=TIMESTAMP}, #{cashCollection,jdbcType=DECIMAL}, 
+      #{cashChange,jdbcType=DECIMAL}, #{billingUser,jdbcType=VARCHAR}, #{source,jdbcType=TINYINT}, 
+      #{activityName,jdbcType=VARCHAR}, #{experienceId,jdbcType=VARCHAR}, #{experienceName,jdbcType=VARCHAR}, 
+      #{experienceAmount,jdbcType=DECIMAL}, #{totalGain,jdbcType=INTEGER}, #{remark,jdbcType=VARCHAR}, 
+      #{tickets,jdbcType=VARCHAR})
+  </insert>
+  <insert id="insertSelective" parameterType="com.mudule.mumzonemarketcal.component.po.order.OrderSale" >
+    insert into order_sale
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        id,
+      </if>
+      <if test="memberCompanyId != null" >
+        member_company_id,
+      </if>
+      <if test="companyId != null" >
+        company_id,
+      </if>
+      <if test="shopId != null" >
+        shop_id,
+      </if>
+      <if test="salerId != null" >
+        saler_id,
+      </if>
+      <if test="orderCode != null" >
+        order_code,
+      </if>
+      <if test="phone != null" >
+        phone,
+      </if>
+      <if test="cashier != null" >
+        cashier,
+      </if>
+      <if test="posCode != null" >
+        pos_code,
+      </if>
+      <if test="amount != null" >
+        amount,
+      </if>
+      <if test="goodsCount != null" >
+        goods_count,
+      </if>
+      <if test="bargainingAmount != null" >
+        bargaining_amount,
+      </if>
+      <if test="activityId != null" >
+        activity_id,
+      </if>
+      <if test="activityAmount != null" >
+        activity_amount,
+      </if>
+      <if test="ticketId != null" >
+        ticket_id,
+      </if>
+      <if test="ticketAmount != null" >
+        ticket_amount,
+      </if>
+      <if test="mlPrice != null" >
+        ml_price,
+      </if>
+      <if test="integralMoney != null" >
+        integral_money,
+      </if>
+      <if test="integralAmount != null" >
+        integral_amount,
+      </if>
+      <if test="integralGoods != null" >
+        integral_goods,
+      </if>
+      <if test="payAmount != null" >
+        pay_amount,
+      </if>
+      <if test="payType != null" >
+        pay_type,
+      </if>
+      <if test="orderStatus != null" >
+        order_status,
+      </if>
+      <if test="dl != null" >
+        dl,
+      </if>
+      <if test="createTime != null" >
+        create_time,
+      </if>
+      <if test="updateTime != null" >
+        update_time,
+      </if>
+      <if test="cashCollection != null" >
+        cash_collection,
+      </if>
+      <if test="cashChange != null" >
+        cash_change,
+      </if>
+      <if test="billingUser != null" >
+        billing_user,
+      </if>
+      <if test="source != null" >
+        source,
+      </if>
+      <if test="activityName != null" >
+        activity_name,
+      </if>
+      <if test="experienceId != null" >
+        experience_id,
+      </if>
+      <if test="experienceName != null" >
+        experience_name,
+      </if>
+      <if test="experienceAmount != null" >
+        experience_amount,
+      </if>
+      <if test="totalGain != null" >
+        total_gain,
+      </if>
+      <if test="remark != null" >
+        remark,
+      </if>
+      <if test="tickets != null" >
+        tickets,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        #{id,jdbcType=VARCHAR},
+      </if>
+      <if test="memberCompanyId != null" >
+        #{memberCompanyId,jdbcType=VARCHAR},
+      </if>
+      <if test="companyId != null" >
+        #{companyId,jdbcType=VARCHAR},
+      </if>
+      <if test="shopId != null" >
+        #{shopId,jdbcType=VARCHAR},
+      </if>
+      <if test="salerId != null" >
+        #{salerId,jdbcType=VARCHAR},
+      </if>
+      <if test="orderCode != null" >
+        #{orderCode,jdbcType=VARCHAR},
+      </if>
+      <if test="phone != null" >
+        #{phone,jdbcType=VARCHAR},
+      </if>
+      <if test="cashier != null" >
+        #{cashier,jdbcType=VARCHAR},
+      </if>
+      <if test="posCode != null" >
+        #{posCode,jdbcType=VARCHAR},
+      </if>
+      <if test="amount != null" >
+        #{amount,jdbcType=DECIMAL},
+      </if>
+      <if test="goodsCount != null" >
+        #{goodsCount,jdbcType=INTEGER},
+      </if>
+      <if test="bargainingAmount != null" >
+        #{bargainingAmount,jdbcType=DECIMAL},
+      </if>
+      <if test="activityId != null" >
+        #{activityId,jdbcType=VARCHAR},
+      </if>
+      <if test="activityAmount != null" >
+        #{activityAmount,jdbcType=DECIMAL},
+      </if>
+      <if test="ticketId != null" >
+        #{ticketId,jdbcType=VARCHAR},
+      </if>
+      <if test="ticketAmount != null" >
+        #{ticketAmount,jdbcType=DECIMAL},
+      </if>
+      <if test="mlPrice != null" >
+        #{mlPrice,jdbcType=DECIMAL},
+      </if>
+      <if test="integralMoney != null" >
+        #{integralMoney,jdbcType=INTEGER},
+      </if>
+      <if test="integralAmount != null" >
+        #{integralAmount,jdbcType=DECIMAL},
+      </if>
+      <if test="integralGoods != null" >
+        #{integralGoods,jdbcType=INTEGER},
+      </if>
+      <if test="payAmount != null" >
+        #{payAmount,jdbcType=DECIMAL},
+      </if>
+      <if test="payType != null" >
+        #{payType,jdbcType=VARCHAR},
+      </if>
+      <if test="orderStatus != null" >
+        #{orderStatus,jdbcType=VARCHAR},
+      </if>
+      <if test="dl != null" >
+        #{dl,jdbcType=TINYINT},
+      </if>
+      <if test="createTime != null" >
+        #{createTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="updateTime != null" >
+        #{updateTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="cashCollection != null" >
+        #{cashCollection,jdbcType=DECIMAL},
+      </if>
+      <if test="cashChange != null" >
+        #{cashChange,jdbcType=DECIMAL},
+      </if>
+      <if test="billingUser != null" >
+        #{billingUser,jdbcType=VARCHAR},
+      </if>
+      <if test="source != null" >
+        #{source,jdbcType=TINYINT},
+      </if>
+      <if test="activityName != null" >
+        #{activityName,jdbcType=VARCHAR},
+      </if>
+      <if test="experienceId != null" >
+        #{experienceId,jdbcType=VARCHAR},
+      </if>
+      <if test="experienceName != null" >
+        #{experienceName,jdbcType=VARCHAR},
+      </if>
+      <if test="experienceAmount != null" >
+        #{experienceAmount,jdbcType=DECIMAL},
+      </if>
+      <if test="totalGain != null" >
+        #{totalGain,jdbcType=INTEGER},
+      </if>
+      <if test="remark != null" >
+        #{remark,jdbcType=VARCHAR},
+      </if>
+      <if test="tickets != null" >
+        #{tickets,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <select id="countByExample" parameterType="com.mudule.mumzonemarketcal.component.po.order.OrderSaleExample" resultType="java.lang.Integer" >
+    select count(*) from order_sale
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+  </select>
+  <update id="updateByExampleSelective" parameterType="map" >
+    update order_sale
+    <set >
+      <if test="record.id != null" >
+        id = #{record.id,jdbcType=VARCHAR},
+      </if>
+      <if test="record.memberCompanyId != null" >
+        member_company_id = #{record.memberCompanyId,jdbcType=VARCHAR},
+      </if>
+      <if test="record.companyId != null" >
+        company_id = #{record.companyId,jdbcType=VARCHAR},
+      </if>
+      <if test="record.shopId != null" >
+        shop_id = #{record.shopId,jdbcType=VARCHAR},
+      </if>
+      <if test="record.salerId != null" >
+        saler_id = #{record.salerId,jdbcType=VARCHAR},
+      </if>
+      <if test="record.orderCode != null" >
+        order_code = #{record.orderCode,jdbcType=VARCHAR},
+      </if>
+      <if test="record.phone != null" >
+        phone = #{record.phone,jdbcType=VARCHAR},
+      </if>
+      <if test="record.cashier != null" >
+        cashier = #{record.cashier,jdbcType=VARCHAR},
+      </if>
+      <if test="record.posCode != null" >
+        pos_code = #{record.posCode,jdbcType=VARCHAR},
+      </if>
+      <if test="record.amount != null" >
+        amount = #{record.amount,jdbcType=DECIMAL},
+      </if>
+      <if test="record.goodsCount != null" >
+        goods_count = #{record.goodsCount,jdbcType=INTEGER},
+      </if>
+      <if test="record.bargainingAmount != null" >
+        bargaining_amount = #{record.bargainingAmount,jdbcType=DECIMAL},
+      </if>
+      <if test="record.activityId != null" >
+        activity_id = #{record.activityId,jdbcType=VARCHAR},
+      </if>
+      <if test="record.activityAmount != null" >
+        activity_amount = #{record.activityAmount,jdbcType=DECIMAL},
+      </if>
+      <if test="record.ticketId != null" >
+        ticket_id = #{record.ticketId,jdbcType=VARCHAR},
+      </if>
+      <if test="record.ticketAmount != null" >
+        ticket_amount = #{record.ticketAmount,jdbcType=DECIMAL},
+      </if>
+      <if test="record.mlPrice != null" >
+        ml_price = #{record.mlPrice,jdbcType=DECIMAL},
+      </if>
+      <if test="record.integralMoney != null" >
+        integral_money = #{record.integralMoney,jdbcType=INTEGER},
+      </if>
+      <if test="record.integralAmount != null" >
+        integral_amount = #{record.integralAmount,jdbcType=DECIMAL},
+      </if>
+      <if test="record.integralGoods != null" >
+        integral_goods = #{record.integralGoods,jdbcType=INTEGER},
+      </if>
+      <if test="record.payAmount != null" >
+        pay_amount = #{record.payAmount,jdbcType=DECIMAL},
+      </if>
+      <if test="record.payType != null" >
+        pay_type = #{record.payType,jdbcType=VARCHAR},
+      </if>
+      <if test="record.orderStatus != null" >
+        order_status = #{record.orderStatus,jdbcType=VARCHAR},
+      </if>
+      <if test="record.dl != null" >
+        dl = #{record.dl,jdbcType=TINYINT},
+      </if>
+      <if test="record.createTime != null" >
+        create_time = #{record.createTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="record.updateTime != null" >
+        update_time = #{record.updateTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="record.cashCollection != null" >
+        cash_collection = #{record.cashCollection,jdbcType=DECIMAL},
+      </if>
+      <if test="record.cashChange != null" >
+        cash_change = #{record.cashChange,jdbcType=DECIMAL},
+      </if>
+      <if test="record.billingUser != null" >
+        billing_user = #{record.billingUser,jdbcType=VARCHAR},
+      </if>
+      <if test="record.source != null" >
+        source = #{record.source,jdbcType=TINYINT},
+      </if>
+      <if test="record.activityName != null" >
+        activity_name = #{record.activityName,jdbcType=VARCHAR},
+      </if>
+      <if test="record.experienceId != null" >
+        experience_id = #{record.experienceId,jdbcType=VARCHAR},
+      </if>
+      <if test="record.experienceName != null" >
+        experience_name = #{record.experienceName,jdbcType=VARCHAR},
+      </if>
+      <if test="record.experienceAmount != null" >
+        experience_amount = #{record.experienceAmount,jdbcType=DECIMAL},
+      </if>
+      <if test="record.totalGain != null" >
+        total_gain = #{record.totalGain,jdbcType=INTEGER},
+      </if>
+      <if test="record.remark != null" >
+        remark = #{record.remark,jdbcType=VARCHAR},
+      </if>
+      <if test="record.tickets != null" >
+        tickets = #{record.tickets,jdbcType=VARCHAR},
+      </if>
+    </set>
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByExample" parameterType="map" >
+    update order_sale
+    set id = #{record.id,jdbcType=VARCHAR},
+      member_company_id = #{record.memberCompanyId,jdbcType=VARCHAR},
+      company_id = #{record.companyId,jdbcType=VARCHAR},
+      shop_id = #{record.shopId,jdbcType=VARCHAR},
+      saler_id = #{record.salerId,jdbcType=VARCHAR},
+      order_code = #{record.orderCode,jdbcType=VARCHAR},
+      phone = #{record.phone,jdbcType=VARCHAR},
+      cashier = #{record.cashier,jdbcType=VARCHAR},
+      pos_code = #{record.posCode,jdbcType=VARCHAR},
+      amount = #{record.amount,jdbcType=DECIMAL},
+      goods_count = #{record.goodsCount,jdbcType=INTEGER},
+      bargaining_amount = #{record.bargainingAmount,jdbcType=DECIMAL},
+      activity_id = #{record.activityId,jdbcType=VARCHAR},
+      activity_amount = #{record.activityAmount,jdbcType=DECIMAL},
+      ticket_id = #{record.ticketId,jdbcType=VARCHAR},
+      ticket_amount = #{record.ticketAmount,jdbcType=DECIMAL},
+      ml_price = #{record.mlPrice,jdbcType=DECIMAL},
+      integral_money = #{record.integralMoney,jdbcType=INTEGER},
+      integral_amount = #{record.integralAmount,jdbcType=DECIMAL},
+      integral_goods = #{record.integralGoods,jdbcType=INTEGER},
+      pay_amount = #{record.payAmount,jdbcType=DECIMAL},
+      pay_type = #{record.payType,jdbcType=VARCHAR},
+      order_status = #{record.orderStatus,jdbcType=VARCHAR},
+      dl = #{record.dl,jdbcType=TINYINT},
+      create_time = #{record.createTime,jdbcType=TIMESTAMP},
+      update_time = #{record.updateTime,jdbcType=TIMESTAMP},
+      cash_collection = #{record.cashCollection,jdbcType=DECIMAL},
+      cash_change = #{record.cashChange,jdbcType=DECIMAL},
+      billing_user = #{record.billingUser,jdbcType=VARCHAR},
+      source = #{record.source,jdbcType=TINYINT},
+      activity_name = #{record.activityName,jdbcType=VARCHAR},
+      experience_id = #{record.experienceId,jdbcType=VARCHAR},
+      experience_name = #{record.experienceName,jdbcType=VARCHAR},
+      experience_amount = #{record.experienceAmount,jdbcType=DECIMAL},
+      total_gain = #{record.totalGain,jdbcType=INTEGER},
+      remark = #{record.remark,jdbcType=VARCHAR},
+      tickets = #{record.tickets,jdbcType=VARCHAR}
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByPrimaryKeySelective" parameterType="com.mudule.mumzonemarketcal.component.po.order.OrderSale" >
+    update order_sale
+    <set >
+      <if test="memberCompanyId != null" >
+        member_company_id = #{memberCompanyId,jdbcType=VARCHAR},
+      </if>
+      <if test="companyId != null" >
+        company_id = #{companyId,jdbcType=VARCHAR},
+      </if>
+      <if test="shopId != null" >
+        shop_id = #{shopId,jdbcType=VARCHAR},
+      </if>
+      <if test="salerId != null" >
+        saler_id = #{salerId,jdbcType=VARCHAR},
+      </if>
+      <if test="orderCode != null" >
+        order_code = #{orderCode,jdbcType=VARCHAR},
+      </if>
+      <if test="phone != null" >
+        phone = #{phone,jdbcType=VARCHAR},
+      </if>
+      <if test="cashier != null" >
+        cashier = #{cashier,jdbcType=VARCHAR},
+      </if>
+      <if test="posCode != null" >
+        pos_code = #{posCode,jdbcType=VARCHAR},
+      </if>
+      <if test="amount != null" >
+        amount = #{amount,jdbcType=DECIMAL},
+      </if>
+      <if test="goodsCount != null" >
+        goods_count = #{goodsCount,jdbcType=INTEGER},
+      </if>
+      <if test="bargainingAmount != null" >
+        bargaining_amount = #{bargainingAmount,jdbcType=DECIMAL},
+      </if>
+      <if test="activityId != null" >
+        activity_id = #{activityId,jdbcType=VARCHAR},
+      </if>
+      <if test="activityAmount != null" >
+        activity_amount = #{activityAmount,jdbcType=DECIMAL},
+      </if>
+      <if test="ticketId != null" >
+        ticket_id = #{ticketId,jdbcType=VARCHAR},
+      </if>
+      <if test="ticketAmount != null" >
+        ticket_amount = #{ticketAmount,jdbcType=DECIMAL},
+      </if>
+      <if test="mlPrice != null" >
+        ml_price = #{mlPrice,jdbcType=DECIMAL},
+      </if>
+      <if test="integralMoney != null" >
+        integral_money = #{integralMoney,jdbcType=INTEGER},
+      </if>
+      <if test="integralAmount != null" >
+        integral_amount = #{integralAmount,jdbcType=DECIMAL},
+      </if>
+      <if test="integralGoods != null" >
+        integral_goods = #{integralGoods,jdbcType=INTEGER},
+      </if>
+      <if test="payAmount != null" >
+        pay_amount = #{payAmount,jdbcType=DECIMAL},
+      </if>
+      <if test="payType != null" >
+        pay_type = #{payType,jdbcType=VARCHAR},
+      </if>
+      <if test="orderStatus != null" >
+        order_status = #{orderStatus,jdbcType=VARCHAR},
+      </if>
+      <if test="dl != null" >
+        dl = #{dl,jdbcType=TINYINT},
+      </if>
+      <if test="createTime != null" >
+        create_time = #{createTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="updateTime != null" >
+        update_time = #{updateTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="cashCollection != null" >
+        cash_collection = #{cashCollection,jdbcType=DECIMAL},
+      </if>
+      <if test="cashChange != null" >
+        cash_change = #{cashChange,jdbcType=DECIMAL},
+      </if>
+      <if test="billingUser != null" >
+        billing_user = #{billingUser,jdbcType=VARCHAR},
+      </if>
+      <if test="source != null" >
+        source = #{source,jdbcType=TINYINT},
+      </if>
+      <if test="activityName != null" >
+        activity_name = #{activityName,jdbcType=VARCHAR},
+      </if>
+      <if test="experienceId != null" >
+        experience_id = #{experienceId,jdbcType=VARCHAR},
+      </if>
+      <if test="experienceName != null" >
+        experience_name = #{experienceName,jdbcType=VARCHAR},
+      </if>
+      <if test="experienceAmount != null" >
+        experience_amount = #{experienceAmount,jdbcType=DECIMAL},
+      </if>
+      <if test="totalGain != null" >
+        total_gain = #{totalGain,jdbcType=INTEGER},
+      </if>
+      <if test="remark != null" >
+        remark = #{remark,jdbcType=VARCHAR},
+      </if>
+      <if test="tickets != null" >
+        tickets = #{tickets,jdbcType=VARCHAR},
+      </if>
+    </set>
+    where id = #{id,jdbcType=VARCHAR}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.mudule.mumzonemarketcal.component.po.order.OrderSale" >
+    update order_sale
+    set member_company_id = #{memberCompanyId,jdbcType=VARCHAR},
+      company_id = #{companyId,jdbcType=VARCHAR},
+      shop_id = #{shopId,jdbcType=VARCHAR},
+      saler_id = #{salerId,jdbcType=VARCHAR},
+      order_code = #{orderCode,jdbcType=VARCHAR},
+      phone = #{phone,jdbcType=VARCHAR},
+      cashier = #{cashier,jdbcType=VARCHAR},
+      pos_code = #{posCode,jdbcType=VARCHAR},
+      amount = #{amount,jdbcType=DECIMAL},
+      goods_count = #{goodsCount,jdbcType=INTEGER},
+      bargaining_amount = #{bargainingAmount,jdbcType=DECIMAL},
+      activity_id = #{activityId,jdbcType=VARCHAR},
+      activity_amount = #{activityAmount,jdbcType=DECIMAL},
+      ticket_id = #{ticketId,jdbcType=VARCHAR},
+      ticket_amount = #{ticketAmount,jdbcType=DECIMAL},
+      ml_price = #{mlPrice,jdbcType=DECIMAL},
+      integral_money = #{integralMoney,jdbcType=INTEGER},
+      integral_amount = #{integralAmount,jdbcType=DECIMAL},
+      integral_goods = #{integralGoods,jdbcType=INTEGER},
+      pay_amount = #{payAmount,jdbcType=DECIMAL},
+      pay_type = #{payType,jdbcType=VARCHAR},
+      order_status = #{orderStatus,jdbcType=VARCHAR},
+      dl = #{dl,jdbcType=TINYINT},
+      create_time = #{createTime,jdbcType=TIMESTAMP},
+      update_time = #{updateTime,jdbcType=TIMESTAMP},
+      cash_collection = #{cashCollection,jdbcType=DECIMAL},
+      cash_change = #{cashChange,jdbcType=DECIMAL},
+      billing_user = #{billingUser,jdbcType=VARCHAR},
+      source = #{source,jdbcType=TINYINT},
+      activity_name = #{activityName,jdbcType=VARCHAR},
+      experience_id = #{experienceId,jdbcType=VARCHAR},
+      experience_name = #{experienceName,jdbcType=VARCHAR},
+      experience_amount = #{experienceAmount,jdbcType=DECIMAL},
+      total_gain = #{totalGain,jdbcType=INTEGER},
+      remark = #{remark,jdbcType=VARCHAR},
+      tickets = #{tickets,jdbcType=VARCHAR}
+    where id = #{id,jdbcType=VARCHAR}
+  </update>
+</mapper>

@@ -1,0 +1,448 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.mudule.mumzonemarketcal.component.mapper.market.MarketPresentMapper" >
+  <resultMap id="BaseResultMap" type="com.mudule.mumzonemarketcal.component.po.market.MarketPresent" >
+    <id column="id" property="id" jdbcType="VARCHAR" />
+    <result column="company_id" property="companyId" jdbcType="VARCHAR" />
+    <result column="goods_id" property="goodsId" jdbcType="VARCHAR" />
+    <result column="goods_code" property="goodsCode" jdbcType="VARCHAR" />
+    <result column="goods_name" property="goodsName" jdbcType="VARCHAR" />
+    <result column="primary_classify" property="primaryClassify" jdbcType="VARCHAR" />
+    <result column="secondary_classify" property="secondaryClassify" jdbcType="VARCHAR" />
+    <result column="three_classify" property="threeClassify" jdbcType="VARCHAR" />
+    <result column="brand_id" property="brandId" jdbcType="VARCHAR" />
+    <result column="supplier_id" property="supplierId" jdbcType="VARCHAR" />
+    <result column="price" property="price" jdbcType="DECIMAL" />
+    <result column="goods_unit" property="goodsUnit" jdbcType="VARCHAR" />
+    <result column="status" property="status" jdbcType="TINYINT" />
+    <result column="create_time" property="createTime" jdbcType="TIMESTAMP" />
+    <result column="update_time" property="updateTime" jdbcType="TIMESTAMP" />
+    <result column="dr" property="dr" jdbcType="TINYINT" />
+    <result column="primary_name" property="primaryName" jdbcType="VARCHAR" />
+    <result column="secondary_name" property="secondaryName" jdbcType="VARCHAR" />
+    <result column="three_name" property="threeName" jdbcType="VARCHAR" />
+    <result column="goods_sku_id" property="goodsSkuId" jdbcType="VARCHAR" />
+  </resultMap>
+  <sql id="Example_Where_Clause" >
+    <where >
+      <foreach collection="oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Update_By_Example_Where_Clause" >
+    <where >
+      <foreach collection="example.oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Base_Column_List" >
+    id, company_id, goods_id, goods_code, goods_name, primary_classify, secondary_classify, 
+    three_classify, brand_id, supplier_id, price, goods_unit, status, create_time, update_time, 
+    dr, primary_name, secondary_name, three_name, goods_sku_id
+  </sql>
+  <select id="selectByExample" resultMap="BaseResultMap" parameterType="com.mudule.mumzonemarketcal.component.po.market.MarketPresentExample" >
+    select
+    <if test="distinct" >
+      distinct
+    </if>
+    <include refid="Base_Column_List" />
+    from market_present
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null" >
+      order by ${orderByClause}
+    </if>
+  </select>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.String" >
+    select 
+    <include refid="Base_Column_List" />
+    from market_present
+    where id = #{id,jdbcType=VARCHAR}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.String" >
+    delete from market_present
+    where id = #{id,jdbcType=VARCHAR}
+  </delete>
+  <delete id="deleteByExample" parameterType="com.mudule.mumzonemarketcal.component.po.market.MarketPresentExample" >
+    delete from market_present
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+  </delete>
+  <insert id="insert" parameterType="com.mudule.mumzonemarketcal.component.po.market.MarketPresent" >
+    insert into market_present (id, company_id, goods_id, 
+      goods_code, goods_name, primary_classify, 
+      secondary_classify, three_classify, brand_id, 
+      supplier_id, price, goods_unit, 
+      status, create_time, update_time, 
+      dr, primary_name, secondary_name, 
+      three_name, goods_sku_id)
+    values (#{id,jdbcType=VARCHAR}, #{companyId,jdbcType=VARCHAR}, #{goodsId,jdbcType=VARCHAR}, 
+      #{goodsCode,jdbcType=VARCHAR}, #{goodsName,jdbcType=VARCHAR}, #{primaryClassify,jdbcType=VARCHAR}, 
+      #{secondaryClassify,jdbcType=VARCHAR}, #{threeClassify,jdbcType=VARCHAR}, #{brandId,jdbcType=VARCHAR}, 
+      #{supplierId,jdbcType=VARCHAR}, #{price,jdbcType=DECIMAL}, #{goodsUnit,jdbcType=VARCHAR}, 
+      #{status,jdbcType=TINYINT}, #{createTime,jdbcType=TIMESTAMP}, #{updateTime,jdbcType=TIMESTAMP}, 
+      #{dr,jdbcType=TINYINT}, #{primaryName,jdbcType=VARCHAR}, #{secondaryName,jdbcType=VARCHAR}, 
+      #{threeName,jdbcType=VARCHAR}, #{goodsSkuId,jdbcType=VARCHAR})
+  </insert>
+  <insert id="insertSelective" parameterType="com.mudule.mumzonemarketcal.component.po.market.MarketPresent" >
+    insert into market_present
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        id,
+      </if>
+      <if test="companyId != null" >
+        company_id,
+      </if>
+      <if test="goodsId != null" >
+        goods_id,
+      </if>
+      <if test="goodsCode != null" >
+        goods_code,
+      </if>
+      <if test="goodsName != null" >
+        goods_name,
+      </if>
+      <if test="primaryClassify != null" >
+        primary_classify,
+      </if>
+      <if test="secondaryClassify != null" >
+        secondary_classify,
+      </if>
+      <if test="threeClassify != null" >
+        three_classify,
+      </if>
+      <if test="brandId != null" >
+        brand_id,
+      </if>
+      <if test="supplierId != null" >
+        supplier_id,
+      </if>
+      <if test="price != null" >
+        price,
+      </if>
+      <if test="goodsUnit != null" >
+        goods_unit,
+      </if>
+      <if test="status != null" >
+        status,
+      </if>
+      <if test="createTime != null" >
+        create_time,
+      </if>
+      <if test="updateTime != null" >
+        update_time,
+      </if>
+      <if test="dr != null" >
+        dr,
+      </if>
+      <if test="primaryName != null" >
+        primary_name,
+      </if>
+      <if test="secondaryName != null" >
+        secondary_name,
+      </if>
+      <if test="threeName != null" >
+        three_name,
+      </if>
+      <if test="goodsSkuId != null" >
+        goods_sku_id,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        #{id,jdbcType=VARCHAR},
+      </if>
+      <if test="companyId != null" >
+        #{companyId,jdbcType=VARCHAR},
+      </if>
+      <if test="goodsId != null" >
+        #{goodsId,jdbcType=VARCHAR},
+      </if>
+      <if test="goodsCode != null" >
+        #{goodsCode,jdbcType=VARCHAR},
+      </if>
+      <if test="goodsName != null" >
+        #{goodsName,jdbcType=VARCHAR},
+      </if>
+      <if test="primaryClassify != null" >
+        #{primaryClassify,jdbcType=VARCHAR},
+      </if>
+      <if test="secondaryClassify != null" >
+        #{secondaryClassify,jdbcType=VARCHAR},
+      </if>
+      <if test="threeClassify != null" >
+        #{threeClassify,jdbcType=VARCHAR},
+      </if>
+      <if test="brandId != null" >
+        #{brandId,jdbcType=VARCHAR},
+      </if>
+      <if test="supplierId != null" >
+        #{supplierId,jdbcType=VARCHAR},
+      </if>
+      <if test="price != null" >
+        #{price,jdbcType=DECIMAL},
+      </if>
+      <if test="goodsUnit != null" >
+        #{goodsUnit,jdbcType=VARCHAR},
+      </if>
+      <if test="status != null" >
+        #{status,jdbcType=TINYINT},
+      </if>
+      <if test="createTime != null" >
+        #{createTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="updateTime != null" >
+        #{updateTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="dr != null" >
+        #{dr,jdbcType=TINYINT},
+      </if>
+      <if test="primaryName != null" >
+        #{primaryName,jdbcType=VARCHAR},
+      </if>
+      <if test="secondaryName != null" >
+        #{secondaryName,jdbcType=VARCHAR},
+      </if>
+      <if test="threeName != null" >
+        #{threeName,jdbcType=VARCHAR},
+      </if>
+      <if test="goodsSkuId != null" >
+        #{goodsSkuId,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <select id="countByExample" parameterType="com.mudule.mumzonemarketcal.component.po.market.MarketPresentExample" resultType="java.lang.Integer" >
+    select count(*) from market_present
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+  </select>
+  <update id="updateByExampleSelective" parameterType="map" >
+    update market_present
+    <set >
+      <if test="record.id != null" >
+        id = #{record.id,jdbcType=VARCHAR},
+      </if>
+      <if test="record.companyId != null" >
+        company_id = #{record.companyId,jdbcType=VARCHAR},
+      </if>
+      <if test="record.goodsId != null" >
+        goods_id = #{record.goodsId,jdbcType=VARCHAR},
+      </if>
+      <if test="record.goodsCode != null" >
+        goods_code = #{record.goodsCode,jdbcType=VARCHAR},
+      </if>
+      <if test="record.goodsName != null" >
+        goods_name = #{record.goodsName,jdbcType=VARCHAR},
+      </if>
+      <if test="record.primaryClassify != null" >
+        primary_classify = #{record.primaryClassify,jdbcType=VARCHAR},
+      </if>
+      <if test="record.secondaryClassify != null" >
+        secondary_classify = #{record.secondaryClassify,jdbcType=VARCHAR},
+      </if>
+      <if test="record.threeClassify != null" >
+        three_classify = #{record.threeClassify,jdbcType=VARCHAR},
+      </if>
+      <if test="record.brandId != null" >
+        brand_id = #{record.brandId,jdbcType=VARCHAR},
+      </if>
+      <if test="record.supplierId != null" >
+        supplier_id = #{record.supplierId,jdbcType=VARCHAR},
+      </if>
+      <if test="record.price != null" >
+        price = #{record.price,jdbcType=DECIMAL},
+      </if>
+      <if test="record.goodsUnit != null" >
+        goods_unit = #{record.goodsUnit,jdbcType=VARCHAR},
+      </if>
+      <if test="record.status != null" >
+        status = #{record.status,jdbcType=TINYINT},
+      </if>
+      <if test="record.createTime != null" >
+        create_time = #{record.createTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="record.updateTime != null" >
+        update_time = #{record.updateTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="record.dr != null" >
+        dr = #{record.dr,jdbcType=TINYINT},
+      </if>
+      <if test="record.primaryName != null" >
+        primary_name = #{record.primaryName,jdbcType=VARCHAR},
+      </if>
+      <if test="record.secondaryName != null" >
+        secondary_name = #{record.secondaryName,jdbcType=VARCHAR},
+      </if>
+      <if test="record.threeName != null" >
+        three_name = #{record.threeName,jdbcType=VARCHAR},
+      </if>
+      <if test="record.goodsSkuId != null" >
+        goods_sku_id = #{record.goodsSkuId,jdbcType=VARCHAR},
+      </if>
+    </set>
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByExample" parameterType="map" >
+    update market_present
+    set id = #{record.id,jdbcType=VARCHAR},
+      company_id = #{record.companyId,jdbcType=VARCHAR},
+      goods_id = #{record.goodsId,jdbcType=VARCHAR},
+      goods_code = #{record.goodsCode,jdbcType=VARCHAR},
+      goods_name = #{record.goodsName,jdbcType=VARCHAR},
+      primary_classify = #{record.primaryClassify,jdbcType=VARCHAR},
+      secondary_classify = #{record.secondaryClassify,jdbcType=VARCHAR},
+      three_classify = #{record.threeClassify,jdbcType=VARCHAR},
+      brand_id = #{record.brandId,jdbcType=VARCHAR},
+      supplier_id = #{record.supplierId,jdbcType=VARCHAR},
+      price = #{record.price,jdbcType=DECIMAL},
+      goods_unit = #{record.goodsUnit,jdbcType=VARCHAR},
+      status = #{record.status,jdbcType=TINYINT},
+      create_time = #{record.createTime,jdbcType=TIMESTAMP},
+      update_time = #{record.updateTime,jdbcType=TIMESTAMP},
+      dr = #{record.dr,jdbcType=TINYINT},
+      primary_name = #{record.primaryName,jdbcType=VARCHAR},
+      secondary_name = #{record.secondaryName,jdbcType=VARCHAR},
+      three_name = #{record.threeName,jdbcType=VARCHAR},
+      goods_sku_id = #{record.goodsSkuId,jdbcType=VARCHAR}
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByPrimaryKeySelective" parameterType="com.mudule.mumzonemarketcal.component.po.market.MarketPresent" >
+    update market_present
+    <set >
+      <if test="companyId != null" >
+        company_id = #{companyId,jdbcType=VARCHAR},
+      </if>
+      <if test="goodsId != null" >
+        goods_id = #{goodsId,jdbcType=VARCHAR},
+      </if>
+      <if test="goodsCode != null" >
+        goods_code = #{goodsCode,jdbcType=VARCHAR},
+      </if>
+      <if test="goodsName != null" >
+        goods_name = #{goodsName,jdbcType=VARCHAR},
+      </if>
+      <if test="primaryClassify != null" >
+        primary_classify = #{primaryClassify,jdbcType=VARCHAR},
+      </if>
+      <if test="secondaryClassify != null" >
+        secondary_classify = #{secondaryClassify,jdbcType=VARCHAR},
+      </if>
+      <if test="threeClassify != null" >
+        three_classify = #{threeClassify,jdbcType=VARCHAR},
+      </if>
+      <if test="brandId != null" >
+        brand_id = #{brandId,jdbcType=VARCHAR},
+      </if>
+      <if test="supplierId != null" >
+        supplier_id = #{supplierId,jdbcType=VARCHAR},
+      </if>
+      <if test="price != null" >
+        price = #{price,jdbcType=DECIMAL},
+      </if>
+      <if test="goodsUnit != null" >
+        goods_unit = #{goodsUnit,jdbcType=VARCHAR},
+      </if>
+      <if test="status != null" >
+        status = #{status,jdbcType=TINYINT},
+      </if>
+      <if test="createTime != null" >
+        create_time = #{createTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="updateTime != null" >
+        update_time = #{updateTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="dr != null" >
+        dr = #{dr,jdbcType=TINYINT},
+      </if>
+      <if test="primaryName != null" >
+        primary_name = #{primaryName,jdbcType=VARCHAR},
+      </if>
+      <if test="secondaryName != null" >
+        secondary_name = #{secondaryName,jdbcType=VARCHAR},
+      </if>
+      <if test="threeName != null" >
+        three_name = #{threeName,jdbcType=VARCHAR},
+      </if>
+      <if test="goodsSkuId != null" >
+        goods_sku_id = #{goodsSkuId,jdbcType=VARCHAR},
+      </if>
+    </set>
+    where id = #{id,jdbcType=VARCHAR}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.mudule.mumzonemarketcal.component.po.market.MarketPresent" >
+    update market_present
+    set company_id = #{companyId,jdbcType=VARCHAR},
+      goods_id = #{goodsId,jdbcType=VARCHAR},
+      goods_code = #{goodsCode,jdbcType=VARCHAR},
+      goods_name = #{goodsName,jdbcType=VARCHAR},
+      primary_classify = #{primaryClassify,jdbcType=VARCHAR},
+      secondary_classify = #{secondaryClassify,jdbcType=VARCHAR},
+      three_classify = #{threeClassify,jdbcType=VARCHAR},
+      brand_id = #{brandId,jdbcType=VARCHAR},
+      supplier_id = #{supplierId,jdbcType=VARCHAR},
+      price = #{price,jdbcType=DECIMAL},
+      goods_unit = #{goodsUnit,jdbcType=VARCHAR},
+      status = #{status,jdbcType=TINYINT},
+      create_time = #{createTime,jdbcType=TIMESTAMP},
+      update_time = #{updateTime,jdbcType=TIMESTAMP},
+      dr = #{dr,jdbcType=TINYINT},
+      primary_name = #{primaryName,jdbcType=VARCHAR},
+      secondary_name = #{secondaryName,jdbcType=VARCHAR},
+      three_name = #{threeName,jdbcType=VARCHAR},
+      goods_sku_id = #{goodsSkuId,jdbcType=VARCHAR}
+    where id = #{id,jdbcType=VARCHAR}
+  </update>
+</mapper>

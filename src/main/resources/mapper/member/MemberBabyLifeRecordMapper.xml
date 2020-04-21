@@ -1,0 +1,370 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.mudule.mumzonemarketcal.component.mapper.member.MemberBabyLifeRecordMapper" >
+  <resultMap id="BaseResultMap" type="com.mudule.mumzonemarketcal.component.po.member.MemberBabyLifeRecord" >
+    <id column="id" property="id" jdbcType="VARCHAR" />
+    <result column="member_company_id" property="memberCompanyId" jdbcType="VARCHAR" />
+    <result column="baby_id" property="babyId" jdbcType="VARCHAR" />
+    <result column="relationship_id" property="relationshipId" jdbcType="VARCHAR" />
+    <result column="relationship_name" property="relationshipName" jdbcType="VARCHAR" />
+    <result column="content" property="content" jdbcType="VARCHAR" />
+    <result column="height" property="height" jdbcType="DECIMAL" />
+    <result column="weight" property="weight" jdbcType="DECIMAL" />
+    <result column="create_time" property="createTime" jdbcType="TIMESTAMP" />
+    <result column="update_time" property="updateTime" jdbcType="TIMESTAMP" />
+    <result column="dr" property="dr" jdbcType="TINYINT" />
+    <result column="record_type" property="recordType" jdbcType="TINYINT" />
+    <result column="shop_id" property="shopId" jdbcType="VARCHAR" />
+    <result column="calories" property="calories" jdbcType="VARCHAR" />
+    <result column="time_length" property="timeLength" jdbcType="VARCHAR" />
+  </resultMap>
+  <sql id="Example_Where_Clause" >
+    <where >
+      <foreach collection="oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Update_By_Example_Where_Clause" >
+    <where >
+      <foreach collection="example.oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Base_Column_List" >
+    id, member_company_id, baby_id, relationship_id, relationship_name, content, height, 
+    weight, create_time, update_time, dr, record_type, shop_id, calories, time_length
+  </sql>
+  <select id="selectByExample" resultMap="BaseResultMap" parameterType="com.mudule.mumzonemarketcal.component.po.member.MemberBabyLifeRecordExample" >
+    select
+    <if test="distinct" >
+      distinct
+    </if>
+    <include refid="Base_Column_List" />
+    from member_baby_life_record
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null" >
+      order by ${orderByClause}
+    </if>
+  </select>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.String" >
+    select 
+    <include refid="Base_Column_List" />
+    from member_baby_life_record
+    where id = #{id,jdbcType=VARCHAR}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.String" >
+    delete from member_baby_life_record
+    where id = #{id,jdbcType=VARCHAR}
+  </delete>
+  <delete id="deleteByExample" parameterType="com.mudule.mumzonemarketcal.component.po.member.MemberBabyLifeRecordExample" >
+    delete from member_baby_life_record
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+  </delete>
+  <insert id="insert" parameterType="com.mudule.mumzonemarketcal.component.po.member.MemberBabyLifeRecord" >
+    insert into member_baby_life_record (id, member_company_id, baby_id, 
+      relationship_id, relationship_name, content, 
+      height, weight, create_time, 
+      update_time, dr, record_type, 
+      shop_id, calories, time_length
+      )
+    values (#{id,jdbcType=VARCHAR}, #{memberCompanyId,jdbcType=VARCHAR}, #{babyId,jdbcType=VARCHAR}, 
+      #{relationshipId,jdbcType=VARCHAR}, #{relationshipName,jdbcType=VARCHAR}, #{content,jdbcType=VARCHAR}, 
+      #{height,jdbcType=DECIMAL}, #{weight,jdbcType=DECIMAL}, #{createTime,jdbcType=TIMESTAMP}, 
+      #{updateTime,jdbcType=TIMESTAMP}, #{dr,jdbcType=TINYINT}, #{recordType,jdbcType=TINYINT}, 
+      #{shopId,jdbcType=VARCHAR}, #{calories,jdbcType=VARCHAR}, #{timeLength,jdbcType=VARCHAR}
+      )
+  </insert>
+  <insert id="insertSelective" parameterType="com.mudule.mumzonemarketcal.component.po.member.MemberBabyLifeRecord" >
+    insert into member_baby_life_record
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        id,
+      </if>
+      <if test="memberCompanyId != null" >
+        member_company_id,
+      </if>
+      <if test="babyId != null" >
+        baby_id,
+      </if>
+      <if test="relationshipId != null" >
+        relationship_id,
+      </if>
+      <if test="relationshipName != null" >
+        relationship_name,
+      </if>
+      <if test="content != null" >
+        content,
+      </if>
+      <if test="height != null" >
+        height,
+      </if>
+      <if test="weight != null" >
+        weight,
+      </if>
+      <if test="createTime != null" >
+        create_time,
+      </if>
+      <if test="updateTime != null" >
+        update_time,
+      </if>
+      <if test="dr != null" >
+        dr,
+      </if>
+      <if test="recordType != null" >
+        record_type,
+      </if>
+      <if test="shopId != null" >
+        shop_id,
+      </if>
+      <if test="calories != null" >
+        calories,
+      </if>
+      <if test="timeLength != null" >
+        time_length,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        #{id,jdbcType=VARCHAR},
+      </if>
+      <if test="memberCompanyId != null" >
+        #{memberCompanyId,jdbcType=VARCHAR},
+      </if>
+      <if test="babyId != null" >
+        #{babyId,jdbcType=VARCHAR},
+      </if>
+      <if test="relationshipId != null" >
+        #{relationshipId,jdbcType=VARCHAR},
+      </if>
+      <if test="relationshipName != null" >
+        #{relationshipName,jdbcType=VARCHAR},
+      </if>
+      <if test="content != null" >
+        #{content,jdbcType=VARCHAR},
+      </if>
+      <if test="height != null" >
+        #{height,jdbcType=DECIMAL},
+      </if>
+      <if test="weight != null" >
+        #{weight,jdbcType=DECIMAL},
+      </if>
+      <if test="createTime != null" >
+        #{createTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="updateTime != null" >
+        #{updateTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="dr != null" >
+        #{dr,jdbcType=TINYINT},
+      </if>
+      <if test="recordType != null" >
+        #{recordType,jdbcType=TINYINT},
+      </if>
+      <if test="shopId != null" >
+        #{shopId,jdbcType=VARCHAR},
+      </if>
+      <if test="calories != null" >
+        #{calories,jdbcType=VARCHAR},
+      </if>
+      <if test="timeLength != null" >
+        #{timeLength,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <select id="countByExample" parameterType="com.mudule.mumzonemarketcal.component.po.member.MemberBabyLifeRecordExample" resultType="java.lang.Integer" >
+    select count(*) from member_baby_life_record
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+  </select>
+  <update id="updateByExampleSelective" parameterType="map" >
+    update member_baby_life_record
+    <set >
+      <if test="record.id != null" >
+        id = #{record.id,jdbcType=VARCHAR},
+      </if>
+      <if test="record.memberCompanyId != null" >
+        member_company_id = #{record.memberCompanyId,jdbcType=VARCHAR},
+      </if>
+      <if test="record.babyId != null" >
+        baby_id = #{record.babyId,jdbcType=VARCHAR},
+      </if>
+      <if test="record.relationshipId != null" >
+        relationship_id = #{record.relationshipId,jdbcType=VARCHAR},
+      </if>
+      <if test="record.relationshipName != null" >
+        relationship_name = #{record.relationshipName,jdbcType=VARCHAR},
+      </if>
+      <if test="record.content != null" >
+        content = #{record.content,jdbcType=VARCHAR},
+      </if>
+      <if test="record.height != null" >
+        height = #{record.height,jdbcType=DECIMAL},
+      </if>
+      <if test="record.weight != null" >
+        weight = #{record.weight,jdbcType=DECIMAL},
+      </if>
+      <if test="record.createTime != null" >
+        create_time = #{record.createTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="record.updateTime != null" >
+        update_time = #{record.updateTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="record.dr != null" >
+        dr = #{record.dr,jdbcType=TINYINT},
+      </if>
+      <if test="record.recordType != null" >
+        record_type = #{record.recordType,jdbcType=TINYINT},
+      </if>
+      <if test="record.shopId != null" >
+        shop_id = #{record.shopId,jdbcType=VARCHAR},
+      </if>
+      <if test="record.calories != null" >
+        calories = #{record.calories,jdbcType=VARCHAR},
+      </if>
+      <if test="record.timeLength != null" >
+        time_length = #{record.timeLength,jdbcType=VARCHAR},
+      </if>
+    </set>
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByExample" parameterType="map" >
+    update member_baby_life_record
+    set id = #{record.id,jdbcType=VARCHAR},
+      member_company_id = #{record.memberCompanyId,jdbcType=VARCHAR},
+      baby_id = #{record.babyId,jdbcType=VARCHAR},
+      relationship_id = #{record.relationshipId,jdbcType=VARCHAR},
+      relationship_name = #{record.relationshipName,jdbcType=VARCHAR},
+      content = #{record.content,jdbcType=VARCHAR},
+      height = #{record.height,jdbcType=DECIMAL},
+      weight = #{record.weight,jdbcType=DECIMAL},
+      create_time = #{record.createTime,jdbcType=TIMESTAMP},
+      update_time = #{record.updateTime,jdbcType=TIMESTAMP},
+      dr = #{record.dr,jdbcType=TINYINT},
+      record_type = #{record.recordType,jdbcType=TINYINT},
+      shop_id = #{record.shopId,jdbcType=VARCHAR},
+      calories = #{record.calories,jdbcType=VARCHAR},
+      time_length = #{record.timeLength,jdbcType=VARCHAR}
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByPrimaryKeySelective" parameterType="com.mudule.mumzonemarketcal.component.po.member.MemberBabyLifeRecord" >
+    update member_baby_life_record
+    <set >
+      <if test="memberCompanyId != null" >
+        member_company_id = #{memberCompanyId,jdbcType=VARCHAR},
+      </if>
+      <if test="babyId != null" >
+        baby_id = #{babyId,jdbcType=VARCHAR},
+      </if>
+      <if test="relationshipId != null" >
+        relationship_id = #{relationshipId,jdbcType=VARCHAR},
+      </if>
+      <if test="relationshipName != null" >
+        relationship_name = #{relationshipName,jdbcType=VARCHAR},
+      </if>
+      <if test="content != null" >
+        content = #{content,jdbcType=VARCHAR},
+      </if>
+      <if test="height != null" >
+        height = #{height,jdbcType=DECIMAL},
+      </if>
+      <if test="weight != null" >
+        weight = #{weight,jdbcType=DECIMAL},
+      </if>
+      <if test="createTime != null" >
+        create_time = #{createTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="updateTime != null" >
+        update_time = #{updateTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="dr != null" >
+        dr = #{dr,jdbcType=TINYINT},
+      </if>
+      <if test="recordType != null" >
+        record_type = #{recordType,jdbcType=TINYINT},
+      </if>
+      <if test="shopId != null" >
+        shop_id = #{shopId,jdbcType=VARCHAR},
+      </if>
+      <if test="calories != null" >
+        calories = #{calories,jdbcType=VARCHAR},
+      </if>
+      <if test="timeLength != null" >
+        time_length = #{timeLength,jdbcType=VARCHAR},
+      </if>
+    </set>
+    where id = #{id,jdbcType=VARCHAR}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.mudule.mumzonemarketcal.component.po.member.MemberBabyLifeRecord" >
+    update member_baby_life_record
+    set member_company_id = #{memberCompanyId,jdbcType=VARCHAR},
+      baby_id = #{babyId,jdbcType=VARCHAR},
+      relationship_id = #{relationshipId,jdbcType=VARCHAR},
+      relationship_name = #{relationshipName,jdbcType=VARCHAR},
+      content = #{content,jdbcType=VARCHAR},
+      height = #{height,jdbcType=DECIMAL},
+      weight = #{weight,jdbcType=DECIMAL},
+      create_time = #{createTime,jdbcType=TIMESTAMP},
+      update_time = #{updateTime,jdbcType=TIMESTAMP},
+      dr = #{dr,jdbcType=TINYINT},
+      record_type = #{recordType,jdbcType=TINYINT},
+      shop_id = #{shopId,jdbcType=VARCHAR},
+      calories = #{calories,jdbcType=VARCHAR},
+      time_length = #{timeLength,jdbcType=VARCHAR}
+    where id = #{id,jdbcType=VARCHAR}
+  </update>
+</mapper>

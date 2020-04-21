@@ -1,0 +1,608 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.mudule.mumzonemarketcal.component.mapper.order.OrderGoodsSaleMapper" >
+  <resultMap id="BaseResultMap" type="com.mudule.mumzonemarketcal.component.po.order.OrderGoodsSale" >
+    <id column="id" property="id" jdbcType="VARCHAR" />
+    <result column="sale_code" property="saleCode" jdbcType="VARCHAR" />
+    <result column="shop_id" property="shopId" jdbcType="VARCHAR" />
+    <result column="supplier_id" property="supplierId" jdbcType="VARCHAR" />
+    <result column="delivery_date" property="deliveryDate" jdbcType="DATE" />
+    <result column="purchase_code" property="purchaseCode" jdbcType="VARCHAR" />
+    <result column="purchase_id" property="purchaseId" jdbcType="VARCHAR" />
+    <result column="order_date" property="orderDate" jdbcType="DATE" />
+    <result column="purchase_status" property="purchaseStatus" jdbcType="TINYINT" />
+    <result column="received_status" property="receivedStatus" jdbcType="TINYINT" />
+    <result column="pay_status" property="payStatus" jdbcType="TINYINT" />
+    <result column="creator" property="creator" jdbcType="VARCHAR" />
+    <result column="sale_num" property="saleNum" jdbcType="INTEGER" />
+    <result column="send_num" property="sendNum" jdbcType="INTEGER" />
+    <result column="sale_amount" property="saleAmount" jdbcType="DECIMAL" />
+    <result column="freight" property="freight" jdbcType="DECIMAL" />
+    <result column="amount" property="amount" jdbcType="DECIMAL" />
+    <result column="pay_amount" property="payAmount" jdbcType="DECIMAL" />
+    <result column="sale_type" property="saleType" jdbcType="TINYINT" />
+    <result column="remark" property="remark" jdbcType="VARCHAR" />
+    <result column="create_time" property="createTime" jdbcType="TIMESTAMP" />
+    <result column="update_time" property="updateTime" jdbcType="TIMESTAMP" />
+    <result column="shop_name" property="shopName" jdbcType="VARCHAR" />
+    <result column="supplier_name" property="supplierName" jdbcType="VARCHAR" />
+    <result column="confirm_sale_amount" property="confirmSaleAmount" jdbcType="DECIMAL" />
+    <result column="confirm_freight" property="confirmFreight" jdbcType="DECIMAL" />
+    <result column="confirm_tax" property="confirmTax" jdbcType="DECIMAL" />
+    <result column="confirm_amount" property="confirmAmount" jdbcType="DECIMAL" />
+    <result column="confirm_sale_num" property="confirmSaleNum" jdbcType="INTEGER" />
+    <result column="status_flow" property="statusFlow" jdbcType="TINYINT" />
+  </resultMap>
+  <sql id="Example_Where_Clause" >
+    <where >
+      <foreach collection="oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Update_By_Example_Where_Clause" >
+    <where >
+      <foreach collection="example.oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Base_Column_List" >
+    id, sale_code, shop_id, supplier_id, delivery_date, purchase_code, purchase_id, order_date, 
+    purchase_status, received_status, pay_status, creator, sale_num, send_num, sale_amount, 
+    freight, amount, pay_amount, sale_type, remark, create_time, update_time, shop_name, 
+    supplier_name, confirm_sale_amount, confirm_freight, confirm_tax, confirm_amount, 
+    confirm_sale_num, status_flow
+  </sql>
+  <select id="selectByExample" resultMap="BaseResultMap" parameterType="com.mudule.mumzonemarketcal.component.po.order.OrderGoodsSaleExample" >
+    select
+    <if test="distinct" >
+      distinct
+    </if>
+    <include refid="Base_Column_List" />
+    from order_goods_sale
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null" >
+      order by ${orderByClause}
+    </if>
+  </select>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.String" >
+    select 
+    <include refid="Base_Column_List" />
+    from order_goods_sale
+    where id = #{id,jdbcType=VARCHAR}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.String" >
+    delete from order_goods_sale
+    where id = #{id,jdbcType=VARCHAR}
+  </delete>
+  <delete id="deleteByExample" parameterType="com.mudule.mumzonemarketcal.component.po.order.OrderGoodsSaleExample" >
+    delete from order_goods_sale
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+  </delete>
+  <insert id="insert" parameterType="com.mudule.mumzonemarketcal.component.po.order.OrderGoodsSale" >
+    insert into order_goods_sale (id, sale_code, shop_id, 
+      supplier_id, delivery_date, purchase_code, 
+      purchase_id, order_date, purchase_status, 
+      received_status, pay_status, creator, 
+      sale_num, send_num, sale_amount, 
+      freight, amount, pay_amount, 
+      sale_type, remark, create_time, 
+      update_time, shop_name, supplier_name, 
+      confirm_sale_amount, confirm_freight, confirm_tax, 
+      confirm_amount, confirm_sale_num, status_flow
+      )
+    values (#{id,jdbcType=VARCHAR}, #{saleCode,jdbcType=VARCHAR}, #{shopId,jdbcType=VARCHAR}, 
+      #{supplierId,jdbcType=VARCHAR}, #{deliveryDate,jdbcType=DATE}, #{purchaseCode,jdbcType=VARCHAR}, 
+      #{purchaseId,jdbcType=VARCHAR}, #{orderDate,jdbcType=DATE}, #{purchaseStatus,jdbcType=TINYINT}, 
+      #{receivedStatus,jdbcType=TINYINT}, #{payStatus,jdbcType=TINYINT}, #{creator,jdbcType=VARCHAR}, 
+      #{saleNum,jdbcType=INTEGER}, #{sendNum,jdbcType=INTEGER}, #{saleAmount,jdbcType=DECIMAL}, 
+      #{freight,jdbcType=DECIMAL}, #{amount,jdbcType=DECIMAL}, #{payAmount,jdbcType=DECIMAL}, 
+      #{saleType,jdbcType=TINYINT}, #{remark,jdbcType=VARCHAR}, #{createTime,jdbcType=TIMESTAMP}, 
+      #{updateTime,jdbcType=TIMESTAMP}, #{shopName,jdbcType=VARCHAR}, #{supplierName,jdbcType=VARCHAR}, 
+      #{confirmSaleAmount,jdbcType=DECIMAL}, #{confirmFreight,jdbcType=DECIMAL}, #{confirmTax,jdbcType=DECIMAL}, 
+      #{confirmAmount,jdbcType=DECIMAL}, #{confirmSaleNum,jdbcType=INTEGER}, #{statusFlow,jdbcType=TINYINT}
+      )
+  </insert>
+  <insert id="insertSelective" parameterType="com.mudule.mumzonemarketcal.component.po.order.OrderGoodsSale" >
+    insert into order_goods_sale
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        id,
+      </if>
+      <if test="saleCode != null" >
+        sale_code,
+      </if>
+      <if test="shopId != null" >
+        shop_id,
+      </if>
+      <if test="supplierId != null" >
+        supplier_id,
+      </if>
+      <if test="deliveryDate != null" >
+        delivery_date,
+      </if>
+      <if test="purchaseCode != null" >
+        purchase_code,
+      </if>
+      <if test="purchaseId != null" >
+        purchase_id,
+      </if>
+      <if test="orderDate != null" >
+        order_date,
+      </if>
+      <if test="purchaseStatus != null" >
+        purchase_status,
+      </if>
+      <if test="receivedStatus != null" >
+        received_status,
+      </if>
+      <if test="payStatus != null" >
+        pay_status,
+      </if>
+      <if test="creator != null" >
+        creator,
+      </if>
+      <if test="saleNum != null" >
+        sale_num,
+      </if>
+      <if test="sendNum != null" >
+        send_num,
+      </if>
+      <if test="saleAmount != null" >
+        sale_amount,
+      </if>
+      <if test="freight != null" >
+        freight,
+      </if>
+      <if test="amount != null" >
+        amount,
+      </if>
+      <if test="payAmount != null" >
+        pay_amount,
+      </if>
+      <if test="saleType != null" >
+        sale_type,
+      </if>
+      <if test="remark != null" >
+        remark,
+      </if>
+      <if test="createTime != null" >
+        create_time,
+      </if>
+      <if test="updateTime != null" >
+        update_time,
+      </if>
+      <if test="shopName != null" >
+        shop_name,
+      </if>
+      <if test="supplierName != null" >
+        supplier_name,
+      </if>
+      <if test="confirmSaleAmount != null" >
+        confirm_sale_amount,
+      </if>
+      <if test="confirmFreight != null" >
+        confirm_freight,
+      </if>
+      <if test="confirmTax != null" >
+        confirm_tax,
+      </if>
+      <if test="confirmAmount != null" >
+        confirm_amount,
+      </if>
+      <if test="confirmSaleNum != null" >
+        confirm_sale_num,
+      </if>
+      <if test="statusFlow != null" >
+        status_flow,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        #{id,jdbcType=VARCHAR},
+      </if>
+      <if test="saleCode != null" >
+        #{saleCode,jdbcType=VARCHAR},
+      </if>
+      <if test="shopId != null" >
+        #{shopId,jdbcType=VARCHAR},
+      </if>
+      <if test="supplierId != null" >
+        #{supplierId,jdbcType=VARCHAR},
+      </if>
+      <if test="deliveryDate != null" >
+        #{deliveryDate,jdbcType=DATE},
+      </if>
+      <if test="purchaseCode != null" >
+        #{purchaseCode,jdbcType=VARCHAR},
+      </if>
+      <if test="purchaseId != null" >
+        #{purchaseId,jdbcType=VARCHAR},
+      </if>
+      <if test="orderDate != null" >
+        #{orderDate,jdbcType=DATE},
+      </if>
+      <if test="purchaseStatus != null" >
+        #{purchaseStatus,jdbcType=TINYINT},
+      </if>
+      <if test="receivedStatus != null" >
+        #{receivedStatus,jdbcType=TINYINT},
+      </if>
+      <if test="payStatus != null" >
+        #{payStatus,jdbcType=TINYINT},
+      </if>
+      <if test="creator != null" >
+        #{creator,jdbcType=VARCHAR},
+      </if>
+      <if test="saleNum != null" >
+        #{saleNum,jdbcType=INTEGER},
+      </if>
+      <if test="sendNum != null" >
+        #{sendNum,jdbcType=INTEGER},
+      </if>
+      <if test="saleAmount != null" >
+        #{saleAmount,jdbcType=DECIMAL},
+      </if>
+      <if test="freight != null" >
+        #{freight,jdbcType=DECIMAL},
+      </if>
+      <if test="amount != null" >
+        #{amount,jdbcType=DECIMAL},
+      </if>
+      <if test="payAmount != null" >
+        #{payAmount,jdbcType=DECIMAL},
+      </if>
+      <if test="saleType != null" >
+        #{saleType,jdbcType=TINYINT},
+      </if>
+      <if test="remark != null" >
+        #{remark,jdbcType=VARCHAR},
+      </if>
+      <if test="createTime != null" >
+        #{createTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="updateTime != null" >
+        #{updateTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="shopName != null" >
+        #{shopName,jdbcType=VARCHAR},
+      </if>
+      <if test="supplierName != null" >
+        #{supplierName,jdbcType=VARCHAR},
+      </if>
+      <if test="confirmSaleAmount != null" >
+        #{confirmSaleAmount,jdbcType=DECIMAL},
+      </if>
+      <if test="confirmFreight != null" >
+        #{confirmFreight,jdbcType=DECIMAL},
+      </if>
+      <if test="confirmTax != null" >
+        #{confirmTax,jdbcType=DECIMAL},
+      </if>
+      <if test="confirmAmount != null" >
+        #{confirmAmount,jdbcType=DECIMAL},
+      </if>
+      <if test="confirmSaleNum != null" >
+        #{confirmSaleNum,jdbcType=INTEGER},
+      </if>
+      <if test="statusFlow != null" >
+        #{statusFlow,jdbcType=TINYINT},
+      </if>
+    </trim>
+  </insert>
+  <select id="countByExample" parameterType="com.mudule.mumzonemarketcal.component.po.order.OrderGoodsSaleExample" resultType="java.lang.Integer" >
+    select count(*) from order_goods_sale
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+  </select>
+  <update id="updateByExampleSelective" parameterType="map" >
+    update order_goods_sale
+    <set >
+      <if test="record.id != null" >
+        id = #{record.id,jdbcType=VARCHAR},
+      </if>
+      <if test="record.saleCode != null" >
+        sale_code = #{record.saleCode,jdbcType=VARCHAR},
+      </if>
+      <if test="record.shopId != null" >
+        shop_id = #{record.shopId,jdbcType=VARCHAR},
+      </if>
+      <if test="record.supplierId != null" >
+        supplier_id = #{record.supplierId,jdbcType=VARCHAR},
+      </if>
+      <if test="record.deliveryDate != null" >
+        delivery_date = #{record.deliveryDate,jdbcType=DATE},
+      </if>
+      <if test="record.purchaseCode != null" >
+        purchase_code = #{record.purchaseCode,jdbcType=VARCHAR},
+      </if>
+      <if test="record.purchaseId != null" >
+        purchase_id = #{record.purchaseId,jdbcType=VARCHAR},
+      </if>
+      <if test="record.orderDate != null" >
+        order_date = #{record.orderDate,jdbcType=DATE},
+      </if>
+      <if test="record.purchaseStatus != null" >
+        purchase_status = #{record.purchaseStatus,jdbcType=TINYINT},
+      </if>
+      <if test="record.receivedStatus != null" >
+        received_status = #{record.receivedStatus,jdbcType=TINYINT},
+      </if>
+      <if test="record.payStatus != null" >
+        pay_status = #{record.payStatus,jdbcType=TINYINT},
+      </if>
+      <if test="record.creator != null" >
+        creator = #{record.creator,jdbcType=VARCHAR},
+      </if>
+      <if test="record.saleNum != null" >
+        sale_num = #{record.saleNum,jdbcType=INTEGER},
+      </if>
+      <if test="record.sendNum != null" >
+        send_num = #{record.sendNum,jdbcType=INTEGER},
+      </if>
+      <if test="record.saleAmount != null" >
+        sale_amount = #{record.saleAmount,jdbcType=DECIMAL},
+      </if>
+      <if test="record.freight != null" >
+        freight = #{record.freight,jdbcType=DECIMAL},
+      </if>
+      <if test="record.amount != null" >
+        amount = #{record.amount,jdbcType=DECIMAL},
+      </if>
+      <if test="record.payAmount != null" >
+        pay_amount = #{record.payAmount,jdbcType=DECIMAL},
+      </if>
+      <if test="record.saleType != null" >
+        sale_type = #{record.saleType,jdbcType=TINYINT},
+      </if>
+      <if test="record.remark != null" >
+        remark = #{record.remark,jdbcType=VARCHAR},
+      </if>
+      <if test="record.createTime != null" >
+        create_time = #{record.createTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="record.updateTime != null" >
+        update_time = #{record.updateTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="record.shopName != null" >
+        shop_name = #{record.shopName,jdbcType=VARCHAR},
+      </if>
+      <if test="record.supplierName != null" >
+        supplier_name = #{record.supplierName,jdbcType=VARCHAR},
+      </if>
+      <if test="record.confirmSaleAmount != null" >
+        confirm_sale_amount = #{record.confirmSaleAmount,jdbcType=DECIMAL},
+      </if>
+      <if test="record.confirmFreight != null" >
+        confirm_freight = #{record.confirmFreight,jdbcType=DECIMAL},
+      </if>
+      <if test="record.confirmTax != null" >
+        confirm_tax = #{record.confirmTax,jdbcType=DECIMAL},
+      </if>
+      <if test="record.confirmAmount != null" >
+        confirm_amount = #{record.confirmAmount,jdbcType=DECIMAL},
+      </if>
+      <if test="record.confirmSaleNum != null" >
+        confirm_sale_num = #{record.confirmSaleNum,jdbcType=INTEGER},
+      </if>
+      <if test="record.statusFlow != null" >
+        status_flow = #{record.statusFlow,jdbcType=TINYINT},
+      </if>
+    </set>
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByExample" parameterType="map" >
+    update order_goods_sale
+    set id = #{record.id,jdbcType=VARCHAR},
+      sale_code = #{record.saleCode,jdbcType=VARCHAR},
+      shop_id = #{record.shopId,jdbcType=VARCHAR},
+      supplier_id = #{record.supplierId,jdbcType=VARCHAR},
+      delivery_date = #{record.deliveryDate,jdbcType=DATE},
+      purchase_code = #{record.purchaseCode,jdbcType=VARCHAR},
+      purchase_id = #{record.purchaseId,jdbcType=VARCHAR},
+      order_date = #{record.orderDate,jdbcType=DATE},
+      purchase_status = #{record.purchaseStatus,jdbcType=TINYINT},
+      received_status = #{record.receivedStatus,jdbcType=TINYINT},
+      pay_status = #{record.payStatus,jdbcType=TINYINT},
+      creator = #{record.creator,jdbcType=VARCHAR},
+      sale_num = #{record.saleNum,jdbcType=INTEGER},
+      send_num = #{record.sendNum,jdbcType=INTEGER},
+      sale_amount = #{record.saleAmount,jdbcType=DECIMAL},
+      freight = #{record.freight,jdbcType=DECIMAL},
+      amount = #{record.amount,jdbcType=DECIMAL},
+      pay_amount = #{record.payAmount,jdbcType=DECIMAL},
+      sale_type = #{record.saleType,jdbcType=TINYINT},
+      remark = #{record.remark,jdbcType=VARCHAR},
+      create_time = #{record.createTime,jdbcType=TIMESTAMP},
+      update_time = #{record.updateTime,jdbcType=TIMESTAMP},
+      shop_name = #{record.shopName,jdbcType=VARCHAR},
+      supplier_name = #{record.supplierName,jdbcType=VARCHAR},
+      confirm_sale_amount = #{record.confirmSaleAmount,jdbcType=DECIMAL},
+      confirm_freight = #{record.confirmFreight,jdbcType=DECIMAL},
+      confirm_tax = #{record.confirmTax,jdbcType=DECIMAL},
+      confirm_amount = #{record.confirmAmount,jdbcType=DECIMAL},
+      confirm_sale_num = #{record.confirmSaleNum,jdbcType=INTEGER},
+      status_flow = #{record.statusFlow,jdbcType=TINYINT}
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByPrimaryKeySelective" parameterType="com.mudule.mumzonemarketcal.component.po.order.OrderGoodsSale" >
+    update order_goods_sale
+    <set >
+      <if test="saleCode != null" >
+        sale_code = #{saleCode,jdbcType=VARCHAR},
+      </if>
+      <if test="shopId != null" >
+        shop_id = #{shopId,jdbcType=VARCHAR},
+      </if>
+      <if test="supplierId != null" >
+        supplier_id = #{supplierId,jdbcType=VARCHAR},
+      </if>
+      <if test="deliveryDate != null" >
+        delivery_date = #{deliveryDate,jdbcType=DATE},
+      </if>
+      <if test="purchaseCode != null" >
+        purchase_code = #{purchaseCode,jdbcType=VARCHAR},
+      </if>
+      <if test="purchaseId != null" >
+        purchase_id = #{purchaseId,jdbcType=VARCHAR},
+      </if>
+      <if test="orderDate != null" >
+        order_date = #{orderDate,jdbcType=DATE},
+      </if>
+      <if test="purchaseStatus != null" >
+        purchase_status = #{purchaseStatus,jdbcType=TINYINT},
+      </if>
+      <if test="receivedStatus != null" >
+        received_status = #{receivedStatus,jdbcType=TINYINT},
+      </if>
+      <if test="payStatus != null" >
+        pay_status = #{payStatus,jdbcType=TINYINT},
+      </if>
+      <if test="creator != null" >
+        creator = #{creator,jdbcType=VARCHAR},
+      </if>
+      <if test="saleNum != null" >
+        sale_num = #{saleNum,jdbcType=INTEGER},
+      </if>
+      <if test="sendNum != null" >
+        send_num = #{sendNum,jdbcType=INTEGER},
+      </if>
+      <if test="saleAmount != null" >
+        sale_amount = #{saleAmount,jdbcType=DECIMAL},
+      </if>
+      <if test="freight != null" >
+        freight = #{freight,jdbcType=DECIMAL},
+      </if>
+      <if test="amount != null" >
+        amount = #{amount,jdbcType=DECIMAL},
+      </if>
+      <if test="payAmount != null" >
+        pay_amount = #{payAmount,jdbcType=DECIMAL},
+      </if>
+      <if test="saleType != null" >
+        sale_type = #{saleType,jdbcType=TINYINT},
+      </if>
+      <if test="remark != null" >
+        remark = #{remark,jdbcType=VARCHAR},
+      </if>
+      <if test="createTime != null" >
+        create_time = #{createTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="updateTime != null" >
+        update_time = #{updateTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="shopName != null" >
+        shop_name = #{shopName,jdbcType=VARCHAR},
+      </if>
+      <if test="supplierName != null" >
+        supplier_name = #{supplierName,jdbcType=VARCHAR},
+      </if>
+      <if test="confirmSaleAmount != null" >
+        confirm_sale_amount = #{confirmSaleAmount,jdbcType=DECIMAL},
+      </if>
+      <if test="confirmFreight != null" >
+        confirm_freight = #{confirmFreight,jdbcType=DECIMAL},
+      </if>
+      <if test="confirmTax != null" >
+        confirm_tax = #{confirmTax,jdbcType=DECIMAL},
+      </if>
+      <if test="confirmAmount != null" >
+        confirm_amount = #{confirmAmount,jdbcType=DECIMAL},
+      </if>
+      <if test="confirmSaleNum != null" >
+        confirm_sale_num = #{confirmSaleNum,jdbcType=INTEGER},
+      </if>
+      <if test="statusFlow != null" >
+        status_flow = #{statusFlow,jdbcType=TINYINT},
+      </if>
+    </set>
+    where id = #{id,jdbcType=VARCHAR}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.mudule.mumzonemarketcal.component.po.order.OrderGoodsSale" >
+    update order_goods_sale
+    set sale_code = #{saleCode,jdbcType=VARCHAR},
+      shop_id = #{shopId,jdbcType=VARCHAR},
+      supplier_id = #{supplierId,jdbcType=VARCHAR},
+      delivery_date = #{deliveryDate,jdbcType=DATE},
+      purchase_code = #{purchaseCode,jdbcType=VARCHAR},
+      purchase_id = #{purchaseId,jdbcType=VARCHAR},
+      order_date = #{orderDate,jdbcType=DATE},
+      purchase_status = #{purchaseStatus,jdbcType=TINYINT},
+      received_status = #{receivedStatus,jdbcType=TINYINT},
+      pay_status = #{payStatus,jdbcType=TINYINT},
+      creator = #{creator,jdbcType=VARCHAR},
+      sale_num = #{saleNum,jdbcType=INTEGER},
+      send_num = #{sendNum,jdbcType=INTEGER},
+      sale_amount = #{saleAmount,jdbcType=DECIMAL},
+      freight = #{freight,jdbcType=DECIMAL},
+      amount = #{amount,jdbcType=DECIMAL},
+      pay_amount = #{payAmount,jdbcType=DECIMAL},
+      sale_type = #{saleType,jdbcType=TINYINT},
+      remark = #{remark,jdbcType=VARCHAR},
+      create_time = #{createTime,jdbcType=TIMESTAMP},
+      update_time = #{updateTime,jdbcType=TIMESTAMP},
+      shop_name = #{shopName,jdbcType=VARCHAR},
+      supplier_name = #{supplierName,jdbcType=VARCHAR},
+      confirm_sale_amount = #{confirmSaleAmount,jdbcType=DECIMAL},
+      confirm_freight = #{confirmFreight,jdbcType=DECIMAL},
+      confirm_tax = #{confirmTax,jdbcType=DECIMAL},
+      confirm_amount = #{confirmAmount,jdbcType=DECIMAL},
+      confirm_sale_num = #{confirmSaleNum,jdbcType=INTEGER},
+      status_flow = #{statusFlow,jdbcType=TINYINT}
+    where id = #{id,jdbcType=VARCHAR}
+  </update>
+</mapper>

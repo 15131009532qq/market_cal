@@ -1,0 +1,323 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.mudule.mumzonemarketcal.component.mapper.base.BaseZjAccountMapper" >
+  <resultMap id="BaseResultMap" type="com.mudule.mumzonemarketcal.component.po.base.BaseZjAccount" >
+    <id column="id" property="id" jdbcType="VARCHAR" />
+    <result column="base_shop_id" property="baseShopId" jdbcType="VARCHAR" />
+    <result column="account_name" property="accountName" jdbcType="VARCHAR" />
+    <result column="certificate_type" property="certificateType" jdbcType="TINYINT" />
+    <result column="certificate_no" property="certificateNo" jdbcType="VARCHAR" />
+    <result column="customer_type" property="customerType" jdbcType="TINYINT" />
+    <result column="status" property="status" jdbcType="TINYINT" />
+    <result column="dr" property="dr" jdbcType="TINYINT" />
+    <result column="cltaccBnkeid" property="cltaccbnkeid" jdbcType="VARCHAR" />
+    <result column="cltaccOpenbkcd" property="cltaccopenbkcd" jdbcType="VARCHAR" />
+    <result column="cltaccOpenbknm" property="cltaccopenbknm" jdbcType="VARCHAR" />
+    <result column="mchid" property="mchid" jdbcType="VARCHAR" />
+  </resultMap>
+  <sql id="Example_Where_Clause" >
+    <where >
+      <foreach collection="oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Update_By_Example_Where_Clause" >
+    <where >
+      <foreach collection="example.oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Base_Column_List" >
+    id, base_shop_id, account_name, certificate_type, certificate_no, customer_type, 
+    status, dr, cltaccBnkeid, cltaccOpenbkcd, cltaccOpenbknm, mchid
+  </sql>
+  <select id="selectByExample" resultMap="BaseResultMap" parameterType="com.mudule.mumzonemarketcal.component.po.base.BaseZjAccountExample" >
+    select
+    <if test="distinct" >
+      distinct
+    </if>
+    <include refid="Base_Column_List" />
+    from base_zj_account
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null" >
+      order by ${orderByClause}
+    </if>
+  </select>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.String" >
+    select 
+    <include refid="Base_Column_List" />
+    from base_zj_account
+    where id = #{id,jdbcType=VARCHAR}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.String" >
+    delete from base_zj_account
+    where id = #{id,jdbcType=VARCHAR}
+  </delete>
+  <delete id="deleteByExample" parameterType="com.mudule.mumzonemarketcal.component.po.base.BaseZjAccountExample" >
+    delete from base_zj_account
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+  </delete>
+  <insert id="insert" parameterType="com.mudule.mumzonemarketcal.component.po.base.BaseZjAccount" >
+    insert into base_zj_account (id, base_shop_id, account_name, 
+      certificate_type, certificate_no, customer_type, 
+      status, dr, cltaccBnkeid, 
+      cltaccOpenbkcd, cltaccOpenbknm, mchid
+      )
+    values (#{id,jdbcType=VARCHAR}, #{baseShopId,jdbcType=VARCHAR}, #{accountName,jdbcType=VARCHAR}, 
+      #{certificateType,jdbcType=TINYINT}, #{certificateNo,jdbcType=VARCHAR}, #{customerType,jdbcType=TINYINT}, 
+      #{status,jdbcType=TINYINT}, #{dr,jdbcType=TINYINT}, #{cltaccbnkeid,jdbcType=VARCHAR}, 
+      #{cltaccopenbkcd,jdbcType=VARCHAR}, #{cltaccopenbknm,jdbcType=VARCHAR}, #{mchid,jdbcType=VARCHAR}
+      )
+  </insert>
+  <insert id="insertSelective" parameterType="com.mudule.mumzonemarketcal.component.po.base.BaseZjAccount" >
+    insert into base_zj_account
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        id,
+      </if>
+      <if test="baseShopId != null" >
+        base_shop_id,
+      </if>
+      <if test="accountName != null" >
+        account_name,
+      </if>
+      <if test="certificateType != null" >
+        certificate_type,
+      </if>
+      <if test="certificateNo != null" >
+        certificate_no,
+      </if>
+      <if test="customerType != null" >
+        customer_type,
+      </if>
+      <if test="status != null" >
+        status,
+      </if>
+      <if test="dr != null" >
+        dr,
+      </if>
+      <if test="cltaccbnkeid != null" >
+        cltaccBnkeid,
+      </if>
+      <if test="cltaccopenbkcd != null" >
+        cltaccOpenbkcd,
+      </if>
+      <if test="cltaccopenbknm != null" >
+        cltaccOpenbknm,
+      </if>
+      <if test="mchid != null" >
+        mchid,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        #{id,jdbcType=VARCHAR},
+      </if>
+      <if test="baseShopId != null" >
+        #{baseShopId,jdbcType=VARCHAR},
+      </if>
+      <if test="accountName != null" >
+        #{accountName,jdbcType=VARCHAR},
+      </if>
+      <if test="certificateType != null" >
+        #{certificateType,jdbcType=TINYINT},
+      </if>
+      <if test="certificateNo != null" >
+        #{certificateNo,jdbcType=VARCHAR},
+      </if>
+      <if test="customerType != null" >
+        #{customerType,jdbcType=TINYINT},
+      </if>
+      <if test="status != null" >
+        #{status,jdbcType=TINYINT},
+      </if>
+      <if test="dr != null" >
+        #{dr,jdbcType=TINYINT},
+      </if>
+      <if test="cltaccbnkeid != null" >
+        #{cltaccbnkeid,jdbcType=VARCHAR},
+      </if>
+      <if test="cltaccopenbkcd != null" >
+        #{cltaccopenbkcd,jdbcType=VARCHAR},
+      </if>
+      <if test="cltaccopenbknm != null" >
+        #{cltaccopenbknm,jdbcType=VARCHAR},
+      </if>
+      <if test="mchid != null" >
+        #{mchid,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <select id="countByExample" parameterType="com.mudule.mumzonemarketcal.component.po.base.BaseZjAccountExample" resultType="java.lang.Integer" >
+    select count(*) from base_zj_account
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+  </select>
+  <update id="updateByExampleSelective" parameterType="map" >
+    update base_zj_account
+    <set >
+      <if test="record.id != null" >
+        id = #{record.id,jdbcType=VARCHAR},
+      </if>
+      <if test="record.baseShopId != null" >
+        base_shop_id = #{record.baseShopId,jdbcType=VARCHAR},
+      </if>
+      <if test="record.accountName != null" >
+        account_name = #{record.accountName,jdbcType=VARCHAR},
+      </if>
+      <if test="record.certificateType != null" >
+        certificate_type = #{record.certificateType,jdbcType=TINYINT},
+      </if>
+      <if test="record.certificateNo != null" >
+        certificate_no = #{record.certificateNo,jdbcType=VARCHAR},
+      </if>
+      <if test="record.customerType != null" >
+        customer_type = #{record.customerType,jdbcType=TINYINT},
+      </if>
+      <if test="record.status != null" >
+        status = #{record.status,jdbcType=TINYINT},
+      </if>
+      <if test="record.dr != null" >
+        dr = #{record.dr,jdbcType=TINYINT},
+      </if>
+      <if test="record.cltaccbnkeid != null" >
+        cltaccBnkeid = #{record.cltaccbnkeid,jdbcType=VARCHAR},
+      </if>
+      <if test="record.cltaccopenbkcd != null" >
+        cltaccOpenbkcd = #{record.cltaccopenbkcd,jdbcType=VARCHAR},
+      </if>
+      <if test="record.cltaccopenbknm != null" >
+        cltaccOpenbknm = #{record.cltaccopenbknm,jdbcType=VARCHAR},
+      </if>
+      <if test="record.mchid != null" >
+        mchid = #{record.mchid,jdbcType=VARCHAR},
+      </if>
+    </set>
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByExample" parameterType="map" >
+    update base_zj_account
+    set id = #{record.id,jdbcType=VARCHAR},
+      base_shop_id = #{record.baseShopId,jdbcType=VARCHAR},
+      account_name = #{record.accountName,jdbcType=VARCHAR},
+      certificate_type = #{record.certificateType,jdbcType=TINYINT},
+      certificate_no = #{record.certificateNo,jdbcType=VARCHAR},
+      customer_type = #{record.customerType,jdbcType=TINYINT},
+      status = #{record.status,jdbcType=TINYINT},
+      dr = #{record.dr,jdbcType=TINYINT},
+      cltaccBnkeid = #{record.cltaccbnkeid,jdbcType=VARCHAR},
+      cltaccOpenbkcd = #{record.cltaccopenbkcd,jdbcType=VARCHAR},
+      cltaccOpenbknm = #{record.cltaccopenbknm,jdbcType=VARCHAR},
+      mchid = #{record.mchid,jdbcType=VARCHAR}
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByPrimaryKeySelective" parameterType="com.mudule.mumzonemarketcal.component.po.base.BaseZjAccount" >
+    update base_zj_account
+    <set >
+      <if test="baseShopId != null" >
+        base_shop_id = #{baseShopId,jdbcType=VARCHAR},
+      </if>
+      <if test="accountName != null" >
+        account_name = #{accountName,jdbcType=VARCHAR},
+      </if>
+      <if test="certificateType != null" >
+        certificate_type = #{certificateType,jdbcType=TINYINT},
+      </if>
+      <if test="certificateNo != null" >
+        certificate_no = #{certificateNo,jdbcType=VARCHAR},
+      </if>
+      <if test="customerType != null" >
+        customer_type = #{customerType,jdbcType=TINYINT},
+      </if>
+      <if test="status != null" >
+        status = #{status,jdbcType=TINYINT},
+      </if>
+      <if test="dr != null" >
+        dr = #{dr,jdbcType=TINYINT},
+      </if>
+      <if test="cltaccbnkeid != null" >
+        cltaccBnkeid = #{cltaccbnkeid,jdbcType=VARCHAR},
+      </if>
+      <if test="cltaccopenbkcd != null" >
+        cltaccOpenbkcd = #{cltaccopenbkcd,jdbcType=VARCHAR},
+      </if>
+      <if test="cltaccopenbknm != null" >
+        cltaccOpenbknm = #{cltaccopenbknm,jdbcType=VARCHAR},
+      </if>
+      <if test="mchid != null" >
+        mchid = #{mchid,jdbcType=VARCHAR},
+      </if>
+    </set>
+    where id = #{id,jdbcType=VARCHAR}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.mudule.mumzonemarketcal.component.po.base.BaseZjAccount" >
+    update base_zj_account
+    set base_shop_id = #{baseShopId,jdbcType=VARCHAR},
+      account_name = #{accountName,jdbcType=VARCHAR},
+      certificate_type = #{certificateType,jdbcType=TINYINT},
+      certificate_no = #{certificateNo,jdbcType=VARCHAR},
+      customer_type = #{customerType,jdbcType=TINYINT},
+      status = #{status,jdbcType=TINYINT},
+      dr = #{dr,jdbcType=TINYINT},
+      cltaccBnkeid = #{cltaccbnkeid,jdbcType=VARCHAR},
+      cltaccOpenbkcd = #{cltaccopenbkcd,jdbcType=VARCHAR},
+      cltaccOpenbknm = #{cltaccopenbknm,jdbcType=VARCHAR},
+      mchid = #{mchid,jdbcType=VARCHAR}
+    where id = #{id,jdbcType=VARCHAR}
+  </update>
+</mapper>

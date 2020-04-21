@@ -1,0 +1,655 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.mudule.mumzonemarketcal.component.mapper.order.OrderSaleGoodsMapper" >
+  <resultMap id="BaseResultMap" type="com.mudule.mumzonemarketcal.component.po.order.OrderSaleGoods" >
+    <id column="id" property="id" jdbcType="VARCHAR" />
+    <result column="order_id" property="orderId" jdbcType="VARCHAR" />
+    <result column="order_code" property="orderCode" jdbcType="VARCHAR" />
+    <result column="sub_code" property="subCode" jdbcType="VARCHAR" />
+    <result column="goods_id" property="goodsId" jdbcType="VARCHAR" />
+    <result column="goods_name" property="goodsName" jdbcType="VARCHAR" />
+    <result column="goods_sku_id" property="goodsSkuId" jdbcType="VARCHAR" />
+    <result column="goods_count" property="goodsCount" jdbcType="INTEGER" />
+    <result column="price" property="price" jdbcType="DECIMAL" />
+    <result column="bargaining_price" property="bargainingPrice" jdbcType="DECIMAL" />
+    <result column="is_timer_card" property="isTimerCard" jdbcType="TINYINT" />
+    <result column="goods_type" property="goodsType" jdbcType="TINYINT" />
+    <result column="discount_id" property="discountId" jdbcType="VARCHAR" />
+    <result column="discount_price" property="discountPrice" jdbcType="DECIMAL" />
+    <result column="goods_amount" property="goodsAmount" jdbcType="DECIMAL" />
+    <result column="integral" property="integral" jdbcType="INTEGER" />
+    <result column="is_consign" property="isConsign" jdbcType="TINYINT" />
+    <result column="consign_num" property="consignNum" jdbcType="INTEGER" />
+    <result column="send_num" property="sendNum" jdbcType="INTEGER" />
+    <result column="status" property="status" jdbcType="TINYINT" />
+    <result column="is_exchange" property="isExchange" jdbcType="TINYINT" />
+    <result column="exchange_num" property="exchangeNum" jdbcType="INTEGER" />
+    <result column="is_return" property="isReturn" jdbcType="TINYINT" />
+    <result column="return_num" property="returnNum" jdbcType="INTEGER" />
+    <result column="create_time" property="createTime" jdbcType="TIMESTAMP" />
+    <result column="update_time" property="updateTime" jdbcType="TIMESTAMP" />
+    <result column="member_price" property="memberPrice" jdbcType="DECIMAL" />
+    <result column="goods_spec" property="goodsSpec" jdbcType="VARCHAR" />
+    <result column="goods_unit" property="goodsUnit" jdbcType="VARCHAR" />
+    <result column="unit_name" property="unitName" jdbcType="VARCHAR" />
+    <result column="obtain_integral" property="obtainIntegral" jdbcType="INTEGER" />
+    <result column="total_discount" property="totalDiscount" jdbcType="DECIMAL" />
+    <result column="sub_tickets" property="subTickets" jdbcType="VARCHAR" />
+  </resultMap>
+  <sql id="Example_Where_Clause" >
+    <where >
+      <foreach collection="oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Update_By_Example_Where_Clause" >
+    <where >
+      <foreach collection="example.oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Base_Column_List" >
+    id, order_id, order_code, sub_code, goods_id, goods_name, goods_sku_id, goods_count, 
+    price, bargaining_price, is_timer_card, goods_type, discount_id, discount_price, 
+    goods_amount, integral, is_consign, consign_num, send_num, status, is_exchange, exchange_num, 
+    is_return, return_num, create_time, update_time, member_price, goods_spec, goods_unit, 
+    unit_name, obtain_integral, total_discount, sub_tickets
+  </sql>
+  <select id="selectByExample" resultMap="BaseResultMap" parameterType="com.mudule.mumzonemarketcal.component.po.order.OrderSaleGoodsExample" >
+    select
+    <if test="distinct" >
+      distinct
+    </if>
+    <include refid="Base_Column_List" />
+    from order_sale_goods
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null" >
+      order by ${orderByClause}
+    </if>
+  </select>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.String" >
+    select 
+    <include refid="Base_Column_List" />
+    from order_sale_goods
+    where id = #{id,jdbcType=VARCHAR}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.String" >
+    delete from order_sale_goods
+    where id = #{id,jdbcType=VARCHAR}
+  </delete>
+  <delete id="deleteByExample" parameterType="com.mudule.mumzonemarketcal.component.po.order.OrderSaleGoodsExample" >
+    delete from order_sale_goods
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+  </delete>
+  <insert id="insert" parameterType="com.mudule.mumzonemarketcal.component.po.order.OrderSaleGoods" >
+    insert into order_sale_goods (id, order_id, order_code, 
+      sub_code, goods_id, goods_name, 
+      goods_sku_id, goods_count, price, 
+      bargaining_price, is_timer_card, goods_type, 
+      discount_id, discount_price, goods_amount, 
+      integral, is_consign, consign_num, 
+      send_num, status, is_exchange, 
+      exchange_num, is_return, return_num, 
+      create_time, update_time, member_price, 
+      goods_spec, goods_unit, unit_name, 
+      obtain_integral, total_discount, sub_tickets
+      )
+    values (#{id,jdbcType=VARCHAR}, #{orderId,jdbcType=VARCHAR}, #{orderCode,jdbcType=VARCHAR}, 
+      #{subCode,jdbcType=VARCHAR}, #{goodsId,jdbcType=VARCHAR}, #{goodsName,jdbcType=VARCHAR}, 
+      #{goodsSkuId,jdbcType=VARCHAR}, #{goodsCount,jdbcType=INTEGER}, #{price,jdbcType=DECIMAL}, 
+      #{bargainingPrice,jdbcType=DECIMAL}, #{isTimerCard,jdbcType=TINYINT}, #{goodsType,jdbcType=TINYINT}, 
+      #{discountId,jdbcType=VARCHAR}, #{discountPrice,jdbcType=DECIMAL}, #{goodsAmount,jdbcType=DECIMAL}, 
+      #{integral,jdbcType=INTEGER}, #{isConsign,jdbcType=TINYINT}, #{consignNum,jdbcType=INTEGER}, 
+      #{sendNum,jdbcType=INTEGER}, #{status,jdbcType=TINYINT}, #{isExchange,jdbcType=TINYINT}, 
+      #{exchangeNum,jdbcType=INTEGER}, #{isReturn,jdbcType=TINYINT}, #{returnNum,jdbcType=INTEGER}, 
+      #{createTime,jdbcType=TIMESTAMP}, #{updateTime,jdbcType=TIMESTAMP}, #{memberPrice,jdbcType=DECIMAL}, 
+      #{goodsSpec,jdbcType=VARCHAR}, #{goodsUnit,jdbcType=VARCHAR}, #{unitName,jdbcType=VARCHAR}, 
+      #{obtainIntegral,jdbcType=INTEGER}, #{totalDiscount,jdbcType=DECIMAL}, #{subTickets,jdbcType=VARCHAR}
+      )
+  </insert>
+  <insert id="insertSelective" parameterType="com.mudule.mumzonemarketcal.component.po.order.OrderSaleGoods" >
+    insert into order_sale_goods
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        id,
+      </if>
+      <if test="orderId != null" >
+        order_id,
+      </if>
+      <if test="orderCode != null" >
+        order_code,
+      </if>
+      <if test="subCode != null" >
+        sub_code,
+      </if>
+      <if test="goodsId != null" >
+        goods_id,
+      </if>
+      <if test="goodsName != null" >
+        goods_name,
+      </if>
+      <if test="goodsSkuId != null" >
+        goods_sku_id,
+      </if>
+      <if test="goodsCount != null" >
+        goods_count,
+      </if>
+      <if test="price != null" >
+        price,
+      </if>
+      <if test="bargainingPrice != null" >
+        bargaining_price,
+      </if>
+      <if test="isTimerCard != null" >
+        is_timer_card,
+      </if>
+      <if test="goodsType != null" >
+        goods_type,
+      </if>
+      <if test="discountId != null" >
+        discount_id,
+      </if>
+      <if test="discountPrice != null" >
+        discount_price,
+      </if>
+      <if test="goodsAmount != null" >
+        goods_amount,
+      </if>
+      <if test="integral != null" >
+        integral,
+      </if>
+      <if test="isConsign != null" >
+        is_consign,
+      </if>
+      <if test="consignNum != null" >
+        consign_num,
+      </if>
+      <if test="sendNum != null" >
+        send_num,
+      </if>
+      <if test="status != null" >
+        status,
+      </if>
+      <if test="isExchange != null" >
+        is_exchange,
+      </if>
+      <if test="exchangeNum != null" >
+        exchange_num,
+      </if>
+      <if test="isReturn != null" >
+        is_return,
+      </if>
+      <if test="returnNum != null" >
+        return_num,
+      </if>
+      <if test="createTime != null" >
+        create_time,
+      </if>
+      <if test="updateTime != null" >
+        update_time,
+      </if>
+      <if test="memberPrice != null" >
+        member_price,
+      </if>
+      <if test="goodsSpec != null" >
+        goods_spec,
+      </if>
+      <if test="goodsUnit != null" >
+        goods_unit,
+      </if>
+      <if test="unitName != null" >
+        unit_name,
+      </if>
+      <if test="obtainIntegral != null" >
+        obtain_integral,
+      </if>
+      <if test="totalDiscount != null" >
+        total_discount,
+      </if>
+      <if test="subTickets != null" >
+        sub_tickets,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        #{id,jdbcType=VARCHAR},
+      </if>
+      <if test="orderId != null" >
+        #{orderId,jdbcType=VARCHAR},
+      </if>
+      <if test="orderCode != null" >
+        #{orderCode,jdbcType=VARCHAR},
+      </if>
+      <if test="subCode != null" >
+        #{subCode,jdbcType=VARCHAR},
+      </if>
+      <if test="goodsId != null" >
+        #{goodsId,jdbcType=VARCHAR},
+      </if>
+      <if test="goodsName != null" >
+        #{goodsName,jdbcType=VARCHAR},
+      </if>
+      <if test="goodsSkuId != null" >
+        #{goodsSkuId,jdbcType=VARCHAR},
+      </if>
+      <if test="goodsCount != null" >
+        #{goodsCount,jdbcType=INTEGER},
+      </if>
+      <if test="price != null" >
+        #{price,jdbcType=DECIMAL},
+      </if>
+      <if test="bargainingPrice != null" >
+        #{bargainingPrice,jdbcType=DECIMAL},
+      </if>
+      <if test="isTimerCard != null" >
+        #{isTimerCard,jdbcType=TINYINT},
+      </if>
+      <if test="goodsType != null" >
+        #{goodsType,jdbcType=TINYINT},
+      </if>
+      <if test="discountId != null" >
+        #{discountId,jdbcType=VARCHAR},
+      </if>
+      <if test="discountPrice != null" >
+        #{discountPrice,jdbcType=DECIMAL},
+      </if>
+      <if test="goodsAmount != null" >
+        #{goodsAmount,jdbcType=DECIMAL},
+      </if>
+      <if test="integral != null" >
+        #{integral,jdbcType=INTEGER},
+      </if>
+      <if test="isConsign != null" >
+        #{isConsign,jdbcType=TINYINT},
+      </if>
+      <if test="consignNum != null" >
+        #{consignNum,jdbcType=INTEGER},
+      </if>
+      <if test="sendNum != null" >
+        #{sendNum,jdbcType=INTEGER},
+      </if>
+      <if test="status != null" >
+        #{status,jdbcType=TINYINT},
+      </if>
+      <if test="isExchange != null" >
+        #{isExchange,jdbcType=TINYINT},
+      </if>
+      <if test="exchangeNum != null" >
+        #{exchangeNum,jdbcType=INTEGER},
+      </if>
+      <if test="isReturn != null" >
+        #{isReturn,jdbcType=TINYINT},
+      </if>
+      <if test="returnNum != null" >
+        #{returnNum,jdbcType=INTEGER},
+      </if>
+      <if test="createTime != null" >
+        #{createTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="updateTime != null" >
+        #{updateTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="memberPrice != null" >
+        #{memberPrice,jdbcType=DECIMAL},
+      </if>
+      <if test="goodsSpec != null" >
+        #{goodsSpec,jdbcType=VARCHAR},
+      </if>
+      <if test="goodsUnit != null" >
+        #{goodsUnit,jdbcType=VARCHAR},
+      </if>
+      <if test="unitName != null" >
+        #{unitName,jdbcType=VARCHAR},
+      </if>
+      <if test="obtainIntegral != null" >
+        #{obtainIntegral,jdbcType=INTEGER},
+      </if>
+      <if test="totalDiscount != null" >
+        #{totalDiscount,jdbcType=DECIMAL},
+      </if>
+      <if test="subTickets != null" >
+        #{subTickets,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <select id="countByExample" parameterType="com.mudule.mumzonemarketcal.component.po.order.OrderSaleGoodsExample" resultType="java.lang.Integer" >
+    select count(*) from order_sale_goods
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+  </select>
+  <update id="updateByExampleSelective" parameterType="map" >
+    update order_sale_goods
+    <set >
+      <if test="record.id != null" >
+        id = #{record.id,jdbcType=VARCHAR},
+      </if>
+      <if test="record.orderId != null" >
+        order_id = #{record.orderId,jdbcType=VARCHAR},
+      </if>
+      <if test="record.orderCode != null" >
+        order_code = #{record.orderCode,jdbcType=VARCHAR},
+      </if>
+      <if test="record.subCode != null" >
+        sub_code = #{record.subCode,jdbcType=VARCHAR},
+      </if>
+      <if test="record.goodsId != null" >
+        goods_id = #{record.goodsId,jdbcType=VARCHAR},
+      </if>
+      <if test="record.goodsName != null" >
+        goods_name = #{record.goodsName,jdbcType=VARCHAR},
+      </if>
+      <if test="record.goodsSkuId != null" >
+        goods_sku_id = #{record.goodsSkuId,jdbcType=VARCHAR},
+      </if>
+      <if test="record.goodsCount != null" >
+        goods_count = #{record.goodsCount,jdbcType=INTEGER},
+      </if>
+      <if test="record.price != null" >
+        price = #{record.price,jdbcType=DECIMAL},
+      </if>
+      <if test="record.bargainingPrice != null" >
+        bargaining_price = #{record.bargainingPrice,jdbcType=DECIMAL},
+      </if>
+      <if test="record.isTimerCard != null" >
+        is_timer_card = #{record.isTimerCard,jdbcType=TINYINT},
+      </if>
+      <if test="record.goodsType != null" >
+        goods_type = #{record.goodsType,jdbcType=TINYINT},
+      </if>
+      <if test="record.discountId != null" >
+        discount_id = #{record.discountId,jdbcType=VARCHAR},
+      </if>
+      <if test="record.discountPrice != null" >
+        discount_price = #{record.discountPrice,jdbcType=DECIMAL},
+      </if>
+      <if test="record.goodsAmount != null" >
+        goods_amount = #{record.goodsAmount,jdbcType=DECIMAL},
+      </if>
+      <if test="record.integral != null" >
+        integral = #{record.integral,jdbcType=INTEGER},
+      </if>
+      <if test="record.isConsign != null" >
+        is_consign = #{record.isConsign,jdbcType=TINYINT},
+      </if>
+      <if test="record.consignNum != null" >
+        consign_num = #{record.consignNum,jdbcType=INTEGER},
+      </if>
+      <if test="record.sendNum != null" >
+        send_num = #{record.sendNum,jdbcType=INTEGER},
+      </if>
+      <if test="record.status != null" >
+        status = #{record.status,jdbcType=TINYINT},
+      </if>
+      <if test="record.isExchange != null" >
+        is_exchange = #{record.isExchange,jdbcType=TINYINT},
+      </if>
+      <if test="record.exchangeNum != null" >
+        exchange_num = #{record.exchangeNum,jdbcType=INTEGER},
+      </if>
+      <if test="record.isReturn != null" >
+        is_return = #{record.isReturn,jdbcType=TINYINT},
+      </if>
+      <if test="record.returnNum != null" >
+        return_num = #{record.returnNum,jdbcType=INTEGER},
+      </if>
+      <if test="record.createTime != null" >
+        create_time = #{record.createTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="record.updateTime != null" >
+        update_time = #{record.updateTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="record.memberPrice != null" >
+        member_price = #{record.memberPrice,jdbcType=DECIMAL},
+      </if>
+      <if test="record.goodsSpec != null" >
+        goods_spec = #{record.goodsSpec,jdbcType=VARCHAR},
+      </if>
+      <if test="record.goodsUnit != null" >
+        goods_unit = #{record.goodsUnit,jdbcType=VARCHAR},
+      </if>
+      <if test="record.unitName != null" >
+        unit_name = #{record.unitName,jdbcType=VARCHAR},
+      </if>
+      <if test="record.obtainIntegral != null" >
+        obtain_integral = #{record.obtainIntegral,jdbcType=INTEGER},
+      </if>
+      <if test="record.totalDiscount != null" >
+        total_discount = #{record.totalDiscount,jdbcType=DECIMAL},
+      </if>
+      <if test="record.subTickets != null" >
+        sub_tickets = #{record.subTickets,jdbcType=VARCHAR},
+      </if>
+    </set>
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByExample" parameterType="map" >
+    update order_sale_goods
+    set id = #{record.id,jdbcType=VARCHAR},
+      order_id = #{record.orderId,jdbcType=VARCHAR},
+      order_code = #{record.orderCode,jdbcType=VARCHAR},
+      sub_code = #{record.subCode,jdbcType=VARCHAR},
+      goods_id = #{record.goodsId,jdbcType=VARCHAR},
+      goods_name = #{record.goodsName,jdbcType=VARCHAR},
+      goods_sku_id = #{record.goodsSkuId,jdbcType=VARCHAR},
+      goods_count = #{record.goodsCount,jdbcType=INTEGER},
+      price = #{record.price,jdbcType=DECIMAL},
+      bargaining_price = #{record.bargainingPrice,jdbcType=DECIMAL},
+      is_timer_card = #{record.isTimerCard,jdbcType=TINYINT},
+      goods_type = #{record.goodsType,jdbcType=TINYINT},
+      discount_id = #{record.discountId,jdbcType=VARCHAR},
+      discount_price = #{record.discountPrice,jdbcType=DECIMAL},
+      goods_amount = #{record.goodsAmount,jdbcType=DECIMAL},
+      integral = #{record.integral,jdbcType=INTEGER},
+      is_consign = #{record.isConsign,jdbcType=TINYINT},
+      consign_num = #{record.consignNum,jdbcType=INTEGER},
+      send_num = #{record.sendNum,jdbcType=INTEGER},
+      status = #{record.status,jdbcType=TINYINT},
+      is_exchange = #{record.isExchange,jdbcType=TINYINT},
+      exchange_num = #{record.exchangeNum,jdbcType=INTEGER},
+      is_return = #{record.isReturn,jdbcType=TINYINT},
+      return_num = #{record.returnNum,jdbcType=INTEGER},
+      create_time = #{record.createTime,jdbcType=TIMESTAMP},
+      update_time = #{record.updateTime,jdbcType=TIMESTAMP},
+      member_price = #{record.memberPrice,jdbcType=DECIMAL},
+      goods_spec = #{record.goodsSpec,jdbcType=VARCHAR},
+      goods_unit = #{record.goodsUnit,jdbcType=VARCHAR},
+      unit_name = #{record.unitName,jdbcType=VARCHAR},
+      obtain_integral = #{record.obtainIntegral,jdbcType=INTEGER},
+      total_discount = #{record.totalDiscount,jdbcType=DECIMAL},
+      sub_tickets = #{record.subTickets,jdbcType=VARCHAR}
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByPrimaryKeySelective" parameterType="com.mudule.mumzonemarketcal.component.po.order.OrderSaleGoods" >
+    update order_sale_goods
+    <set >
+      <if test="orderId != null" >
+        order_id = #{orderId,jdbcType=VARCHAR},
+      </if>
+      <if test="orderCode != null" >
+        order_code = #{orderCode,jdbcType=VARCHAR},
+      </if>
+      <if test="subCode != null" >
+        sub_code = #{subCode,jdbcType=VARCHAR},
+      </if>
+      <if test="goodsId != null" >
+        goods_id = #{goodsId,jdbcType=VARCHAR},
+      </if>
+      <if test="goodsName != null" >
+        goods_name = #{goodsName,jdbcType=VARCHAR},
+      </if>
+      <if test="goodsSkuId != null" >
+        goods_sku_id = #{goodsSkuId,jdbcType=VARCHAR},
+      </if>
+      <if test="goodsCount != null" >
+        goods_count = #{goodsCount,jdbcType=INTEGER},
+      </if>
+      <if test="price != null" >
+        price = #{price,jdbcType=DECIMAL},
+      </if>
+      <if test="bargainingPrice != null" >
+        bargaining_price = #{bargainingPrice,jdbcType=DECIMAL},
+      </if>
+      <if test="isTimerCard != null" >
+        is_timer_card = #{isTimerCard,jdbcType=TINYINT},
+      </if>
+      <if test="goodsType != null" >
+        goods_type = #{goodsType,jdbcType=TINYINT},
+      </if>
+      <if test="discountId != null" >
+        discount_id = #{discountId,jdbcType=VARCHAR},
+      </if>
+      <if test="discountPrice != null" >
+        discount_price = #{discountPrice,jdbcType=DECIMAL},
+      </if>
+      <if test="goodsAmount != null" >
+        goods_amount = #{goodsAmount,jdbcType=DECIMAL},
+      </if>
+      <if test="integral != null" >
+        integral = #{integral,jdbcType=INTEGER},
+      </if>
+      <if test="isConsign != null" >
+        is_consign = #{isConsign,jdbcType=TINYINT},
+      </if>
+      <if test="consignNum != null" >
+        consign_num = #{consignNum,jdbcType=INTEGER},
+      </if>
+      <if test="sendNum != null" >
+        send_num = #{sendNum,jdbcType=INTEGER},
+      </if>
+      <if test="status != null" >
+        status = #{status,jdbcType=TINYINT},
+      </if>
+      <if test="isExchange != null" >
+        is_exchange = #{isExchange,jdbcType=TINYINT},
+      </if>
+      <if test="exchangeNum != null" >
+        exchange_num = #{exchangeNum,jdbcType=INTEGER},
+      </if>
+      <if test="isReturn != null" >
+        is_return = #{isReturn,jdbcType=TINYINT},
+      </if>
+      <if test="returnNum != null" >
+        return_num = #{returnNum,jdbcType=INTEGER},
+      </if>
+      <if test="createTime != null" >
+        create_time = #{createTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="updateTime != null" >
+        update_time = #{updateTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="memberPrice != null" >
+        member_price = #{memberPrice,jdbcType=DECIMAL},
+      </if>
+      <if test="goodsSpec != null" >
+        goods_spec = #{goodsSpec,jdbcType=VARCHAR},
+      </if>
+      <if test="goodsUnit != null" >
+        goods_unit = #{goodsUnit,jdbcType=VARCHAR},
+      </if>
+      <if test="unitName != null" >
+        unit_name = #{unitName,jdbcType=VARCHAR},
+      </if>
+      <if test="obtainIntegral != null" >
+        obtain_integral = #{obtainIntegral,jdbcType=INTEGER},
+      </if>
+      <if test="totalDiscount != null" >
+        total_discount = #{totalDiscount,jdbcType=DECIMAL},
+      </if>
+      <if test="subTickets != null" >
+        sub_tickets = #{subTickets,jdbcType=VARCHAR},
+      </if>
+    </set>
+    where id = #{id,jdbcType=VARCHAR}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.mudule.mumzonemarketcal.component.po.order.OrderSaleGoods" >
+    update order_sale_goods
+    set order_id = #{orderId,jdbcType=VARCHAR},
+      order_code = #{orderCode,jdbcType=VARCHAR},
+      sub_code = #{subCode,jdbcType=VARCHAR},
+      goods_id = #{goodsId,jdbcType=VARCHAR},
+      goods_name = #{goodsName,jdbcType=VARCHAR},
+      goods_sku_id = #{goodsSkuId,jdbcType=VARCHAR},
+      goods_count = #{goodsCount,jdbcType=INTEGER},
+      price = #{price,jdbcType=DECIMAL},
+      bargaining_price = #{bargainingPrice,jdbcType=DECIMAL},
+      is_timer_card = #{isTimerCard,jdbcType=TINYINT},
+      goods_type = #{goodsType,jdbcType=TINYINT},
+      discount_id = #{discountId,jdbcType=VARCHAR},
+      discount_price = #{discountPrice,jdbcType=DECIMAL},
+      goods_amount = #{goodsAmount,jdbcType=DECIMAL},
+      integral = #{integral,jdbcType=INTEGER},
+      is_consign = #{isConsign,jdbcType=TINYINT},
+      consign_num = #{consignNum,jdbcType=INTEGER},
+      send_num = #{sendNum,jdbcType=INTEGER},
+      status = #{status,jdbcType=TINYINT},
+      is_exchange = #{isExchange,jdbcType=TINYINT},
+      exchange_num = #{exchangeNum,jdbcType=INTEGER},
+      is_return = #{isReturn,jdbcType=TINYINT},
+      return_num = #{returnNum,jdbcType=INTEGER},
+      create_time = #{createTime,jdbcType=TIMESTAMP},
+      update_time = #{updateTime,jdbcType=TIMESTAMP},
+      member_price = #{memberPrice,jdbcType=DECIMAL},
+      goods_spec = #{goodsSpec,jdbcType=VARCHAR},
+      goods_unit = #{goodsUnit,jdbcType=VARCHAR},
+      unit_name = #{unitName,jdbcType=VARCHAR},
+      obtain_integral = #{obtainIntegral,jdbcType=INTEGER},
+      total_discount = #{totalDiscount,jdbcType=DECIMAL},
+      sub_tickets = #{subTickets,jdbcType=VARCHAR}
+    where id = #{id,jdbcType=VARCHAR}
+  </update>
+</mapper>
